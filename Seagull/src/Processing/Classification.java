@@ -7,9 +7,21 @@ import weka.core.Instances;
 
 public class Classification {
 
-	private Instances trainingSet;
-	private boolean incrementalBuild; 
+	private Instances trainingSet, testSet; 
 	private Classifier cls;
+	
+	
+	public enum ClassifierType {
+	    NAIVE_BAYES, J48;
+	}
+	
+	public enum BuildType {
+		BATCH, INCREMENTAL;
+	}
+	
+	public enum EvaluationType {
+		CROSS_VALIDATION, DEDICATED_TEST_SET; 
+	}
 
 	/**
 	 * Standard constructor. Initializes the training set and assumes the buildType as Batch. 
@@ -24,8 +36,8 @@ public class Classification {
 	 * @throws Exception <br/>
 	 * Throws exception if the String parameter is not properly supplied. 
 	 */
-	public Classification(Instances trainingSet, String classifier) throws Exception{
-		this(trainingSet, classifier, false);
+	public Classification(Instances trainingSet, ClassifierType cType) throws Exception{
+		this(trainingSet, cType, BuildType.BATCH, EvaluationType.DEDICATED_TEST_SET);
 	}
 
 	/**
@@ -39,21 +51,18 @@ public class Classification {
 	 * @throws Exception 
 	 * 
 	 */
-	public Classification(Instances trainingSet, String classifier, boolean incrementalBuild) throws Exception{
+	public Classification(Instances trainingSet, ClassifierType cType, BuildType bType, EvaluationType eType) throws Exception{
 		this.trainingSet = trainingSet;
-		this.incrementalBuild = incrementalBuild;
-
-		classifier = treatStringParameter(classifier);
-
-		switch(classifier){
+		
+		switch(cType){
 
 		// TODO Will we use J48 or ID3 implementation of decision trees?
-		case "j48":
-			cls = new J48();
+		case NAIVE_BAYES:
+			cls = new NaiveBayes();
 			break;
 
-		case "naivebayes":
-			cls = new NaiveBayes();
+		case J48:
+			cls = new J48();
 			break;
 
 		default:
@@ -63,24 +72,12 @@ public class Classification {
 		}
 
 		// TODO Randomize instances before classifying!
-		buildClassifier();
-		evaluateClassifier();
+		buildClassifier(bType);
+		evaluateClassifier(eType);
 	}
 
-	// TODO Eligible to be moved to Utils package.
-	private String treatStringParameter(String untreatedString){
-		String treatedString;
-
-		untreatedString = untreatedString.trim();
-		untreatedString = untreatedString.toLowerCase();
-
-		treatedString = untreatedString;
-
-		return treatedString;
-	}
-
-	private void buildClassifier() throws Exception{
-		if(incrementalBuild){
+	private void buildClassifier(BuildType bType) throws Exception{
+		if(bType == BuildType.INCREMENTAL){
 			// TODO Incremental implementation is consistent with Naive Bayes original model?
 
 		}
@@ -88,12 +85,12 @@ public class Classification {
 			cls.buildClassifier(trainingSet);
 		}				
 	}
-
-	private void evaluateClassifier(Instances testSet){
+	
+	private void evaluateClassifier(EvaluationType eType){
 
 	}
 
-	private void evaluateClassifier(){
+	private void evaluateClassifier(Instances data, EvaluationType eType){
 
 	}
 }
