@@ -1,33 +1,62 @@
 package processing;
 
+import java.util.Random;
+
 import weka.classifiers.Classifier;
+import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.trees.J48;
 import weka.core.Instances;
 
 public class Classification {
 
-	private Instances trainingSet;
-	private boolean incrementalBuild; 
+	private Instances trainingSet, testingSet; 
 	private Classifier cls;
-
-	/**
-	 * Standard constructor. Initializes the training set and assumes the buildType as Batch. 
-	 * @param trainingSet <br/>
-	 * The training set from which the classifier will be built.
-	 * @param classifier <br/>
-	 * The classifier to be built. Possible values for that: <br/>
-	 * <ul>
-	 * 	<li>J48</li>
-	 * 	<li>Naive Bayes</li>
-	 * </ul>
-	 * @throws Exception <br/>
-	 * Throws exception if the String parameter is not properly supplied. 
-	 */
-	public Classification(Instances trainingSet, String classifier) throws Exception{
-		this(trainingSet, classifier, false);
+	private Evaluation eval;
+	private ClassifierType cType;
+	
+	public enum ClassifierType{ NAIVE_BAYES, J48;}
+	
+	public Instances getTrainingSet() {
+		return trainingSet;
 	}
 
+	public void setTrainingSet(Instances trainingSet) {
+		this.trainingSet = trainingSet;
+	}
+
+	public Instances getTestingSet() {
+		return testingSet;
+	}
+
+	public void setTestingSet(Instances testingSet) {
+		this.testingSet = testingSet;
+	}
+
+	public Classifier getClassifier() {
+		return cls;
+	}
+
+	public void setClassifier(Classifier cls) {
+		this.cls = cls;
+	}
+
+	public Evaluation getEvaluation() {
+		return eval;
+	}
+
+	public void setEvaluation(Evaluation eval) {
+		this.eval = eval;
+	}
+
+	public ClassifierType getClassifierType() {
+		return cType;
+	}
+
+	public void setClassifierType(ClassifierType cType) {
+		this.cType = cType;
+	}
+	
 	/**
 	 * Initializes classification parameters.
 	 * @param trainingSet <br/>
@@ -39,61 +68,86 @@ public class Classification {
 	 * @throws Exception 
 	 * 
 	 */
-	public Classification(Instances trainingSet, String classifier, boolean incrementalBuild) throws Exception{
-		this.trainingSet = trainingSet;
-		this.incrementalBuild = incrementalBuild;
-
-		classifier = treatStringParameter(classifier);
-
-		switch(classifier){
+	public Classification(ClassifierType cType) throws Exception{
+		this.cType = cType;
+	}
+	
+	/**
+	 * Returns a new instance of Classifier according to the ClassifierType requested
+	 * @return
+	 * @throws Exception 
+	 */
+	private Classifier classifierFactory(ClassifierType cType) throws Exception{
+		Classifier classifier;
+		
+		switch(cType){
 
 		// TODO Will we use J48 or ID3 implementation of decision trees?
-		case "j48":
-			cls = new J48();
+		case J48:
+			classifier = new J48();
 			break;
 
-		case "naivebayes":
-			cls = new NaiveBayes();
+		case NAIVE_BAYES:
+			// If bType == Incremental then cls = new UpdateableNaiveBayes(); else
+			classifier = new NaiveBayes();
 			break;
 
 		default:
-			throw new Exception("Classifier not provided!");
+			throw new Exception("ClassifierType not provided!");
 
 			// TODO Add other cases: Decision Rule, KNN and so on.
 		}
-
-		// TODO Randomize instances before classifying!
-		buildClassifier();
-		evaluateClassifier();
+		
+		return classifier;
 	}
-
-	// TODO Eligible to be moved to Utils package.
-	private String treatStringParameter(String untreatedString){
-		String treatedString;
-
-		untreatedString = untreatedString.trim();
-		untreatedString = untreatedString.toLowerCase();
-
-		treatedString = untreatedString;
-
-		return treatedString;
+	
+	public Instances randomizeTrainingSet(Instances trainingSet){
+		trainingSet.randomize(new Random(1));
+		return trainingSet;
 	}
-
-	private void buildClassifier() throws Exception{
-		if(incrementalBuild){
-			// TODO Incremental implementation is consistent with Naive Bayes original model?
-
-		}
-		else{
-			cls.buildClassifier(trainingSet);
-		}				
+	
+	public Evaluation performTestSetEvaluation(Instances dataset, int percentageSplit) throws Exception{
+		int trainSetSize = Math.round(dataset.numInstances() * (percentageSplit/100));
+		int testSetSize = dataset.numInstances() - trainSetSize;
+		
+		trainingSet = new Instances(dataset, 0, trainSetSize);
+		testingSet = new Instances(dataset, trainSetSize, testSetSize);
+		
+		evaluationHelper(trainingSet);
+		
+		trainingSet = randomizeTrainingSet(trainingSet);
+		cls.buildClassifier(trainingSet);
+		eval.evaluateModel(cls, testingSet);
+		
+		return eval;
 	}
-
-	private void evaluateClassifier(Instances testSet){
-
+	
+	public Evaluation performTestSetEvaluation(Instances trainingSet, Instances testingSet) throws Exception {
+		this.trainingSet = trainingSet;
+		this.testingSet = testingSet;
+		
+		evaluationHelper(trainingSet);
+		
+		this.trainingSet = randomizeTrainingSet(this.trainingSet);
+		cls.buildClassifier(this.trainingSet);
+		eval.evaluateModel(cls, this.testingSet);
+		
+		return eval;
 	}
-
-	private void evaluateClassifier(){
-
+	
+	public Evaluation performCrossValidation(Instances dataset, int folds) throws Exception{
+		evaluationHelper(dataset);
+		eval.crossValidateModel(cls, dataset, folds, new Random(1));
+		
+		return eval;		
+	}
+	
+	public Evaluation performLOOCV(Instances dataset) throws Exception{
+		return performCrossValidation(dataset, dataset.numInstances());
+	}
+	
+	private void evaluationHelper(Instances trainingSet) throws Exception{
+		this.cls = classifierFactory(cType);
+		eval = new Evaluation(trainingSet);		
 	}
 }
