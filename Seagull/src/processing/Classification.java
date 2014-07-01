@@ -1,4 +1,4 @@
-package Processing;
+package processing;
 
 import weka.classifiers.Classifier;
 import weka.classifiers.bayes.NaiveBayes;
