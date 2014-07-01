@@ -43,7 +43,7 @@ public class Input {
 		
 		List<Cell> wBag = new ArrayList<Cell>();
 		Scanner sc2 = null;
-		Cell s;			//###################################################
+		Cell s;			
 	    try {
 	        sc2 = new Scanner(new File(path));
 	    } catch (FileNotFoundException e) {
@@ -66,7 +66,7 @@ public class Input {
 	    
 	    sc2.close();
 	    
-	    
+	  
 	   
 	    
 		return wBag;
