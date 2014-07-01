@@ -6,10 +6,10 @@ import weka.core.*;
 
 
 
-public class input {
+public class Input {
 
 	
-	public input(){
+	public Input(){
 		
 		
 		
@@ -18,7 +18,7 @@ public class input {
 	
 	
 	
-	public static void print_list(List<cell> l){
+	public static void print_list(List<Cell> l){
 		String pick = new String();
 		int i = 0;
 		System.out.println("Imprimindo lista:");
@@ -39,11 +39,11 @@ public class input {
 	
 	
 	
-	public static List<cell> read_file (String path, String classe, String original_file) {
+	public static List<Cell> read_file (String path, String classe, String original_file) {
 		
-		List<cell> wBag = new ArrayList<cell>();
+		List<Cell> wBag = new ArrayList<Cell>();
 		Scanner sc2 = null;
-		cell s;			//###################################################
+		Cell s;			//###################################################
 	    try {
 	        sc2 = new Scanner(new File(path));
 	    } catch (FileNotFoundException e) {
@@ -54,7 +54,7 @@ public class input {
 	            Scanner s2 = new Scanner(sc2.nextLine());
 	        //boolean b;
 	        while (s2.hasNext()) {
-	        	s = new cell();
+	        	s = new Cell();
 	            s.setText(s2.next());
 	            s.setClasse(classe);
 	            s.setOriginal_file(original_file);
@@ -76,11 +76,11 @@ public class input {
 
 	
 	
-	public static List<cell> read_file (String path) {
+	public static List<Cell> read_file (String path) {
 		
-		List<cell> wBag = new ArrayList<cell>();
+		List<Cell> wBag = new ArrayList<Cell>();
 		Scanner sc2 = null;
-		cell s;			//###################################################
+		Cell s;			//###################################################
 	    try {
 	        sc2 = new Scanner(new File(path));
 	    } catch (FileNotFoundException e) {
@@ -91,7 +91,7 @@ public class input {
 	            Scanner s2 = new Scanner(sc2.nextLine());
 	        //boolean b;
 	        while (s2.hasNext()) {
-	        	s = new cell();
+	        	s = new Cell();
 	            s.setText(s2.next());
 
 	            wBag.add(s);
@@ -112,13 +112,13 @@ public class input {
 	
 	
 	
-	public List<List<List<cell>>> read_subfolder(String path){
+	public List<List<List<Cell>>> read_subfolder(String path){
 		/*	reads the classes	*/
 		/*	Classe<arquivos<Bag of words>>	*/
-		List<List<List<cell>>> bigBag = new ArrayList<>();
+		List<List<List<Cell>>> bigBag = new ArrayList<>();
 		
-		List<cell> bag;
-		List<List<cell>> classe;
+		List<Cell> bag;
+		List<List<Cell>> classe;
 		
 		int content_number;
 		String name_test;
@@ -161,7 +161,7 @@ public class input {
 		for(int i=0; i < sub_folders.size(); i++){
 			System.out.println("#####################");
 			System.out.println("Criando classe " + sub_folders.get(i));
-			classe = new ArrayList<List<cell>>();
+			classe = new ArrayList<List<Cell>>();
 			new_path = path + '/' + sub_folders.get(i);
 			f = new File(new_path);
 			System.out.println("Populando classe:");

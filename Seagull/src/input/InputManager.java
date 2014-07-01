@@ -1,9 +1,9 @@
 package input;
 
-public class input_manager {
+public class InputManager {
 
 	public static void main(String[] args) {
-		input haha = new input();
+		Input haha = new Input();
 		haha.read_subfolder("C:/wekatest");
 
 	}

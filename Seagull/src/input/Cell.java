@@ -1,19 +1,19 @@
 package input;
 
-public class cell {
+public class Cell {
 	private float weight;
 	private String text;
 	private String classe;
 	private String original_file;
 	
-	public cell(){
+	public Cell(){
 		this.setText("");
 		this.setWeight(0);
 		
 	}
 	
 	
-	public float compareTo(cell o)
+	public float compareTo(Cell o)
 	{
 	     return(this.weight - o.weight);
 	}

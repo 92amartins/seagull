@@ -2,16 +2,16 @@ package input;
 
 import java.util.List;
 
-public class stopword_remover {
+public class StopwordRemover {
 
-	public stopword_remover(){
+	public StopwordRemover(){
 		
 	}
 	
 	
-	public static List<cell> remove_punct (List<cell> l){
+	public static List<Cell> remove_punct (List<Cell> l){
 		String temp = new String();
-		cell c;
+		Cell c;
 		
 		for(int i=0; i< l.size(); i++){
 			c = l.get(i);
