@@ -15,6 +15,13 @@ public class stopword_remover {
 		
 		for(int i=0; i< l.size(); i++){
 			c = l.get(i);
+			temp = c.getText();
+			
+			temp = temp.replaceAll("[^A-Za-z0-9]", "");
+			c.setText(temp);
+			if(temp.equals("")){
+				l.remove(i);
+			}
 			
 		}
 		
