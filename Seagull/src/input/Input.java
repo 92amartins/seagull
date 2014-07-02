@@ -55,7 +55,7 @@ public class Input {
 	        //boolean b;
 	        while (s2.hasNext()) {
 	        	s = new Cell();
-	            s.setText(s2.next());
+	            s.setText(s2.next().toLowerCase());
 	            s.setClasse(classe);
 	            s.setOriginal_file(original_file);
 	            wBag.add(s);
@@ -159,29 +159,29 @@ public class Input {
 		System.out.println("Obtendo arquivos nas sub pastas...");
 		
 		for(int i=0; i < sub_folders.size(); i++){
-			System.out.println("#####################");
-			System.out.println("Criando classe " + sub_folders.get(i));
+			//System.out.println("#####################");
+			//System.out.println("Criando classe " + sub_folders.get(i));
 			classe = new ArrayList<List<Cell>>();
 			new_path = path + '/' + sub_folders.get(i);
 			f = new File(new_path);
-			System.out.println("Populando classe:");
+			//System.out.println("Populando classe:");
 			
 			content = new ArrayList<String>(Arrays.asList(f.list()));
 			content_number = content.size();
 			for(int j=0; j< content_number; j++){
 				name_test = content.get(j);
 				/* if((name_test.substring(name_test.lastIndexOf('.') + 1)).equals(txt)){	 */
-					System.out.println("Criando bag of words para :" + new_path + '/' + name_test);
+					//System.out.println("Criando bag of words para :" + new_path + '/' + name_test);
 					bag = read_file(new_path + '/' + name_test, sub_folders.get(i), name_test);
-					System.out.println("Adicionando   " + name_test + "   à classe.");
+					//System.out.println("Adicionando   " + name_test + "   à classe.");
 					classe.add(bag);
 				/* } */
 			}
 			if(content_number != 0){
-			System.out.println("Adicionando classe à big bag of words.");
+			//System.out.println("Adicionando classe à big bag of words.");
 			bigBag.add(classe);
 			}else{
-				System.out.println("Classe vazia, desconsiderar.");
+				//System.out.println("Classe vazia, desconsiderar.");
 			}
 		}
 		
@@ -190,7 +190,7 @@ public class Input {
 		
 		System.out.println("Isso eh tudo pessoal.");
 		System.out.println("Big Bag of Words (BBW) mounted");
-		
+		System.out.println("################");
 		return bigBag;
 	}
 	

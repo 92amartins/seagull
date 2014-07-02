@@ -24,8 +24,8 @@ public class StopwordRemover {
 			c.setText(temp);
 			if(temp.equals("")){
 				l.remove(i);
+				i--;
 			}
-			
 		}
 		
 		
@@ -35,6 +35,8 @@ public class StopwordRemover {
 	public static List<Cell> removeStopwords_list (List<Cell> l){
 		String temp = new String();
 		Cell c;
+		//int prev_size = l.size();
+		//int new_size;
 		Stopwords checker = new Stopwords();
 		for(int i=0; i< l.size(); i++){
 			c = l.get(i);
@@ -43,9 +45,15 @@ public class StopwordRemover {
 			
 			if(checker.is(temp)){
 				l.remove(i);
+				i--;
+				//System.out.println("Removed stopword: " + temp);
+				
+			}else{
+				//System.out.println("## Didnt Remove stopword: " + temp);
 			}
 			
 		}
+		//new_size = l.size();
 		
 		
 		return l;
@@ -54,24 +62,26 @@ public class StopwordRemover {
 	
 	
 	
-	public List<List<List<Cell>>> removeAllStopwords(List<List<List<Cell>>> bigBag){
-
+	public int removeAllStopwords(List<List<List<Cell>>> bigBag){
+		int prev_size = 0;
+		int new_size = 0;
+		System.out.println("Removing stop words.");
 		for(int i=0; i< bigBag.size(); i++){
 			for(int j=0; j< bigBag.get(i).size(); j++){
-			
-				
+				//System.out.println("SWR - Classe: "+(i+1) + " - Arquivo: "+ (j+1) + "/" + bigBag.get(i).size());
+				prev_size += (bigBag.get(i)).get(j).size();
 				removePunct_list((bigBag.get(i)).get(j));
 				removeStopwords_list((bigBag.get(i)).get(j));
-				
+				new_size += (bigBag.get(i)).get(j).size();
 				
 				
 			}
 			
 		}
 		
-		
-		
-		return bigBag;
+		System.out.println("Removed " + (prev_size - new_size) + " terms.");
+		System.out.println("################");
+		return prev_size - new_size;
 	}
 	
 	

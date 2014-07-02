@@ -2,6 +2,7 @@ package input;
 
 public class Cell {
 	private float weight;
+	private int quantity;
 	private String text;
 	private String classe;
 	private String original_file;
@@ -9,7 +10,7 @@ public class Cell {
 	public Cell(){
 		this.setText("");
 		this.setWeight(0);
-		
+		this.setQuantity(1);
 	}
 	
 	
@@ -63,6 +64,16 @@ public class Cell {
 
 	public void setOriginal_file(String original_file) {
 		this.original_file = original_file;
+	}
+
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	
 	
