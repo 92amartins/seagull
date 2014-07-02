@@ -56,7 +56,6 @@ public class PreProcessingPanel extends JPanel {
 		lblBOW.setBounds(200, 10, 100, 25);
 		add(lblBOW);
 		
-		//width, height
 		tblBOW.setBounds(200, 40, 560, 370);
 		add(tblBOW);
 		

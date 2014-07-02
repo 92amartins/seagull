@@ -1,7 +1,5 @@
 package ui;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +21,7 @@ public class MainFrame extends JFrame{
 	
 	public MainFrame() {
 		super("Seagull");
+		
 		setBounds(100, 100, 800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -32,9 +31,9 @@ public class MainFrame extends JFrame{
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		BufferedImage myPicture = ImageIO.read(new File("img\\seagull-logo.png"));
+		BufferedImage myPicture = ImageIO.read(new File("img\\seagull-logo2.png"));
 		logoLabel = new JLabel(new ImageIcon(myPicture));
-		logoLabel.setBounds(0, 0, 240, 69);
+		logoLabel.setBounds(0, 0, 700, 80);
 		panel.add(logoLabel);
 		 
 		btnAbout = new JButton("About");	
