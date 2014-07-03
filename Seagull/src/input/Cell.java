@@ -1,7 +1,7 @@
 package input;
 
 public class Cell {
-	private float weight;
+	private Float weight;
 	private int quantity;
 	private String text;
 	private String classe;

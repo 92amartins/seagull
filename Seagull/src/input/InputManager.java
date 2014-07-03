@@ -37,26 +37,40 @@ public class InputManager {
 	}
 	
 	
-	/*	main method for test only	*/
+	
+	
+	
+	
+	/*##########################################################################################################*/
+	/*										main method for test only											*/
+	/*##########################################################################################################*/
 	
 	public static void main(String[] args) {
 		Input haha = new Input();
 		StopwordRemover clear_stopwd = new StopwordRemover();
 		Weighter testetfidf = new Weighter();
 		bigBagReducer reducer = new bigBagReducer();
+		InstancesGenerator gen1 = new InstancesGenerator();
 		int again = 1;
 		
 		
 		List<List<List<Cell>>> bigBag;
 
 		//bigBag = haha.read_subfolder("C:/wekatest/teste");
-		bigBag = haha.read_subfolder("C:/wekatest/datasets");
+		//bigBag = haha.read_subfolder("C:/wekatest/datasets");
+		bigBag = haha.read_subfolder("C:/wekatest/simpletest");
 		
 		while(again != 0) again = clear_stopwd.removeAllStopwords(bigBag);
 		
 		bigBag = reducer.reduceBag(bigBag);
 		
+		Vocabulary dic = new Vocabulary(bigBag);
+		
 		testetfidf.weightTFIDF(bigBag);
+		
+		gen1.generate(bigBag);
+		
+		
 		
 	}
 
