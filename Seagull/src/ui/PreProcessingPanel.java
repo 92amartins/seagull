@@ -1,8 +1,5 @@
 package ui;
 
-import java.awt.Button;
-import java.awt.Label;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -62,4 +59,53 @@ public class PreProcessingPanel extends JPanel {
 		btnClassify.setBounds(660, 420, 100, 25);
 		add(btnClassify);		
 	}
+
+	public JButton getBtnBrowse() {
+		return btnBrowse;
+	}
+
+	public void setBtnBrowse(JButton btnBrowse) {
+		this.btnBrowse = btnBrowse;
+	}
+
+	public JButton getBtnProcess() {
+		return btnProcess;
+	}
+
+	public void setBtnProcess(JButton btnProcess) {
+		this.btnProcess = btnProcess;
+	}
+
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
+
+	public void setProgressBar(JProgressBar progressBar) {
+		this.progressBar = progressBar;
+	}
+
+	public JList<String> getListFiles() {
+		return listFiles;
+	}
+
+	public void setListFiles(JList<String> listFiles) {
+		this.listFiles = listFiles;
+	}
+
+	public JTable getTblBOW() {
+		return tblBOW;
+	}
+
+	public void setTblBOW(JTable tblBOW) {
+		this.tblBOW = tblBOW;
+	}
+
+	public JButton getBtnClassify() {
+		return btnClassify;
+	}
+
+	public void setBtnClassify(JButton btnClassify) {
+		this.btnClassify = btnClassify;
+	}
+	
 }
