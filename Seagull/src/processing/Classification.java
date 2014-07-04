@@ -5,6 +5,8 @@ import java.util.Random;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.lazy.IBk;
+import weka.classifiers.lazy.KStar;
 import weka.classifiers.trees.J48;
 import weka.core.Instances;
 
@@ -15,7 +17,7 @@ public class Classification {
 	private Evaluation eval;
 	private ClassifierType cType;
 	
-	public enum ClassifierType{ NAIVE_BAYES, J48;}
+	public enum ClassifierType{ NAIVE_BAYES, J48, IBK, KSTAR, IB1;}
 	
 	public Instances getTrainingSet() {
 		return trainingSet;
@@ -68,7 +70,7 @@ public class Classification {
 	 * @throws Exception 
 	 * 
 	 */
-	public Classification(ClassifierType cType) throws Exception{
+	public Classification(ClassifierType cType) {
 		this.cType = cType;
 	}
 	
@@ -91,6 +93,14 @@ public class Classification {
 			// If bType == Incremental then cls = new UpdateableNaiveBayes(); else
 			classifier = new NaiveBayes();
 			break;
+		
+		case IBK:
+			classifier = new IBk();
+			break;
+		
+		case KSTAR:
+			classifier = new KStar();
+			break;
 
 		default:
 			throw new Exception("ClassifierType not provided!");
@@ -101,21 +111,21 @@ public class Classification {
 		return classifier;
 	}
 	
-	public Instances randomizeTrainingSet(Instances trainingSet){
+	public Instances randomizeSet(Instances trainingSet){
 		trainingSet.randomize(new Random(1));
 		return trainingSet;
 	}
 	
 	public Evaluation performTestSetEvaluation(Instances dataset, int percentageSplit) throws Exception{
-		int trainSetSize = Math.round(dataset.numInstances() * (percentageSplit/100));
+		int trainSetSize = Math.round((dataset.numInstances() * percentageSplit)/100);
 		int testSetSize = dataset.numInstances() - trainSetSize;
-		
+	
+		dataset = randomizeSet(dataset);
 		trainingSet = new Instances(dataset, 0, trainSetSize);
 		testingSet = new Instances(dataset, trainSetSize, testSetSize);
 		
 		evaluationHelper(trainingSet);
 		
-		trainingSet = randomizeTrainingSet(trainingSet);
 		cls.buildClassifier(trainingSet);
 		eval.evaluateModel(cls, testingSet);
 		
@@ -128,7 +138,7 @@ public class Classification {
 		
 		evaluationHelper(trainingSet);
 		
-		this.trainingSet = randomizeTrainingSet(this.trainingSet);
+		this.trainingSet = randomizeSet(this.trainingSet);
 		cls.buildClassifier(this.trainingSet);
 		eval.evaluateModel(cls, this.testingSet);
 		
