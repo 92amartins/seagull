@@ -11,7 +11,7 @@ public class ClassificationTest {
 			Instances data = DataSource.read("C:\\Program Files\\Weka-3-6\\data\\iris.arff");
 			data.setClassIndex(data.numAttributes()-1);
 			Classification cls = new Classification(ClassifierType.NAIVE_BAYES);
-			Report r = new Report(cls.performTestSetEvaluation(data, 80));
+			Report r = new Report(cls.performLOOCV(data));
 			
 			System.out.println(r.summaryString());
 			System.out.println(r.classificationDetails());
