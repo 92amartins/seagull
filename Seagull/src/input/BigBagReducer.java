@@ -1,9 +1,9 @@
 package input;
 
 import java.util.List;
-public class bigBagReducer {
+public class BigBagReducer {
 	
-	public bigBagReducer(){
+	public BigBagReducer(){
 		
 	}
 	
@@ -40,7 +40,7 @@ public class bigBagReducer {
 								
 								if(w_counter > 1){
 									(bigBag.get(i)).get(j).remove(n);
-									//System.out.println("Removeu célula de indice " + n);
+									//System.out.println("Removeu cï¿½lula de indice " + n);
 									n--;
 									remove_counter++;
 
@@ -63,7 +63,7 @@ public class bigBagReducer {
 		
 		
 		
-		System.out.println("Remoção de " + remove_counter + " termos repetidos.");
+		System.out.println("Remoï¿½ï¿½o de " + remove_counter + " termos repetidos.");
 		System.out.println("################");
 		return bigBag;
 	}
