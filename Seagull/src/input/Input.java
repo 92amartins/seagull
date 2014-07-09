@@ -2,6 +2,7 @@ package input;
 
 import java.io.*;
 import java.util.*;
+
 import weka.core.*;
 
 
@@ -40,10 +41,11 @@ public class Input {
 	
 	
 	public static List<Cell> read_file (String path, String classe, String original_file) {
-		
+		Stopwords checker = new Stopwords();
 		List<Cell> wBag = new ArrayList<Cell>();
 		Scanner sc2 = null;
-		Cell s;			
+		Cell s;		
+		int counter =0;
 	    try {
 	        sc2 = new Scanner(new File(path));
 	    } catch (FileNotFoundException e) {
@@ -55,10 +57,16 @@ public class Input {
 	        //boolean b;
 	        while (s2.hasNext()) {
 	        	s = new Cell();
-	            s.setText(s2.next().toLowerCase());
+	            s.setText((s2.next().toLowerCase()).replaceAll("[^A-Za-z0-9]", ""));
 	            s.setClasse(classe);
 	            s.setOriginal_file(original_file);
-	            wBag.add(s);
+	            
+	            if((s.getText() != "") && !checker.is(s.getText())){
+	            	wBag.add(s);
+	            	
+	            }else{
+	           	counter++;
+	            }
 
 	        }
 	        s2.close();
@@ -67,7 +75,7 @@ public class Input {
 	    sc2.close();
 	    
 	  
-	   
+	   //System.out.println("counter: " + counter);
 	    
 		return wBag;
 		
@@ -76,6 +84,11 @@ public class Input {
 
 	
 	
+	
+	
+	
+	
+/*	
 	public static List<Cell> read_file (String path) {
 		
 		List<Cell> wBag = new ArrayList<Cell>();
@@ -92,9 +105,9 @@ public class Input {
 	        //boolean b;
 	        while (s2.hasNext()) {
 	        	s = new Cell();
-	            s.setText(s2.next());
-
-	            wBag.add(s);
+	            s.setText(s2.next().replaceAll("[^A-Za-z0-9]", ""));
+	            
+	            if(s.getText() != "") wBag.add(s);
 
 	        }
 	        s2.close();
@@ -108,6 +121,12 @@ public class Input {
 		return wBag;
 		
 	}
+	
+	*/
+	
+	
+	
+	
 	
 	
 	
