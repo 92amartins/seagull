@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import processing.ClassificationTest;
 import ui.MainFrame;
 
 public class FrameListener implements ActionListener {
@@ -44,7 +43,7 @@ public class FrameListener implements ActionListener {
 		String msg = "Tool done as a research project by Sciece without Borders students in University of Brighton. \n"
 				+ "Students: \n"
 				+ "- Andrei Martins Silva \n"
-				+ "- Camilla Maciel Quitério de Oliveira \n"
+				+ "- Camilla Maciel Quitï¿½rio de Oliveira \n"
 				+ "- Humberto Politi de Oliveira \n"
 				+ "Project Supervisor: Dr Gulden Uchyigit";
 		JOptionPane.showMessageDialog(mainFrame, msg, "About Seagull Tool", JOptionPane.INFORMATION_MESSAGE);
