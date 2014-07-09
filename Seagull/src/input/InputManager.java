@@ -56,19 +56,19 @@ public class InputManager {
 		
 		List<List<List<Cell>>> bigBag;
 
-		//bigBag = haha.read_subfolder("C:/wekatest/teste");
+		bigBag = haha.read_subfolder("C:/wekatest/teste");
 		//bigBag = haha.read_subfolder("C:/wekatest/datasets");
-		bigBag = haha.read_subfolder("C:/wekatest/simpletest");
+		//bigBag = haha.read_subfolder("C:/wekatest/simpletest");
 		
 		while(again != 0) again = clear_stopwd.removeAllStopwords(bigBag);
 		
 		bigBag = reducer.reduceBag(bigBag);
 		
-		Vocabulary dic = new Vocabulary(bigBag);
+		//Vocabulary dic = new Vocabulary(bigBag);
 		
-		testetfidf.weightTFIDF(bigBag);
+		//testetfidf.weightTFIDF(bigBag);
 		
-		gen1.generate(bigBag);
+		//gen1.generate(bigBag);
 		
 		
 		
