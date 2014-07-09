@@ -11,7 +11,9 @@ import ui.MainFrame;
 public class FrameListener implements ActionListener {
 	
 	private MainFrame mainFrame;
+	private InputManager inputManager = new InputManager();
 	private ClassificationManager classificatioManager = new ClassificationManager();
+	private PreProcessingManager preProcessingManager = new PreProcessingManager();
 	private String pathClassify = "";
 	private String pathPreProcess = "";
 	
