@@ -85,7 +85,7 @@ public class ClassificationPanel extends JPanel{
 		lblOptions.setBounds(10, 115, 100, 25);
 		add(lblOptions);
 		
-		paneOptions.setBounds(10, 140, 150, 300);
+		paneOptions.setBounds(10, 140, 160, 300);
 		paneOptions.setLayout(null);
 		
 		lblClassifier.setBounds(5, 5, 140, 20);
