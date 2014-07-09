@@ -11,7 +11,7 @@ import javax.swing.JTable;
 public class PreProcessingPanel extends JPanel {
 	
 	private JButton btnBrowse;
-	private JButton btnProcess;
+	private JButton btnProcess; 
 	private JProgressBar progressBar;
 	private JLabel lblOptions;
 	private JPanel panelOptions;
