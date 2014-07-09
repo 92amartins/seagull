@@ -1,5 +1,6 @@
 package control;
 
+import model.ClassificationModel;
 import processing.Classification;
 import processing.Report;
 import processing.Classification.ClassifierType;
@@ -7,6 +8,8 @@ import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
 public class ClassificationManager {
+	
+	private ClassificationModel classificationModel;
 	
 	public String classify(String path) {
 		String report = "";
