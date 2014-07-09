@@ -38,9 +38,9 @@ public class MainFrame extends JFrame{
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		setIconImage(ImageIO.read(new File("img\\seagull-icon.png")));
+		setIconImage(ImageIO.read(new File("img/seagull-icon.png")));
 		
-		BufferedImage logo = ImageIO.read(new File("img\\seagull-logo2.png"));
+		BufferedImage logo = ImageIO.read(new File("img/seagull-logo2.png"));
 		logoLabel = new JLabel(new ImageIcon(logo));
 		logoLabel.setBounds(0, 0, 700, 80);
 		panel.add(logoLabel);
@@ -50,7 +50,7 @@ public class MainFrame extends JFrame{
 		panel.add(btnAbout);
 		
 		tabbedPane = new JTabbedPane();
-		tabbedPane.setBounds(5, 80, 780, 480);
+		tabbedPane.setBounds(5, 80, 790, 490);
 		preProcessingPanel = new PreProcessingPanel();
 		classificationPanel = new ClassificationPanel();
 		tabbedPane.addTab("Pre-processing", preProcessingPanel);
@@ -82,7 +82,7 @@ public class MainFrame extends JFrame{
 			String msg = "Tool done as a research project by Sciece without Borders students in University of Brighton. \n"
 					+ "Students: \n"
 					+ "- Andrei Martins Silva \n"
-					+ "- Camilla Maciel Quitério de Oliveira \n"
+					+ "- Camilla Maciel QuitÃ©rio de Oliveira \n"
 					+ "- Humberto Politi de Oliveira \n"
 					+ "Project Supervisor: Dr Gulden Uchyigit";
 			JOptionPane.showMessageDialog(MainFrame.this, msg, "About Seagull Tool", JOptionPane.INFORMATION_MESSAGE);
