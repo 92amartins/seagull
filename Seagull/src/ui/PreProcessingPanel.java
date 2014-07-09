@@ -1,6 +1,7 @@
 package ui;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -12,6 +13,12 @@ public class PreProcessingPanel extends JPanel {
 	private JButton btnBrowse;
 	private JButton btnProcess;
 	private JProgressBar progressBar;
+	private JLabel lblOptions;
+	private JPanel panelOptions;
+	private JCheckBox checkBoxTokenization;
+	private JCheckBox checkBoxStemming;
+	private JCheckBox checkBoxStopwords;
+	private JCheckBox checkBoxNormalization;
 	private JLabel lblFiles;
 	private JList<String> listFiles;
 	private JLabel lblBOW;
@@ -25,6 +32,12 @@ public class PreProcessingPanel extends JPanel {
 		btnBrowse = new JButton("Browse...");
 		btnProcess = new JButton("Process!");
 		progressBar = new JProgressBar();
+		lblOptions = new JLabel("Options:");
+		panelOptions = new JPanel();
+		checkBoxTokenization = new JCheckBox("Tokenization");
+		checkBoxStemming = new JCheckBox("Stemming");
+		checkBoxStopwords = new JCheckBox("Remove stopwords");
+		checkBoxNormalization = new JCheckBox("Normalization");
 		lblFiles = new JLabel("Imported files: ");
 		listFiles = new JList<String>();
 		lblBOW = new JLabel("Bag of Words: ");
@@ -44,10 +57,26 @@ public class PreProcessingPanel extends JPanel {
 		progressBar.setBounds(10, 80, 150, 25);
 		add(progressBar);
 		
-		lblFiles.setBounds(10, 115, 100, 25);
+		lblOptions.setBounds(10, 115, 100, 25);
+		add(lblOptions);
+		
+		panelOptions.setBounds(10, 140, 165, 105);
+		panelOptions.setLayout(null);
+		checkBoxTokenization.setBounds(5, 5, 140, 20);
+		checkBoxStemming.setBounds(5, 30, 140, 20);
+		checkBoxStopwords.setBounds(5, 55, 160, 20);
+		checkBoxNormalization.setBounds(5, 80, 140, 20);
+		
+		panelOptions.add(checkBoxTokenization);
+		panelOptions.add(checkBoxStemming);
+		panelOptions.add(checkBoxStopwords);
+		panelOptions.add(checkBoxNormalization);
+		add(panelOptions);
+		
+		lblFiles.setBounds(10, 250, 100, 25);
 		add(lblFiles);
 		
-		listFiles.setBounds(10, 140, 150, 300);
+		listFiles.setBounds(10, 275, 150, 160);
 		add(listFiles);
 		
 		lblBOW.setBounds(200, 10, 100, 25);
