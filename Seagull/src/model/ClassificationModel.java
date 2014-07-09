@@ -1,17 +1,17 @@
 package model;
 
-import processing.Classification;
 import weka.core.Instances;
 
 
 public class ClassificationModel {
+
+	public enum ClassifierType{ NAIVE_BAYES, J48, IBK, KSTAR;}
+	public enum EvaluationMethod{ CROSS_VALIDATION, PERCENTAGE_SPLIT, LOOCV;}
 	
 	private String path;
 	private Instances instances;
-	//TODO move Enum ClassifierType to this class!
-	private Classification.ClassifierType classifierType;
-	//TODO create Enum to evaluationMethod;
-	private String evaluationMethod;
+	private ClassifierType[] classifierTypes;
+	private EvaluationMethod evaluationMethod;	
 	
 	public String getPath() {
 		return path;
@@ -29,19 +29,23 @@ public class ClassificationModel {
 		this.instances = instances;
 	}
 	
-	public Classification.ClassifierType getClassifierType() {
-		return classifierType;
+	public ClassifierType[] getClassifierTypes() {
+		return classifierTypes;
 	}
 	
-	public void setClassifierType(Classification.ClassifierType classifierType) {
-		this.classifierType = classifierType;
+	public void setClassifierTypes(ClassifierType[] classifierType) {
+		this.classifierTypes = classifierType;
 	}
 	
-	public String getEvaluationMethod() {
+	public int classifierTypesLength(){
+		return classifierTypes.length;
+	}
+	
+	public EvaluationMethod getEvaluationMethod() {
 		return evaluationMethod;
 	}
 	
-	public void setEvaluationMethod(String evaluationMethod) {
+	public void setEvaluationMethod(EvaluationMethod evaluationMethod) {
 		this.evaluationMethod = evaluationMethod;
 	}
 }

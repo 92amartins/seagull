@@ -2,6 +2,7 @@ package processing;
 
 import java.util.Random;
 
+import model.ClassificationModel;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
@@ -13,58 +14,36 @@ import weka.core.Instances;
 public class Classification {
 
 	private Instances trainingSet, testingSet; 
-	private Classifier cls;
-	private Evaluation eval;
-	private ClassifierType cType;
+	private Classifier[] cls;
+	private Evaluation eval[];
 	
-	public enum ClassifierType{ NAIVE_BAYES, J48, IBK, KSTAR, IB1;}
-	
-	/**
-	 * Initializes classification parameters.
-	 * @param ClassifierType
-	 * 	The classifier used for classification.<br/>
-	 * 	E.g.: ClassifierType.NAIVE_BAYES 
-	 * 
-	 */
-	public Classification(ClassifierType cType) {
-		this.cType = cType;
-	}
-	
-	/**
-	 * Returns a new instance of Classifier according to the ClassifierType requested.
-	 * @return Classifier
-	 * @throws Exception 
-	 */
-	private Classifier classifierFactory(ClassifierType cType) throws Exception{
-		Classifier classifier;
+	public Classification(ClassificationModel.ClassifierType[] cType) {
 		
-		switch(cType){
-
-		// TODO Will we use J48 or ID3 implementation of decision trees?
-		case J48:
-			classifier = new J48();
-			break;
-
-		case NAIVE_BAYES:
-			// If bType == Incremental then cls = new UpdateableNaiveBayes(); else
-			classifier = new NaiveBayes();
-			break;
+		cls = new Classifier[cType.length];
+		eval = new Evaluation[cType.length];
 		
-		case IBK:
-			classifier = new IBk();
-			break;
-		
-		case KSTAR:
-			classifier = new KStar();
-			break;
+		for(int i = 0; i < cType.length;i++){			
+			switch(cType[i]){
+			// TODO Will we use J48 or ID3 implementation of decision trees?
+			case J48:
+				cls[i] = new J48();
+				break;
 
-		default:
-			throw new Exception("ClassifierType not provided!");
-
-			// TODO Add other cases: Decision Rule, KNN and so on.
+			case NAIVE_BAYES:
+				// If bType == Incremental then cls = new UpdateableNaiveBayes(); else
+				cls[i] = new NaiveBayes();
+				break;
+			
+			case IBK:
+				cls[i] = new IBk();
+				break;
+			
+			case KSTAR:
+				cls[i] = new KStar();
+				break;
+				// TODO Add other cases: Decision Rule, KNN and so on.
+			}
 		}
-		
-		return classifier;
 	}
 	
 	/**
@@ -72,7 +51,7 @@ public class Classification {
 	 * @param trainingSet
 	 * @return randomized trainingSet
 	 */
-	public Instances randomizeSet(Instances trainingSet){
+	private Instances randomizeSet(Instances trainingSet){
 		trainingSet.randomize(new Random(1));
 		return trainingSet;
 	}
@@ -88,7 +67,7 @@ public class Classification {
 	 * An Evaluation Object with the results
 	 * @throws Exception
 	 */
-	public Evaluation performTestSetEvaluation(Instances dataset, int percentageSplit) throws Exception{
+	public Evaluation[] performTestSetEvaluation(Instances dataset, int percentageSplit) throws Exception{
 		int trainSetSize = Math.round((dataset.numInstances() * percentageSplit)/100);
 		int testSetSize = dataset.numInstances() - trainSetSize;
 	
@@ -96,10 +75,11 @@ public class Classification {
 		trainingSet = new Instances(dataset, 0, trainSetSize);
 		testingSet = new Instances(dataset, trainSetSize, testSetSize);
 		
-		evaluationHelper(trainingSet);
-		
-		cls.buildClassifier(trainingSet);
-		eval.evaluateModel(cls, testingSet);
+		for(int i = 0;i < cls.length;i++){
+			cls[i].buildClassifier(trainingSet);
+			eval[i] = new Evaluation(trainingSet);
+			eval[i].evaluateModel(cls[i], testingSet);
+		}
 		
 		return eval;
 	}
@@ -114,9 +94,9 @@ public class Classification {
 	 * An Evaluation object with the results.
 	 * @throws Exception
 	 */
-	public Evaluation performCrossValidation(Instances dataset, int folds) throws Exception{
-		evaluationHelper(dataset);
-		eval.crossValidateModel(cls, dataset, folds, new Random(1));
+	public Evaluation[] performCrossValidation(Instances dataset, int folds) throws Exception{
+		for(int i = 0;i < cls.length;i++)
+			eval[i].crossValidateModel(cls[i], dataset, folds, new Random(1));
 		
 		return eval;		
 	}
@@ -129,20 +109,8 @@ public class Classification {
 	 * @return
 	 * @throws Exception
 	 */
-	public Evaluation performLOOCV(Instances dataset) throws Exception{
+	public Evaluation[] performLOOCV(Instances dataset) throws Exception{
 		return performCrossValidation(dataset, dataset.numInstances());
-	}
-	
-	/**
-	 * This is a helper method used for classification.
-	 * Instantiate a Classifier and an Evaluation object.
-	 * @param trainingSet
-	 * The training set which will be the basis for the Evaluation.
-	 * @throws Exception
-	 */
-	private void evaluationHelper(Instances trainingSet) throws Exception{
-		this.cls = classifierFactory(cType);
-		eval = new Evaluation(trainingSet);		
 	}
 	
 	// GETTERS AND SETTERS
@@ -163,27 +131,19 @@ public class Classification {
 		this.testingSet = testingSet;
 	}
 
-	public Classifier getClassifier() {
+	public Classifier[] getClassifiers() {
 		return cls;
 	}
 
-	public void setClassifier(Classifier cls) {
+	public void setClassifiers(Classifier[] cls) {
 		this.cls = cls;
 	}
 
-	public Evaluation getEvaluation() {
+	public Evaluation[] getEvaluations() {
 		return eval;
 	}
 
-	public void setEvaluation(Evaluation eval) {
+	public void setEvaluations(Evaluation[] eval) {
 		this.eval = eval;
-	}
-
-	public ClassifierType getClassifierType() {
-		return cType;
-	}
-
-	public void setClassifierType(ClassifierType cType) {
-		this.cType = cType;
 	}
 }
