@@ -8,11 +8,16 @@ import input.BigBagReducer;
 
 import java.util.List;
 
+import javax.swing.JFileChooser;
+
 import weka.core.Instances;
 
 public class InputManager {
 	private List<List<List<Cell>>> bigBag;
 	private Instances normalBag;
+	
+	private InstancesGenerator instancesGenerator = new InstancesGenerator();
+	private ClassificationManager classificationManager = new ClassificationManager();
 
 	public InputManager(){
 
@@ -66,6 +71,18 @@ public class InputManager {
 		//Vocabulary dic = new Vocabulary(bigBag);
 		//testetfidf.weightTFIDF(bigBag);
 		//gen1.generate(bigBag);
+	}
+	
+	public void browseFile() {
+		JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle("Browse the file to process");
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+        	classificationManager.getClassificationModel().setPath(chooser.getSelectedFile().toString());
+        	classificationManager.getClassificationModel().setInstances(instancesGenerator.generateFromFile(classificationManager.getClassificationModel().getPath()));
+        }
 	}
 
 }
