@@ -76,19 +76,6 @@ public class MainFrame extends JFrame{
 		classificationPanel.getBtnChart().addActionListener(frameListener);
 	}
 	
-	/*ActionListener listenerBtnAbout = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			String msg = "Tool done as a research project by Sciece without Borders students in University of Brighton. \n"
-					+ "Students: \n"
-					+ "- Andrei Martins Silva \n"
-					+ "- Camilla Maciel Quitério de Oliveira \n"
-					+ "- Humberto Politi de Oliveira \n"
-					+ "Project Supervisor: Dr Gulden Uchyigit";
-			JOptionPane.showMessageDialog(MainFrame.this, msg, "About Seagull Tool", JOptionPane.INFORMATION_MESSAGE);
-		}
-	};*/
-	
 	public static void main(String[] args) {
 		MainFrame frame = new MainFrame();
 		try {
