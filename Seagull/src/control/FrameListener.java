@@ -2,25 +2,30 @@ package control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import error.ExceptionsHandler;
+import model.ClassificationModel.ClassifierType;
+import model.ClassificationModel.EvaluationMethod;
 import ui.MainFrame;
 
 public class FrameListener implements ActionListener {
 	
-	private MainFrame mainFrame;
+	private static MainFrame mainFrame;
 	private InputManager inputManager = new InputManager();
-	private ClassificationManager classificatioManager = new ClassificationManager();
+	private ClassificationManager classificationManager = new ClassificationManager();
 	private PreProcessingManager preProcessingManager = new PreProcessingManager();
-	private String pathClassify = "";
-	private String pathPreProcess = "";
 	
 	public FrameListener(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 	}
 
+	public static MainFrame getMainFrame() {
+		return mainFrame;
+	}	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(mainFrame.getBtnAbout()))
@@ -32,7 +37,7 @@ public class FrameListener implements ActionListener {
 		else if(e.getSource().equals(mainFrame.getPreProcessingPanel().getBtnClassify()))
 			showAboutDialog();
 		else if(e.getSource().equals(mainFrame.getClassificationPanel().getBtnBrowse()))
-			browseDirectory();
+			inputManager.browseFile();
 		else if(e.getSource().equals(mainFrame.getClassificationPanel().getBtnProcess()))
 			processClassification();
 		else if(e.getSource().equals(mainFrame.getClassificationPanel().getBtnSave()))
@@ -45,29 +50,50 @@ public class FrameListener implements ActionListener {
 		String msg = "Tool done as a research project by Sciece without Borders students in University of Brighton. \n"
 				+ "Students: \n"
 				+ "- Andrei Martins Silva \n"
-				+ "- Camilla Maciel Quit�rio de Oliveira \n"
+				+ "- Camilla Maciel Quitério de Oliveira \n"
 				+ "- Humberto Politi de Oliveira \n"
 				+ "Project Supervisor: Dr Gulden Uchyigit";
 		JOptionPane.showMessageDialog(mainFrame, msg, "About Seagull Tool", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
-	//TODO move these methods to some Classification manager class
 	private void processClassification() {
-		String summary = classificatioManager.classify(pathClassify);
-		mainFrame.getClassificationPanel().getTxtAreaReport().setText(summary);
+		//TODO create a Validation class or separated methods to validate the things below.
+		ArrayList<ClassifierType> classifierTypes = new ArrayList<ClassifierType>();
+		if(mainFrame.getClassificationPanel().getCheckBoxNaiveBayes().isSelected())
+			classifierTypes.add(ClassifierType.NAIVE_BAYES);
+		if(mainFrame.getClassificationPanel().getCheckBoxJ48().isSelected())
+			classifierTypes.add(ClassifierType.J48);
+		if(mainFrame.getClassificationPanel().getCheckBoxKnn().isSelected())
+			classifierTypes.add(ClassifierType.IBK);
+		
+		if(mainFrame.getClassificationPanel().getRadioBtnCrossValidation().isSelected()) {
+			classificationManager.getClassificationModel().setEvaluationMethod(EvaluationMethod.CROSS_VALIDATION);
+			if(mainFrame.getClassificationPanel().getTxtFolds().getText().isEmpty()) {
+				ExceptionsHandler.showInputEMParameterDialog();
+				return;
+			} else
+				classificationManager.getClassificationModel().setAdditionalParamEM(Integer.valueOf(mainFrame.getClassificationPanel().getTxtFolds().getText()));
+		} else if(mainFrame.getClassificationPanel().getRadioBtnPercentageSplit().isSelected()) {
+			classificationManager.getClassificationModel().setEvaluationMethod(EvaluationMethod.PERCENTAGE_SPLIT);
+			if(mainFrame.getClassificationPanel().getTxtSplit().getText().isEmpty()) {
+				ExceptionsHandler.showInputEMParameterDialog();
+				return;
+			} else
+				classificationManager.getClassificationModel().setAdditionalParamEM(Integer.valueOf(mainFrame.getClassificationPanel().getTxtSplit().getText()));
+		} else {
+			classificationManager.getClassificationModel().setEvaluationMethod(EvaluationMethod.LOOCV);
+			classificationManager.getClassificationModel().setAdditionalParamEM(null);
+		}
+		
+		if(classificationManager.getClassificationModel().getInstances() == null)
+			ExceptionsHandler.showUploadProcessFileDialog();
+		else {
+			if(classifierTypes.isEmpty())
+				ExceptionsHandler.showSelectClassifierDialog();
+			else {
+				classificationManager.getClassificationModel().setClassifierTypes(classifierTypes);
+				mainFrame.getClassificationPanel().getTxtAreaReport().setText(classificationManager.classify());
+			}
+		}
 	}
-	
-	private void browseDirectory() {
-		JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new java.io.File("."));
-        chooser.setDialogTitle("Browse the folder to process");
-        chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        chooser.setAcceptAllFileFilterUsed(false);
-
-        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-        	pathClassify = chooser.getSelectedFile().toString();
-        	mainFrame.getClassificationPanel().getTxtAreaReport().setText("Selected directory: "+ chooser.getCurrentDirectory() + "\n" + "Selected file: "+ chooser.getSelectedFile());
-        } 
-	}
-
 }
