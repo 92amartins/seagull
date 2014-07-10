@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import weka.core.Instances;
 
 
@@ -10,8 +12,19 @@ public class ClassificationModel {
 	
 	private String path;
 	private Instances instances;
-	private ClassifierType[] classifierTypes;
+	private ArrayList<ClassifierType> classifierTypes;
 	private EvaluationMethod evaluationMethod;	
+	private Integer additionalParamEM;
+	
+	private static ClassificationModel instance = null;
+	
+	protected ClassificationModel() {};
+	
+	public static ClassificationModel getInstance() {
+		if(instance == null)
+			instance = new ClassificationModel();
+		return instance;
+	}
 	
 	public String getPath() {
 		return path;
@@ -29,16 +42,12 @@ public class ClassificationModel {
 		this.instances = instances;
 	}
 	
-	public ClassifierType[] getClassifierTypes() {
+	public ArrayList<ClassifierType> getClassifierTypes() {
 		return classifierTypes;
 	}
 	
-	public void setClassifierTypes(ClassifierType[] classifierType) {
+	public void setClassifierTypes(ArrayList<ClassifierType> classifierType) {
 		this.classifierTypes = classifierType;
-	}
-	
-	public int classifierTypesLength(){
-		return classifierTypes.length;
 	}
 	
 	public EvaluationMethod getEvaluationMethod() {
@@ -47,5 +56,13 @@ public class ClassificationModel {
 	
 	public void setEvaluationMethod(EvaluationMethod evaluationMethod) {
 		this.evaluationMethod = evaluationMethod;
+	}
+
+	public Integer getAdditionalParamEM() {
+		return additionalParamEM;
+	}
+
+	public void setAdditionalParamEM(Integer additionalParamEM) {
+		this.additionalParamEM = additionalParamEM;
 	}
 }
