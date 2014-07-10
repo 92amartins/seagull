@@ -11,6 +11,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class ClassificationPanel extends JPanel{
 	
@@ -19,8 +20,7 @@ public class ClassificationPanel extends JPanel{
 	private JButton btnProcess;
 	private JProgressBar progressBar;
 	
-	private JLabel lblOptions;
-	private JScrollPane paneOptions;
+	private JPanel paneOptions;
 	
 	private JLabel lblClassifier;
 	private JCheckBox checkBoxNaiveBayes;
@@ -32,6 +32,11 @@ public class ClassificationPanel extends JPanel{
 	private JRadioButton radioBtnPercentageSplit;
 	private JRadioButton radioBtnLOOCV;
 	private ButtonGroup btnGroupEM;
+	//TODO txtFolds and txtSplit should only allow positive Integers
+	private JTextField txtFolds;
+	private JLabel lblFolds;
+	private JTextField txtSplit;
+	private JLabel lblSplit;
 	
 	private JLabel lblReport;
 	private JScrollPane paneReport;
@@ -48,8 +53,7 @@ public class ClassificationPanel extends JPanel{
 		btnProcess = new JButton("Process!");
 		progressBar = new JProgressBar();
 		
-		lblOptions = new JLabel("Options: ");
-		paneOptions = new JScrollPane();	
+		paneOptions = new JPanel();	
 		
 		lblClassifier = new JLabel("Classifier:");
 		checkBoxNaiveBayes = new JCheckBox("NaïveBayes");
@@ -61,6 +65,10 @@ public class ClassificationPanel extends JPanel{
 		radioBtnPercentageSplit = new JRadioButton("Percentage Split");
 		radioBtnLOOCV = new JRadioButton("LOOCV");
 		btnGroupEM = new ButtonGroup();
+		txtFolds = new JTextField("10");
+		lblFolds = new JLabel("folds");
+		txtSplit = new JTextField("80");
+		lblSplit = new JLabel("% training set");
 		
 		lblReport = new JLabel("Report:");
 		txtAreaReport = new JTextArea();
@@ -82,10 +90,7 @@ public class ClassificationPanel extends JPanel{
 		progressBar.setBounds(10, 80, 150, 25);
 		add(progressBar);
 		
-		lblOptions.setBounds(10, 115, 100, 25);
-		add(lblOptions);
-		
-		paneOptions.setBounds(10, 140, 160, 300);
+		paneOptions.setBounds(10, 115, 160, 300);
 		paneOptions.setLayout(null);
 		
 		lblClassifier.setBounds(5, 5, 140, 20);
@@ -95,8 +100,13 @@ public class ClassificationPanel extends JPanel{
 		
 		lblEvaluationMethod.setBounds(5, 100, 140, 20);
 		radioBtnCrossValidation.setBounds(10, 125, 140, 20);
-		radioBtnPercentageSplit.setBounds(10, 150, 140, 20);
-		radioBtnLOOCV.setBounds(10, 175, 140, 20);
+		radioBtnCrossValidation.setSelected(true);
+		txtFolds.setBounds(30, 150, 30, 20);
+		lblFolds.setBounds(60, 150, 100, 20);
+		radioBtnPercentageSplit.setBounds(10, 175, 140, 20);
+		txtSplit.setBounds(30, 200, 30, 20);
+		lblSplit.setBounds(60, 200, 100, 20);
+		radioBtnLOOCV.setBounds(10, 225, 140, 20);
 		btnGroupEM.add(radioBtnCrossValidation);
 		btnGroupEM.add(radioBtnPercentageSplit);
 		btnGroupEM.add(radioBtnLOOCV);
@@ -108,7 +118,11 @@ public class ClassificationPanel extends JPanel{
 		
 		paneOptions.add(lblEvaluationMethod);
 		paneOptions.add(radioBtnCrossValidation);
+		paneOptions.add(txtFolds);
+		paneOptions.add(lblFolds);
 		paneOptions.add(radioBtnPercentageSplit);
+		paneOptions.add(txtSplit);
+		paneOptions.add(lblSplit);
 		paneOptions.add(radioBtnLOOCV);
 		
 		add(paneOptions);
@@ -152,12 +166,76 @@ public class ClassificationPanel extends JPanel{
 		this.progressBar = progressBar;
 	}
 
-	public JScrollPane getPaneOptions() {
+	public JPanel getPaneOptions() {
 		return paneOptions;
 	}
 
-	public void setPaneOptions(JScrollPane paneOptions) {
+	public void setPaneOptions(JPanel paneOptions) {
 		this.paneOptions = paneOptions;
+	}
+	
+	public JCheckBox getCheckBoxNaiveBayes() {
+		return checkBoxNaiveBayes;
+	}
+
+	public void setCheckBoxNaiveBayes(JCheckBox checkBoxNaiveBayes) {
+		this.checkBoxNaiveBayes = checkBoxNaiveBayes;
+	}
+
+	public JCheckBox getCheckBoxJ48() {
+		return checkBoxJ48;
+	}
+
+	public void setCheckBoxJ48(JCheckBox checkBoxJ48) {
+		this.checkBoxJ48 = checkBoxJ48;
+	}
+
+	public JCheckBox getCheckBoxKnn() {
+		return checkBoxKnn;
+	}
+
+	public void setCheckBoxKnn(JCheckBox checkBoxKnn) {
+		this.checkBoxKnn = checkBoxKnn;
+	}
+	
+	public JRadioButton getRadioBtnCrossValidation() {
+		return radioBtnCrossValidation;
+	}
+
+	public void setRadioBtnCrossValidation(JRadioButton radioBtnCrossValidation) {
+		this.radioBtnCrossValidation = radioBtnCrossValidation;
+	}
+
+	public JTextField getTxtFolds() {
+		return txtFolds;
+	}
+
+	public void setTxtFolds(JTextField txtFolds) {
+		this.txtFolds = txtFolds;
+	}
+	
+	public JRadioButton getRadioBtnPercentageSplit() {
+		return radioBtnPercentageSplit;
+	}
+
+	public void setRadioBtnPercentageSplit(JRadioButton radioBtnPercentageSplit) {
+		this.radioBtnPercentageSplit = radioBtnPercentageSplit;
+	}
+	
+	public JTextField getTxtSplit() {
+		return txtSplit;
+	}
+
+	public void setTxtSplit(JTextField txtSplit) {
+		this.txtSplit = txtSplit;
+	}
+
+	public JRadioButton getRadioBtnLOOCV() {
+		return radioBtnLOOCV;
+	}
+
+	public void setRadioBtnLOOCV(JRadioButton radioBtnLOOCV) {
+		this.radioBtnLOOCV = radioBtnLOOCV;
 	}
 
 	public JScrollPane getPaneReport() {
