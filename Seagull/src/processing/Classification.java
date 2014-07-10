@@ -1,8 +1,9 @@
 package processing;
 
+import java.util.ArrayList;
 import java.util.Random;
 
-import model.ClassificationModel;
+import model.ClassificationModel.ClassifierType;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
@@ -17,31 +18,28 @@ public class Classification {
 	private Classifier[] cls;
 	private Evaluation eval[];
 	
-	public Classification(ClassificationModel.ClassifierType[] cType) {
+	public Classification(ArrayList<ClassifierType> cType) {
 		
-		cls = new Classifier[cType.length];
-		eval = new Evaluation[cType.length];
+		cls = new Classifier[cType.size()];
+		eval = new Evaluation[cType.size()];
 		
-		for(int i = 0; i < cType.length;i++){			
-			switch(cType[i]){
-			// TODO Will we use J48 or ID3 implementation of decision trees?
-			case J48:
-				cls[i] = new J48();
-				break;
-
-			case NAIVE_BAYES:
-				// If bType == Incremental then cls = new UpdateableNaiveBayes(); else
-				cls[i] = new NaiveBayes();
-				break;
-			
-			case IBK:
-				cls[i] = new IBk();
-				break;
-			
-			case KSTAR:
-				cls[i] = new KStar();
-				break;
-				// TODO Add other cases: Decision Rule, KNN and so on.
+		for(int i = 0; i < cType.size();i++){			
+			switch(cType.get(i)){
+				// TODO Will we use J48 or ID3 implementation of decision trees?
+				case J48:
+					cls[i] = new J48();
+					break;
+				case NAIVE_BAYES:
+					// If bType == Incremental then cls = new UpdateableNaiveBayes(); else
+					cls[i] = new NaiveBayes();
+					break;
+				case IBK:
+					cls[i] = new IBk();
+					break;
+				case KSTAR:
+					cls[i] = new KStar();
+					break;
+					// TODO Add other cases: Decision Rule, KNN and so on.
 			}
 		}
 	}
@@ -95,9 +93,12 @@ public class Classification {
 	 * @throws Exception
 	 */
 	public Evaluation[] performCrossValidation(Instances dataset, int folds) throws Exception{
-		for(int i = 0;i < cls.length;i++)
-			eval[i].crossValidateModel(cls[i], dataset, folds, new Random(1));
-		
+		Evaluation e;
+		for(int i = 0;i < cls.length;i++) {
+			e = new Evaluation(dataset);
+			e.crossValidateModel(cls[i], dataset, folds, new Random(1));
+			eval[i] = e;
+		}
 		return eval;		
 	}
 	
