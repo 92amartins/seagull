@@ -12,6 +12,16 @@ public class PreProcessingModel {
 	//TODO private ??? bagOfWords;
 	private ArrayList<String> filesList;
 	
+	private static PreProcessingModel instance = null;
+	
+	protected PreProcessingModel() {};
+	
+	public static PreProcessingModel getInstance() {
+		if(instance == null)
+			instance = new PreProcessingModel();
+		return instance;
+	}
+	
 	public String getPath() {
 		return path;
 	}
