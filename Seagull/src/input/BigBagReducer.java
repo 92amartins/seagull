@@ -63,7 +63,7 @@ public class BigBagReducer {
 		
 		
 		
-		System.out.println("Remo��o de " + remove_counter + " termos repetidos.");
+		System.out.println("Remocao de " + remove_counter + " termos repetidos.");
 		System.out.println("################");
 		return bigBag;
 	}

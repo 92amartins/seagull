@@ -1,5 +1,8 @@
 package control;
 import input.Cell;
+import input.MatrixGenerator;
+import input.StemmingMaster;
+import input.Vocabulary;
 import input.Input;
 import input.InstancesGenerator;
 import input.StopwordRemover;
@@ -47,6 +50,7 @@ public class InputManager {
 
 	/*##########################################################################################################*/
 	/*										main method for test only											*/
+	/*										inclu exemplos de como usar cada metodo								*/
 	/*##########################################################################################################*/
 
 	public static void main(String[] args) {
@@ -55,11 +59,13 @@ public class InputManager {
 		Weighter testetfidf = new Weighter();
 		BigBagReducer reducer = new BigBagReducer();
 		InstancesGenerator gen1 = new InstancesGenerator();
+		MatrixGenerator matrix;
 		int again = 1;
-
+		StemmingMaster stem = new StemmingMaster();
+		
 		List<List<List<Cell>>> bigBag;
 
-		bigBag = haha.read_subfolder("C:/wekatest/teste");
+		bigBag = haha.read_subfolder("C:/wekatest/");
 		//bigBag = haha.read_subfolder("C:/wekatest/datasets");
 		//bigBag = haha.read_subfolder("C:/wekatest/simpletest");
 
@@ -68,8 +74,13 @@ public class InputManager {
 
 		bigBag = reducer.reduceBag(bigBag);
 
-		//Vocabulary dic = new Vocabulary(bigBag);
-		//testetfidf.weightTFIDF(bigBag);
+		Vocabulary dic = new Vocabulary(bigBag);
+		testetfidf.weightTFIDF(bigBag);
+		stem.StemmBag(bigBag);
+		matrix = new MatrixGenerator();
+		matrix.GenerateMatrix(bigBag);
+		matrix.printList();
+		
 		//gen1.generate(bigBag);
 	}
 	

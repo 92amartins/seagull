@@ -6,7 +6,7 @@ public class Vocabulary {
 	private List<Cell> vocabulary;
 	
 	public Vocabulary(List<List<List<Cell>>> bigBag){
-		System.out.println("Criando vocabul·rio.");
+		System.out.println("Criando vocabulario.");
 		vocabulary = new ArrayList<Cell>();
 		
 		String test;
@@ -28,7 +28,7 @@ public class Vocabulary {
 		}
 		
 		
-		System.out.println("Criou vocabul·rio com " + vocabulary.size()+ " termos.");
+		System.out.println("Criou vocabulario com " + vocabulary.size()+ " termos.");
 		System.out.println("################");
 		
 	}
@@ -47,7 +47,18 @@ public class Vocabulary {
 		return false;
 	}
 	
-	
+	/*	m√©todo apenas para gerar matriz para exibi√ß√£o	*/
+	public List<String> getMatrixHeader(){
+		List<String> list = new ArrayList<String>();
+		list.add("File");
+		for(int i=0;i<vocabulary.size();i++){
+			list.add(vocabulary.get(i).getText());
+		}
+		
+		list.add("Class");
+		
+		return list;
+	}
 	
 	
 	
