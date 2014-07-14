@@ -11,13 +11,10 @@ import weka.core.converters.ConverterUtils.DataSource;
 
 public class InstancesGenerator {
 	
-	
-	
-	
-	
 	public InstancesGenerator(){
 		
 	}
+	
 	
 	
 	

@@ -43,7 +43,7 @@ public class Input {
 			sc2 = new Scanner(new File(path));
 		} catch (FileNotFoundException e) {
 			System.out.println("erro");
-			e.printStackTrace();  
+			e.printStackTrace();
 		}
 		while (sc2.hasNextLine()) {
 			Scanner s2 = new Scanner(sc2.nextLine());
@@ -144,7 +144,6 @@ public class Input {
 			if( test_f.isDirectory() ){
 				/*	add the sub folder to the list	*/
 				sub_folders.add(name_test);
-				continue;
 			}
 
 		}
