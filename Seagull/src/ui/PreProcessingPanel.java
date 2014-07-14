@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class PreProcessingPanel extends JPanel {
@@ -19,6 +20,7 @@ public class PreProcessingPanel extends JPanel {
 	private JCheckBox checkBoxStopwords;
 	private JCheckBox checkBoxNormalization;
 	private JLabel lblFiles;
+	private JScrollPane paneListFiles;
 	private JList<String> listFiles;
 	private JLabel lblBOW;
 	private JTable tblBOW;
@@ -38,6 +40,7 @@ public class PreProcessingPanel extends JPanel {
 		checkBoxNormalization = new JCheckBox("Normalization");
 		lblFiles = new JLabel("Imported files: ");
 		listFiles = new JList<String>();
+		paneListFiles = new JScrollPane(listFiles);
 		lblBOW = new JLabel("Bag of Words: ");
 		tblBOW = new JTable();
 		btnClassify = new JButton("Classify!");
@@ -72,8 +75,9 @@ public class PreProcessingPanel extends JPanel {
 		lblFiles.setBounds(10, 220, 100, 25);
 		add(lblFiles);
 		
-		listFiles.setBounds(10, 250, 150, 160);
-		add(listFiles);
+		
+		paneListFiles.setBounds(10, 250, 150, 160);
+		add(paneListFiles);
 		
 		lblBOW.setBounds(200, 10, 100, 25);
 		add(lblBOW);
