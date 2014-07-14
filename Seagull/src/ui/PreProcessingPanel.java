@@ -22,6 +22,7 @@ public class PreProcessingPanel extends JPanel {
 	private JLabel lblFiles;
 	private JScrollPane paneListFiles;
 	private JList<String> listFiles;
+	private JLabel lblTotalFiles;
 	private JLabel lblBOW;
 	private JTable tblBOW;
 	private JButton btnClassify;
@@ -41,6 +42,7 @@ public class PreProcessingPanel extends JPanel {
 		lblFiles = new JLabel("Imported files: ");
 		listFiles = new JList<String>();
 		paneListFiles = new JScrollPane(listFiles);
+		lblTotalFiles = new JLabel();
 		lblBOW = new JLabel("Bag of Words: ");
 		tblBOW = new JTable();
 		btnClassify = new JButton("Classify!");
@@ -72,12 +74,14 @@ public class PreProcessingPanel extends JPanel {
 		panelOptions.add(checkBoxNormalization);
 		add(panelOptions);
 		
-		lblFiles.setBounds(10, 220, 100, 25);
+		lblFiles.setBounds(10, 220, 200, 25);
 		add(lblFiles);
-		
 		
 		paneListFiles.setBounds(10, 250, 150, 160);
 		add(paneListFiles);
+		
+		lblTotalFiles.setBounds(10, 415, 200, 25);
+		add(lblTotalFiles);
 		
 		lblBOW.setBounds(200, 10, 100, 25);
 		add(lblBOW);
@@ -111,6 +115,14 @@ public class PreProcessingPanel extends JPanel {
 
 	public void setProgressBar(JProgressBar progressBar) {
 		this.progressBar = progressBar;
+	}
+	
+	public JLabel getLblTotalFiles() {
+		return lblTotalFiles;
+	}
+
+	public void setLblTotalFiles(JLabel lblTotalFiles) {
+		this.lblTotalFiles = lblTotalFiles;
 	}
 
 	public JList<String> getListFiles() {
