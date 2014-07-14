@@ -1,9 +1,11 @@
 package control;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 import error.ExceptionsHandler;
@@ -32,7 +34,7 @@ public class FrameListener implements ActionListener {
 		if(e.getSource().equals(mainFrame.getBtnAbout()))
 			showAboutDialog();
 		else if(e.getSource().equals(mainFrame.getPreProcessingPanel().getBtnBrowse()))
-			showAboutDialog();
+			inputPreProcessing();
 		else if(e.getSource().equals(mainFrame.getPreProcessingPanel().getBtnProcess()))
 			showAboutDialog();
 		else if(e.getSource().equals(mainFrame.getPreProcessingPanel().getBtnClassify()))
@@ -55,6 +57,15 @@ public class FrameListener implements ActionListener {
 				+ "- Humberto Politi de Oliveira \n"
 				+ "Project Supervisor: Dr Gulden Uchyigit";
 		JOptionPane.showMessageDialog(mainFrame, msg, "About Seagull Tool", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	private void inputPreProcessing() {
+		inputManager.browseDirectory();
+		
+		DefaultListModel<String> model = new DefaultListModel<String>();
+		for (String fileName : preProcessingManager.getPreProcessingModel().getFilesList())
+			model.addElement(fileName);
+		mainFrame.getPreProcessingPanel().getListFiles().setModel(model);
 	}
 	
 	private void processClassification() {
@@ -93,8 +104,26 @@ public class FrameListener implements ActionListener {
 				ExceptionsHandler.showSelectClassifierDialog();
 			else {
 				classificationManager.getClassificationModel().setClassifierTypes(classifierTypes);
+				activateProgressBarDisableComponents();
 				mainFrame.getClassificationPanel().getTxtAreaReport().setText(classificationManager.classify());
+				deactivateProgressBarEnableComponents();
 			}
 		}
+	}
+	
+	public void activateProgressBarDisableComponents() {
+		for (Component c : mainFrame.getClassificationPanel().getPaneOptions().getComponents()) {
+			c.setEnabled(false);
+		}
+		mainFrame.getClassificationPanel().getBtnBrowse().setEnabled(false);
+		mainFrame.getClassificationPanel().getBtnProcess().setEnabled(false);
+	}
+	
+	public void deactivateProgressBarEnableComponents() {
+		for (Component c : mainFrame.getClassificationPanel().getPaneOptions().getComponents()) {
+			c.setEnabled(true);
+		}
+		mainFrame.getClassificationPanel().getBtnBrowse().setEnabled(true);
+		mainFrame.getClassificationPanel().getBtnProcess().setEnabled(true);
 	}
 }
