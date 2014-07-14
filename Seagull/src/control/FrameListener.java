@@ -36,7 +36,7 @@ public class FrameListener implements ActionListener {
 		else if(e.getSource().equals(mainFrame.getPreProcessingPanel().getBtnBrowse()))
 			inputPreProcessing();
 		else if(e.getSource().equals(mainFrame.getPreProcessingPanel().getBtnProcess()))
-			showAboutDialog();
+			processPreProcessing();
 		else if(e.getSource().equals(mainFrame.getPreProcessingPanel().getBtnClassify()))
 			showAboutDialog();
 		else if(e.getSource().equals(mainFrame.getClassificationPanel().getBtnBrowse()))
@@ -65,7 +65,12 @@ public class FrameListener implements ActionListener {
 		DefaultListModel<String> model = new DefaultListModel<String>();
 		for (String fileName : preProcessingManager.getPreProcessingModel().getFilesList())
 			model.addElement(fileName);
+		mainFrame.getPreProcessingPanel().getLblTotalFiles().setText(model.size()-preProcessingManager.getPreProcessingModel().getBigBag().size()+" files imported.");
 		mainFrame.getPreProcessingPanel().getListFiles().setModel(model);
+	}
+	
+	private void processPreProcessing() {
+		
 	}
 	
 	private void processClassification() {
