@@ -16,20 +16,17 @@ import preprocessing.Weighter;
 import weka.core.Instances;
 
 public class InputManager {
+
 	private List<List<List<Cell>>> bigBag;
-	
-	
 	private InstancesGenerator instancesGenerator = new InstancesGenerator();
 	private ClassificationManager classificationManager = new ClassificationManager();
-
+	private PreProcessingManager preProcessingManager = new PreProcessingManager();
 	
-	public InputManager(){
-		
-	}
+	private Input input;
 
-	public InputManager(String path){
-		Input getIt = new Input();
-		bigBag = getIt.read_subfolder(path);
+	public void loadFiles(String path){
+		input = new Input();
+		bigBag = input.readSubfolder(path);
 	}
 
 
@@ -37,12 +34,18 @@ public class InputManager {
 		return bigBag;
 	}
  
+	public void browseDirectory() {
+		JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle("Browse the directory to process");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
 
-
-
-
-	
-	
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+        	preProcessingManager.getPreProcessingModel().setPath(chooser.getSelectedFile().toString());
+        	loadFiles(preProcessingManager.getPreProcessingModel().getPath());
+        	preProcessingManager.getPreProcessingModel().setFilesList(input.getFilesList());
+        }
+	}
 	
 	public void browseFile() {
 		JFileChooser chooser = new JFileChooser();
