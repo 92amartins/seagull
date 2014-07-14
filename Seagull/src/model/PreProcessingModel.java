@@ -1,6 +1,9 @@
 package model;
 
+import input.Cell;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class PreProcessingModel {
 	
@@ -8,8 +11,9 @@ public class PreProcessingModel {
 	private boolean stemming;
 	private boolean stopwords;
 	private boolean normalization;
+	private List<List<List<Cell>>> bigBag;
 	private ArrayList<String> bagOfWords;
-	private ArrayList<String> filesList;
+	private ArrayList<String> filesList = new ArrayList<String>();
 	
 	private static PreProcessingModel instance = null;
 	
@@ -53,6 +57,22 @@ public class PreProcessingModel {
 		this.normalization = normalization;
 	}
 	
+	public List<List<List<Cell>>> getBigBag() {
+		return bigBag;
+	}
+
+	public void setBigBag(List<List<List<Cell>>> bigBag) {
+		this.bigBag = bigBag;
+	}
+
+	public ArrayList<String> getBagOfWords() {
+		return bagOfWords;
+	}
+
+	public void setBagOfWords(ArrayList<String> bagOfWords) {
+		this.bagOfWords = bagOfWords;
+	}
+
 	public ArrayList<String> getFilesList() {
 		return filesList;
 	}
