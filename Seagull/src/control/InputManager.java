@@ -36,6 +36,7 @@ public class InputManager {
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
         	preProcessingManager.getPreProcessingModel().setPath(chooser.getSelectedFile().toString());
         	loadFiles(preProcessingManager.getPreProcessingModel().getPath());
+        	preProcessingManager.getPreProcessingModel().setBigBag(bigBag);
         	preProcessingManager.getPreProcessingModel().setFilesList(input.getFilesList());
         }
 	}
