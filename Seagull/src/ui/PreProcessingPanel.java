@@ -15,7 +15,6 @@ public class PreProcessingPanel extends JPanel {
 	private JProgressBar progressBar;
 	private JLabel lblOptions;
 	private JPanel panelOptions;
-	private JCheckBox checkBoxTokenization;
 	private JCheckBox checkBoxStemming;
 	private JCheckBox checkBoxStopwords;
 	private JCheckBox checkBoxNormalization;
@@ -34,7 +33,6 @@ public class PreProcessingPanel extends JPanel {
 		progressBar = new JProgressBar();
 		lblOptions = new JLabel("Options:");
 		panelOptions = new JPanel();
-		checkBoxTokenization = new JCheckBox("Tokenization");
 		checkBoxStemming = new JCheckBox("Stemming");
 		checkBoxStopwords = new JCheckBox("Remove stopwords");
 		checkBoxNormalization = new JCheckBox("Normalization");
@@ -60,23 +58,21 @@ public class PreProcessingPanel extends JPanel {
 		lblOptions.setBounds(10, 115, 100, 25);
 		add(lblOptions);
 		
-		panelOptions.setBounds(10, 140, 165, 105);
+		panelOptions.setBounds(10, 140, 165, 85);
 		panelOptions.setLayout(null);
-		checkBoxTokenization.setBounds(5, 5, 140, 20);
-		checkBoxStemming.setBounds(5, 30, 140, 20);
-		checkBoxStopwords.setBounds(5, 55, 160, 20);
-		checkBoxNormalization.setBounds(5, 80, 140, 20);
+		checkBoxStemming.setBounds(5, 5, 140, 20);
+		checkBoxStopwords.setBounds(5, 30, 160, 20);
+		checkBoxNormalization.setBounds(5, 55, 140, 20);
 		
-		panelOptions.add(checkBoxTokenization);
 		panelOptions.add(checkBoxStemming);
 		panelOptions.add(checkBoxStopwords);
 		panelOptions.add(checkBoxNormalization);
 		add(panelOptions);
 		
-		lblFiles.setBounds(10, 250, 100, 25);
+		lblFiles.setBounds(10, 220, 100, 25);
 		add(lblFiles);
 		
-		listFiles.setBounds(10, 275, 150, 160);
+		listFiles.setBounds(10, 250, 150, 160);
 		add(listFiles);
 		
 		lblBOW.setBounds(200, 10, 100, 25);
