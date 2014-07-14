@@ -12,33 +12,18 @@ import weka.core.Stopwords;
 
 
 public class Input {
-
-	public Input(){
-
-	}
-
-	public static void print_list(List<Cell> l){
-		String pick = new String();
-		int i = 0;
-		System.out.println("Imprimindo lista:");
-		while(l.size() > i){
-			pick = (l.get(i)).getText();
-			i++;
-			System.out.println(pick);
-		}
-
-		return;
-	}
+	
+	private ArrayList<String> filesList = new ArrayList<String>();
 
 	//#########################################
 	// isDirectory from class File
 	//#########################################
-	public static List<Cell> read_file (String path, String classe, String original_file) {
+	public static List<Cell> readFile (String path, String classe, String original_file) {
 		Stopwords checker = new Stopwords();
 		List<Cell> wBag = new ArrayList<Cell>();
 		Scanner sc2 = null;
 		Cell s;
-		int counter =0;
+		int counter = 0;
 		try {
 			sc2 = new Scanner(new File(path));
 		} catch (FileNotFoundException e) {
@@ -69,49 +54,11 @@ public class Input {
 
 		sc2.close();
 
-
 		//System.out.println("counter: " + counter);
-
 		return wBag;
-
 	}
 
-	/*	
-	public static List<Cell> read_file (String path) {
-
-		List<Cell> wBag = new ArrayList<Cell>();
-		Scanner sc2 = null;
-		Cell s;			//###################################################
-	    try {
-	        sc2 = new Scanner(new File(path));
-	    } catch (FileNotFoundException e) {
-	    	System.out.println("erro");
-	        e.printStackTrace();  
-	    }
-	    while (sc2.hasNextLine()) {
-	            Scanner s2 = new Scanner(sc2.nextLine());
-	        //boolean b;
-	        while (s2.hasNext()) {
-	        	s = new Cell();
-	            s.setText(s2.next().replaceAll("[^A-Za-z0-9]", ""));
-
-	            if(s.getText() != "") wBag.add(s);
-
-	        }
-	        s2.close();
-	    }
-
-	    sc2.close();
-
-
-
-
-		return wBag;
-
-	}
-	 */
-
-	public List<List<List<Cell>>> read_subfolder(String path){
+	public List<List<List<Cell>>> readSubfolder(String path){
 		/*	reads the classes	*/
 		/*	Classe<arquivos<Bag of words>>	*/
 		List<List<List<Cell>>> bigBag = new ArrayList<>();
@@ -121,9 +68,7 @@ public class Input {
 
 		int content_number;
 		String name_test;
-		String txt = new String("txt");
 		List<String> sub_folders = new ArrayList<String>();
-		List<String> file_names = new ArrayList<String>();
 		String new_path = new String();
 		System.out.println("Lendo sub pastas:");
 		
@@ -138,7 +83,6 @@ public class Input {
 		content_number = content.size();
 
 		for(int i=0; i<content_number;i++){
-
 			name_test = content.get(i);
 			test_f = new File(path + "/" + name_test);
 			if( test_f.isDirectory() ){
@@ -163,12 +107,13 @@ public class Input {
 			//System.out.println("Populando classe:");
 
 			content = new ArrayList<String>(Arrays.asList(f.list()));
+			filesList.addAll(content);
 			content_number = content.size();
 			for(int j=0; j< content_number; j++){
 				name_test = content.get(j);
 				/* if((name_test.substring(name_test.lastIndexOf('.') + 1)).equals(txt)){	 */
 				//System.out.println("Criando bag of words para :" + new_path + '/' + name_test);
-				bag = read_file(new_path + '/' + name_test, sub_folders.get(i), name_test);
+				bag = readFile(new_path + '/' + name_test, sub_folders.get(i), name_test);
 				//System.out.println("Adicionando   " + name_test + "   � classe.");
 				classe.add(bag);
 				/* } */
@@ -187,4 +132,11 @@ public class Input {
 		return bigBag;
 	}
 
+	public ArrayList<String> getFilesList() {
+		return filesList;
+	}
+
+	public void setFilesList(ArrayList<String> filesList) {
+		this.filesList = filesList;
+	}
 }
