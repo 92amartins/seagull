@@ -32,7 +32,6 @@ public class Input {
 		}
 		while (sc2.hasNextLine()) {
 			Scanner s2 = new Scanner(sc2.nextLine());
-			//boolean b;
 			while (s2.hasNext()) {
 				s = new Cell();
 				
@@ -41,20 +40,16 @@ public class Input {
 				s.setClasse(classe);
 				s.setOriginal_file(original_file);
 
-				if((s.getText() != "") && !checker.is(s.getText())){
+				if((s.getText() != "") && !checker.is(s.getText()))
 					wBag.add(s);
-
-				}else{
+				else
 					counter++;
-				}
-
 			}
 			s2.close();
 		}
 
 		sc2.close();
 
-		//System.out.println("counter: " + counter);
 		return wBag;
 	}
 
@@ -67,68 +62,47 @@ public class Input {
 		List<List<Cell>> classe;
 
 		int content_number;
-		String name_test;
+		String fileName;
 		List<String> sub_folders = new ArrayList<String>();
 		String new_path = new String();
-		System.out.println("Lendo sub pastas:");
 		
 		File f = new File(path);
 		File test_f;
 		List<String> content = new ArrayList<String>(Arrays.asList(f.list()));
 
 		/*	an ArrayList of all the names of the content in the "path" are in content variable	*/
-
 		/*	Now the program will get only the sub folder names	*/
-
 		content_number = content.size();
 
 		for(int i=0; i<content_number;i++){
-			name_test = content.get(i);
-			test_f = new File(path + "/" + name_test);
+			fileName = content.get(i);
+			test_f = new File(path + "/" + fileName);
 			if( test_f.isDirectory() ){
 				/*	add the sub folder to the list	*/
-				sub_folders.add(name_test);
+				sub_folders.add(fileName);
 			}
-
 		}
 		
 		/*	at this point there is a list of the sub folders in the sub_folders variable	*/
-
 		/*	access all folders	*/
-
-		System.out.println("Obtendo arquivos nas sub pastas...");
-
 		for(int i=0; i < sub_folders.size(); i++){
-			//System.out.println("#####################");
-			//System.out.println("Criando classe " + sub_folders.get(i));
 			classe = new ArrayList<List<Cell>>();
 			new_path = path + '/' + sub_folders.get(i);
 			f = new File(new_path);
-			//System.out.println("Populando classe:");
 
 			content = new ArrayList<String>(Arrays.asList(f.list()));
-			filesList.addAll(content);
+			filesList.add(sub_folders.get(i));
 			content_number = content.size();
 			for(int j=0; j< content_number; j++){
-				name_test = content.get(j);
-				/* if((name_test.substring(name_test.lastIndexOf('.') + 1)).equals(txt)){	 */
-				//System.out.println("Criando bag of words para :" + new_path + '/' + name_test);
-				bag = readFile(new_path + '/' + name_test, sub_folders.get(i), name_test);
-				//System.out.println("Adicionando   " + name_test + "   � classe.");
+				fileName = content.get(j);
+				filesList.add("\t\t"+fileName);
+				bag = readFile(new_path + '/' + fileName, sub_folders.get(i), fileName);
 				classe.add(bag);
-				/* } */
 			}
-			if(content_number != 0){
-				//System.out.println("Adicionando classe � big bag of words.");
+			if(content_number != 0)
 				bigBag.add(classe);
-			}else{
-				//System.out.println("Classe vazia, desconsiderar.");
-			}
 		}
 
-		System.out.println("Isso eh tudo pessoal.");
-		System.out.println("Big Bag of Words (BBW) mounted");
-		System.out.println("################");
 		return bigBag;
 	}
 
