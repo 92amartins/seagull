@@ -13,11 +13,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ClassificationPanel extends JPanel{
+public class ClassificationPanel extends MasterPanel{
 	
-	private JButton btnBrowse;
+//	private JButton btnBrowse;
 	
-	private JPanel paneOptions;
+//	private JPanel panelOptions;
 	
 	private JLabel lblClassifier;
 	private JCheckBox checkBoxNaiveBayes;
@@ -35,13 +35,13 @@ public class ClassificationPanel extends JPanel{
 	private JTextField txtSplit;
 	private JLabel lblSplit;
 	
-	private JButton btnProcess;
+//	private JButton btnProcess;
 
 	private JLabel lblReport;
 	private JScrollPane paneReport;
 	private JTextArea txtAreaReport;
 	
-	private JProgressBar progressBar;
+//	private JProgressBar progressBar;
 	
 	private JButton btnSave;
 	private JButton btnChart;
@@ -51,7 +51,7 @@ public class ClassificationPanel extends JPanel{
 		
 		btnBrowse = new JButton("Browse...");
 		
-		paneOptions = new JPanel();	
+		panelOptions = new JPanel();	
 		
 		lblClassifier = new JLabel("Classifier:");
 		checkBoxNaiveBayes = new JCheckBox("NaïveBayes");
@@ -86,8 +86,8 @@ public class ClassificationPanel extends JPanel{
 		btnBrowse.setBounds(10, 10, 100, 25);
 		add(btnBrowse);
 		
-		paneOptions.setBounds(10, 45, 160, 250);
-		paneOptions.setLayout(null);
+		panelOptions.setBounds(10, 45, 160, 250);
+		panelOptions.setLayout(null);
 		
 		lblClassifier.setBounds(5, 5, 140, 20);
 		checkBoxNaiveBayes.setBounds(10, 25, 140, 20);
@@ -107,21 +107,21 @@ public class ClassificationPanel extends JPanel{
 		btnGroupEM.add(radioBtnPercentageSplit);
 		btnGroupEM.add(radioBtnLOOCV);
 		
-		paneOptions.add(lblClassifier);
-		paneOptions.add(checkBoxNaiveBayes);
-		paneOptions.add(checkBoxJ48);
-		paneOptions.add(checkBoxKnn);
+		panelOptions.add(lblClassifier);
+		panelOptions.add(checkBoxNaiveBayes);
+		panelOptions.add(checkBoxJ48);
+		panelOptions.add(checkBoxKnn);
 		
-		paneOptions.add(lblEvaluationMethod);
-		paneOptions.add(radioBtnCrossValidation);
-		paneOptions.add(txtFolds);
-		paneOptions.add(lblFolds);
-		paneOptions.add(radioBtnPercentageSplit);
-		paneOptions.add(txtSplit);
-		paneOptions.add(lblSplit);
-		paneOptions.add(radioBtnLOOCV);
+		panelOptions.add(lblEvaluationMethod);
+		panelOptions.add(radioBtnCrossValidation);
+		panelOptions.add(txtFolds);
+		panelOptions.add(lblFolds);
+		panelOptions.add(radioBtnPercentageSplit);
+		panelOptions.add(txtSplit);
+		panelOptions.add(lblSplit);
+		panelOptions.add(radioBtnLOOCV);
 		
-		add(paneOptions);
+		add(panelOptions);
 		
 		btnProcess.setBounds(10, 310, 100, 25);
 		add(btnProcess);
@@ -152,12 +152,12 @@ public class ClassificationPanel extends JPanel{
 		this.btnBrowse = btnBrowse;
 	}
 
-	public JPanel getPaneOptions() {
-		return paneOptions;
+	public JPanel getPanelOptions() {
+		return panelOptions;
 	}
 
-	public void setPaneOptions(JPanel paneOptions) {
-		this.paneOptions = paneOptions;
+	public void setPanelOptions(JPanel panelOptions) {
+		this.panelOptions = panelOptions;
 	}
 	
 	public JCheckBox getCheckBoxNaiveBayes() {

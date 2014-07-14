@@ -9,12 +9,12 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class PreProcessingPanel extends JPanel {
+public class PreProcessingPanel extends MasterPanel {
 	
-	private JButton btnBrowse;
+//	private JButton btnBrowse;
 		
 	private JLabel lblOptions;
-	private JPanel panelOptions;
+//	private JPanel panelOptions;
 	private JCheckBox checkBoxStemming;
 	private JCheckBox checkBoxStopwords;
 	private JCheckBox checkBoxNormalization;
@@ -24,13 +24,13 @@ public class PreProcessingPanel extends JPanel {
 	private JList<String> listFiles;
 	private JLabel lblTotalFiles;
 
-	private JButton btnProcess; 
+//	private JButton btnProcess; 
 	
 	private JLabel lblBOW;
 	private JScrollPane paneBOW;
 	private JTable tblBOW;
 	
-	private JProgressBar progressBar;
+//	private JProgressBar progressBar;
 	
 	private JButton btnClassify;
 	
