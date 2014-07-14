@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class PreProcessingModel {
 	
 	private String path;	
-	private boolean tokenization;
 	private boolean stemming;
 	private boolean stopwords;
 	private boolean normalization;
@@ -28,14 +27,6 @@ public class PreProcessingModel {
 	
 	public void setPath(String path) {
 		this.path = path;
-	}
-	
-	public boolean isTokenization() {
-		return tokenization;
-	}
-	
-	public void setTokenization(boolean tokenization) {
-		this.tokenization = tokenization;
 	}
 	
 	public boolean isStemming() {
