@@ -6,14 +6,7 @@ import input.InstancesGenerator;
 import java.util.List;
 
 import javax.swing.JFileChooser;
-
-import preprocessing.BigBagReducer;
-import preprocessing.MatrixGenerator;
-import preprocessing.StemmingMaster;
-import preprocessing.StopwordRemover;
-import preprocessing.Vocabulary;
-import preprocessing.Weighter;
-import weka.core.Instances;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class InputManager {
 
@@ -49,7 +42,9 @@ public class InputManager {
 	
 	public void browseFile() {
 		JFileChooser chooser = new JFileChooser();
-        chooser.setDialogTitle("Browse the file to process");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("ARFF Files", "arff");
+		chooser.setFileFilter(filter);
+		chooser.setDialogTitle("Browse the file to process");
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
 
