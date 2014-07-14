@@ -17,9 +17,6 @@ public class ClassificationPanel extends JPanel{
 	
 	private JButton btnBrowse;
 	
-	private JButton btnProcess;
-	private JProgressBar progressBar;
-	
 	private JPanel paneOptions;
 	
 	private JLabel lblClassifier;
@@ -38,9 +35,13 @@ public class ClassificationPanel extends JPanel{
 	private JTextField txtSplit;
 	private JLabel lblSplit;
 	
+	private JButton btnProcess;
+
 	private JLabel lblReport;
 	private JScrollPane paneReport;
 	private JTextArea txtAreaReport;
+	
+	private JProgressBar progressBar;
 	
 	private JButton btnSave;
 	private JButton btnChart;
@@ -49,9 +50,6 @@ public class ClassificationPanel extends JPanel{
 		setLayout(null);
 		
 		btnBrowse = new JButton("Browse...");
-		
-		btnProcess = new JButton("Process!");
-		progressBar = new JProgressBar();
 		
 		paneOptions = new JPanel();	
 		
@@ -69,10 +67,14 @@ public class ClassificationPanel extends JPanel{
 		lblFolds = new JLabel("folds");
 		txtSplit = new JTextField("80");
 		lblSplit = new JLabel("% training set");
+
+		btnProcess = new JButton("Process!");
 		
 		lblReport = new JLabel("Report:");
 		txtAreaReport = new JTextArea();
 		paneReport = new JScrollPane(txtAreaReport);
+		
+		progressBar = new JProgressBar();
 		
 		btnSave = new JButton("Save to file");
 		btnChart = new JButton("Generate chart");
@@ -84,13 +86,7 @@ public class ClassificationPanel extends JPanel{
 		btnBrowse.setBounds(10, 10, 100, 25);
 		add(btnBrowse);
 		
-		btnProcess.setBounds(10, 45, 100, 25);
-		add(btnProcess);
-		
-		progressBar.setBounds(10, 80, 150, 25);
-		add(progressBar);
-		
-		paneOptions.setBounds(10, 115, 160, 300);
+		paneOptions.setBounds(10, 45, 160, 250);
 		paneOptions.setLayout(null);
 		
 		lblClassifier.setBounds(5, 5, 140, 20);
@@ -127,6 +123,9 @@ public class ClassificationPanel extends JPanel{
 		
 		add(paneOptions);
 		
+		btnProcess.setBounds(10, 310, 100, 25);
+		add(btnProcess);
+		
 		lblReport.setBounds(200, 10, 100, 25);
 		add(lblReport);
 		
@@ -134,11 +133,14 @@ public class ClassificationPanel extends JPanel{
 		txtAreaReport.setEditable(false);
 		txtAreaReport.setFont(new Font("Courier New", Font.PLAIN, 12));
 		add(paneReport);
+
+		progressBar.setBounds(200, 415, 250, 25);
+		add(progressBar);
 		
-		btnSave.setBounds(530, 420, 100, 25);
+		btnSave.setBounds(530, 415, 100, 25);
 		add(btnSave);	
 		
-		btnChart.setBounds(640, 420, 120, 25);
+		btnChart.setBounds(640, 415, 120, 25);
 		add(btnChart);		
 	}
 
@@ -148,22 +150,6 @@ public class ClassificationPanel extends JPanel{
 
 	public void setBtnBrowse(JButton btnBrowse) {
 		this.btnBrowse = btnBrowse;
-	}
-
-	public JButton getBtnProcess() {
-		return btnProcess;
-	}
-
-	public void setBtnProcess(JButton btnProcess) {
-		this.btnProcess = btnProcess;
-	}
-
-	public JProgressBar getProgressBar() {
-		return progressBar;
-	}
-
-	public void setProgressBar(JProgressBar progressBar) {
-		this.progressBar = progressBar;
 	}
 
 	public JPanel getPaneOptions() {
@@ -237,6 +223,14 @@ public class ClassificationPanel extends JPanel{
 	public void setRadioBtnLOOCV(JRadioButton radioBtnLOOCV) {
 		this.radioBtnLOOCV = radioBtnLOOCV;
 	}
+	
+	public JButton getBtnProcess() {
+		return btnProcess;
+	}
+
+	public void setBtnProcess(JButton btnProcess) {
+		this.btnProcess = btnProcess;
+	}
 
 	public JScrollPane getPaneReport() {
 		return paneReport;
@@ -252,6 +246,14 @@ public class ClassificationPanel extends JPanel{
 
 	public void setTxtAreaReport(JTextArea txtAreaReport) {
 		this.txtAreaReport = txtAreaReport;
+	}
+	
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
+
+	public void setProgressBar(JProgressBar progressBar) {
+		this.progressBar = progressBar;
 	}
 
 	public JButton getBtnSave() {
