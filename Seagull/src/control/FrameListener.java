@@ -65,8 +65,11 @@ public class FrameListener implements ActionListener {
 		DefaultListModel<String> model = new DefaultListModel<String>();
 		for (String fileName : preProcessingManager.getPreProcessingModel().getFilesList())
 			model.addElement(fileName);
-		mainFrame.getPreProcessingPanel().getLblTotalFiles().setText(model.size()-preProcessingManager.getPreProcessingModel().getBigBag().size()+" files imported.");
-		mainFrame.getPreProcessingPanel().getListFiles().setModel(model);
+		
+		if(!model.isEmpty()) {
+			mainFrame.getPreProcessingPanel().getLblTotalFiles().setText(model.size()-preProcessingManager.getPreProcessingModel().getBigBag().size()+" files imported.");
+			mainFrame.getPreProcessingPanel().getListFiles().setModel(model);
+		}
 	}
 	
 	private void processPreProcessing() {
