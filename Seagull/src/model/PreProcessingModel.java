@@ -9,7 +9,7 @@ public class PreProcessingModel {
 	private boolean stemming;
 	private boolean stopwords;
 	private boolean normalization;
-	//TODO private ??? bagOfWords;
+	private ArrayList<String> bagOfWords;
 	private ArrayList<String> filesList;
 	
 	private static PreProcessingModel instance = null;

@@ -1,6 +1,9 @@
-package input;
+package preprocessing;
+
+import input.Cell;
 
 import java.util.List;
+
 import weka.core.Stopwords;
 
 

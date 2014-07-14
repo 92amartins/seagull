@@ -14,8 +14,9 @@ import ui.MainFrame;
 public class FrameListener implements ActionListener {
 	
 	private static MainFrame mainFrame;
-	private InputManager inputManager = new InputManager();
+	
 	private ClassificationManager classificationManager = new ClassificationManager();
+	private InputManager inputManager = new InputManager();
 	private PreProcessingManager preProcessingManager = new PreProcessingManager();
 	
 	public FrameListener(MainFrame mainFrame) {

@@ -1,6 +1,7 @@
 package input;
 import java.util.List;
 
+import preprocessing.Vocabulary;
 import error.ExceptionsHandler;
 import weka.core.Attribute;
 import weka.core.FastVector;

@@ -1,4 +1,6 @@
-package input;
+package preprocessing;
+
+import input.Cell;
 
 import java.util.List;
 public class BigBagReducer {
