@@ -7,11 +7,13 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 import model.ClassificationModel.ClassifierType;
 import model.ClassificationModel.EvaluationMethod;
 import model.PreProcessingModel;
 import ui.MainFrame;
+import ui.MasterPanel;
 import error.ExceptionsHandler;
 
 public class FrameListener implements ActionListener {
@@ -39,7 +41,7 @@ public class FrameListener implements ActionListener {
 		else if(e.getSource().equals(mainFrame.getPreProcessingPanel().getBtnProcess()))
 			processPreProcessing();
 		else if(e.getSource().equals(mainFrame.getPreProcessingPanel().getBtnClassify()))
-			showAboutDialog();
+			mainFrame.getTabbedPane().setSelectedIndex(1);
 		else if(e.getSource().equals(mainFrame.getClassificationPanel().getBtnBrowse()))
 			inputManager.browseFile();
 		else if(e.getSource().equals(mainFrame.getClassificationPanel().getBtnProcess()))
@@ -73,19 +75,45 @@ public class FrameListener implements ActionListener {
 		}
 	}
 	
-	private void processPreProcessing() {
-		PreProcessingModel pModel = PreProcessingModel.getInstance();
-		
-		pModel.setStemming(mainFrame.getPreProcessingPanel()
-				.getCheckBoxStemming().isSelected());
-		pModel.setStopwords(mainFrame.getPreProcessingPanel()
-				.getCheckBoxStopwords().isSelected());
-		pModel.setNormalization(mainFrame.getPreProcessingPanel()
-				.getCheckBoxNormalization().isSelected());
-		
-		preProcessingManager.startPreProcessing();
+	SwingWorker preProcessingWorker = new SwingWorker<Void, Void>() {
+	    @Override
+	    public Void doInBackground() {
+	    	PreProcessingModel preProcessingModel = PreProcessingModel.getInstance();
 			
+			preProcessingModel.setStemming(mainFrame.getPreProcessingPanel().getCheckBoxStemming().isSelected());
+			preProcessingModel.setStopwords(mainFrame.getPreProcessingPanel().getCheckBoxStopwords().isSelected());
+			preProcessingModel.setNormalization(mainFrame.getPreProcessingPanel().getCheckBoxNormalization().isSelected());
+			
+			preProcessingManager.startPreProcessing();	        
+			return null;
+	    }
+	    
+	    protected void done() {
+	    	mainFrame.getPreProcessingPanel().getBtnClassify().setEnabled(true);
+	    	deactivateProgressBarEnableComponents(mainFrame.getPreProcessingPanel());
+	    };
+	};
+	
+	private void processPreProcessing() {
+		mainFrame.getPreProcessingPanel().getBtnClassify().setEnabled(false);
+		activateProgressBarDisableComponents(mainFrame.getPreProcessingPanel());
+		//TODO how to deal if the user clicks the Process again? It only executes once. (The same for Classification)
+		preProcessingWorker.execute();
 	}
+	
+	SwingWorker classificationWorker = new SwingWorker<Void, Void>() {
+	    @Override
+	    public Void doInBackground() {
+	    	mainFrame.getClassificationPanel().getTxtAreaReport().setText(classificationManager.classify());
+			return null;
+	    }
+	    
+	    protected void done() {
+	    	mainFrame.getClassificationPanel().getBtnSave().setEnabled(true);
+			mainFrame.getClassificationPanel().getBtnChart().setEnabled(true);
+	    	deactivateProgressBarEnableComponents(mainFrame.getClassificationPanel());
+	    };
+	};
 	
 	private void processClassification() {
 		//TODO create a Validation class or separated methods to validate the things below.
@@ -123,26 +151,31 @@ public class FrameListener implements ActionListener {
 				ExceptionsHandler.showSelectClassifierDialog();
 			else {
 				classificationManager.getClassificationModel().setClassifierTypes(classifierTypes);
-				activateProgressBarDisableComponents();
-				mainFrame.getClassificationPanel().getTxtAreaReport().setText(classificationManager.classify());
-				deactivateProgressBarEnableComponents();
+				mainFrame.getClassificationPanel().getBtnSave().setEnabled(false);
+				mainFrame.getClassificationPanel().getBtnChart().setEnabled(false);
+				activateProgressBarDisableComponents(mainFrame.getClassificationPanel());
+				classificationWorker.execute();
 			}
 		}
 	}
 	
-	public void activateProgressBarDisableComponents() {
-		for (Component c : mainFrame.getClassificationPanel().getPaneOptions().getComponents()) {
+	public void activateProgressBarDisableComponents(MasterPanel panel) {
+		for (Component c : panel.getPanelOptions().getComponents()) 
 			c.setEnabled(false);
-		}
-		mainFrame.getClassificationPanel().getBtnBrowse().setEnabled(false);
-		mainFrame.getClassificationPanel().getBtnProcess().setEnabled(false);
+		
+		mainFrame.getTabbedPane().setEnabled(false);
+		panel.getProgressBar().setIndeterminate(true);
+		panel.getBtnBrowse().setEnabled(false);
+		panel.getBtnProcess().setEnabled(false);
 	}
 	
-	public void deactivateProgressBarEnableComponents() {
-		for (Component c : mainFrame.getClassificationPanel().getPaneOptions().getComponents()) {
+	public void deactivateProgressBarEnableComponents(MasterPanel panel) {
+		for (Component c : panel.getPanelOptions().getComponents()) 
 			c.setEnabled(true);
-		}
-		mainFrame.getClassificationPanel().getBtnBrowse().setEnabled(true);
-		mainFrame.getClassificationPanel().getBtnProcess().setEnabled(true);
+		
+		mainFrame.getTabbedPane().setEnabled(true);
+		panel.getProgressBar().setIndeterminate(false);
+		panel.getBtnBrowse().setEnabled(true);
+		panel.getBtnProcess().setEnabled(true);
 	}
 }
