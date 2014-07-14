@@ -117,6 +117,30 @@ public class PreProcessingPanel extends JPanel {
 		this.progressBar = progressBar;
 	}
 	
+	public JCheckBox getCheckBoxStemming() {
+		return checkBoxStemming;
+	}
+
+	public void setCheckBoxStemming(JCheckBox checkBoxStemming) {
+		this.checkBoxStemming = checkBoxStemming;
+	}
+
+	public JCheckBox getCheckBoxStopwords() {
+		return checkBoxStopwords;
+	}
+
+	public void setCheckBoxStopwords(JCheckBox checkBoxStopwords) {
+		this.checkBoxStopwords = checkBoxStopwords;
+	}
+
+	public JCheckBox getCheckBoxNormalization() {
+		return checkBoxNormalization;
+	}
+
+	public void setCheckBoxNormalization(JCheckBox checkBoxNormalization) {
+		this.checkBoxNormalization = checkBoxNormalization;
+	}
+
 	public JLabel getLblTotalFiles() {
 		return lblTotalFiles;
 	}
