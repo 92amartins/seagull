@@ -1,10 +1,14 @@
 package input;
 
-import java.io.*;
-import java.util.*;
+import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 
-import weka.core.*;
-
+import weka.core.Stopwords;
+/*	ctrl+shift+o	*/
 
 
 public class Input {
@@ -26,11 +30,14 @@ public class Input {
 		return;
 	}
 
+	//#########################################
+	// isDirectory from class File
+	//#########################################
 	public static List<Cell> read_file (String path, String classe, String original_file) {
 		Stopwords checker = new Stopwords();
 		List<Cell> wBag = new ArrayList<Cell>();
 		Scanner sc2 = null;
-		Cell s;		
+		Cell s;
 		int counter =0;
 		try {
 			sc2 = new Scanner(new File(path));
@@ -43,6 +50,8 @@ public class Input {
 			//boolean b;
 			while (s2.hasNext()) {
 				s = new Cell();
+				
+				/*		tratar espaços		*/
 				s.setText((s2.next().toLowerCase()).replaceAll("[^A-Za-z0-9]", ""));
 				s.setClasse(classe);
 				s.setOriginal_file(original_file);
@@ -117,8 +126,9 @@ public class Input {
 		List<String> file_names = new ArrayList<String>();
 		String new_path = new String();
 		System.out.println("Lendo sub pastas:");
-
+		
 		File f = new File(path);
+		File test_f;
 		List<String> content = new ArrayList<String>(Arrays.asList(f.list()));
 
 		/*	an ArrayList of all the names of the content in the "path" are in content variable	*/
@@ -130,15 +140,15 @@ public class Input {
 		for(int i=0; i<content_number;i++){
 
 			name_test = content.get(i);
-
-			if( (name_test.charAt(name_test.length() - 4) != '.')){
+			test_f = new File(path + "/" + name_test);
+			if( test_f.isDirectory() ){
 				/*	add the sub folder to the list	*/
 				sub_folders.add(name_test);
 				continue;
 			}
 
 		}
-
+		
 		/*	at this point there is a list of the sub folders in the sub_folders variable	*/
 
 		/*	access all folders	*/

@@ -11,9 +11,17 @@ import weka.core.converters.ConverterUtils.DataSource;
 
 public class InstancesGenerator {
 	
+	
+	
+	
+	
 	public InstancesGenerator(){
 		
 	}
+	
+	
+	
+	
 	
 	public Instances generate(List<List<List<Cell>>> bigBag){
 		Instances data;
@@ -85,5 +93,9 @@ public class InstancesGenerator {
 			return null;
 		}
 	}
+	
+	
+	
+	
 	
 }
