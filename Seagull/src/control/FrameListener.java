@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-import error.ExceptionsHandler;
 import model.ClassificationModel.ClassifierType;
 import model.ClassificationModel.EvaluationMethod;
+import model.PreProcessingModel;
 import ui.MainFrame;
+import error.ExceptionsHandler;
 
 public class FrameListener implements ActionListener {
 	
@@ -73,7 +74,17 @@ public class FrameListener implements ActionListener {
 	}
 	
 	private void processPreProcessing() {
+		PreProcessingModel pModel = PreProcessingModel.getInstance();
 		
+		pModel.setStemming(mainFrame.getPreProcessingPanel()
+				.getCheckBoxStemming().isSelected());
+		pModel.setStopwords(mainFrame.getPreProcessingPanel()
+				.getCheckBoxStopwords().isSelected());
+		pModel.setNormalization(mainFrame.getPreProcessingPanel()
+				.getCheckBoxNormalization().isSelected());
+		
+		preProcessingManager.startPreProcessing();
+			
 	}
 	
 	private void processClassification() {
