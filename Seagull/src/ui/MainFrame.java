@@ -92,6 +92,14 @@ public class MainFrame extends JFrame{
 	public void setBtnAbout(JButton btnAbout) {
 		this.btnAbout = btnAbout;
 	}
+	
+	public JTabbedPane getTabbedPane() {
+		return tabbedPane;
+	}
+
+	public void setTabbedPane(JTabbedPane tabbedPane) {
+		this.tabbedPane = tabbedPane;
+	}
 
 	public PreProcessingPanel getPreProcessingPanel() {
 		return preProcessingPanel;
