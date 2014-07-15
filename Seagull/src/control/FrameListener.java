@@ -3,9 +3,13 @@ package control;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
@@ -47,7 +51,7 @@ public class FrameListener implements ActionListener {
 		else if(e.getSource().equals(mainFrame.getClassificationPanel().getBtnProcess()))
 			processClassification();
 		else if(e.getSource().equals(mainFrame.getClassificationPanel().getBtnSave()))
-			showAboutDialog();
+			saveToFile();
 		else if(e.getSource().equals(mainFrame.getClassificationPanel().getBtnChart()))
 			showAboutDialog();
 	}
@@ -177,5 +181,30 @@ public class FrameListener implements ActionListener {
 		panel.getProgressBar().setIndeterminate(false);
 		panel.getBtnBrowse().setEnabled(true);
 		panel.getBtnProcess().setEnabled(true);
+	}
+	
+	//TODO where to put this method?
+	public void saveToFile() {
+        String text = mainFrame.getClassificationPanel().getTxtAreaReport().getText();
+
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File( "./"));
+        int actionDialog = chooser.showSaveDialog(mainFrame);
+        if (actionDialog == JFileChooser.APPROVE_OPTION) {
+            File fileName = new File(chooser.getSelectedFile( ) + "" );
+
+            if(fileName.exists()) {
+                actionDialog = JOptionPane.showConfirmDialog(mainFrame, "Replace existing file?");
+                if (actionDialog == JOptionPane.NO_OPTION)
+                    return;
+            }
+            try {
+            	BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
+            	out.write(text);
+            	out.close();
+            } catch(Exception e) {
+                 System.err.println("Error: " + e.getMessage());
+            }
+        }
 	}
 }
