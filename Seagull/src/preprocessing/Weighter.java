@@ -13,6 +13,21 @@ public class Weighter {
 		
 	}
 	
+	public List<List<List<Cell>>> weightTF(List<List<List<Cell>>> bigBag){
+		for(int i=0; i< bigBag.size(); i++){
+			for(int j=0; j<bigBag.get(i).size();j++){
+				for(int k=0; k< bigBag.get(i).get(j).size(); k++){
+					bigBag.get(i).get(j).get(k).setWeight(bigBag.get(i).get(j).get(k).getQuantity());
+				}
+			}
+		}
+		
+		
+		
+		return bigBag;
+	}
+	
+	
 	
 	public List<List<List<Cell>>> weightTFIDF(List<List<List<Cell>>> bigBag){
 		System.out.println("Applying TF-IDF weighting.");

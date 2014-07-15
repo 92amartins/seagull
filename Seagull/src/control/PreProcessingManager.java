@@ -7,6 +7,8 @@ import preprocessing.BigBagReducer;
 import preprocessing.StemmingMaster;
 import preprocessing.StopwordRemover;
 import preprocessing.Weighter;
+import preprocessing.MatrixGenerator;
+
 
 public class PreProcessingManager {
 
@@ -48,7 +50,11 @@ public class PreProcessingManager {
 		if(preProcessingModel.isNormalization()){
 			Weighter w = new Weighter();
 			preProcessingModel.setBigBag(w.weightTFIDF(preProcessingModel.getBigBag()));
+		}else{
+			Weighter w = new Weighter();
+			preProcessingModel.setBigBag(w.weightTF(preProcessingModel.getBigBag()));
 		}
+		
 		
 		ClassificationModel cm = ClassificationModel.getInstance();
 		

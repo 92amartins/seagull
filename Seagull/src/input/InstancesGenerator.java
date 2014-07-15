@@ -27,35 +27,83 @@ public class InstancesGenerator {
 		Vocabulary vocabulary = new Vocabulary(bigBag);
 		int has_term;
 		int index = 0;
-		
-		atts.addElement(new Attribute(".file", (FastVector) null));
+		double[] newInst;
+		FastVector      attVals;
+		//atts.addElement(new Attribute(".file"));
 		
 		/*	create atribute list (vocabulary)	*/
 		for(int i=0; i< vocabulary.getVocabulary().size(); i++){
 			//atts.addElement(new Attribute(vocabulary.getVocabulary().get(i).getText(), )); //############# pode dar problema ###############
-			atts.addElement(new Attribute(vocabulary.getVocabulary().get(i).getText(), (FastVector) null));
+			atts.addElement(new Attribute(vocabulary.getVocabulary().get(i).getText()));
 		}
 		
-		atts.addElement(new Attribute(".class", (FastVector) null));
+		attVals = new FastVector();
+	     for (int i = 0; i < bigBag.size(); i++)	/*	pode dar problema com pastas (classes) vazias	*/
+	       attVals.addElement(bigBag.get(i).get(0).get(0).getClasse());
+	     atts.addElement(new Attribute("classe", attVals));
 		
 		data = new Instances("training_set", atts, 0);
 		
+		
+		
+		//System.out.println("maxi: " + bigBag.size());
+		
+		
+	     
+	     
 		for(int i=0; i< bigBag.size(); i++){
+			
+			
+			
+			
+			//System.out.println(" - maxj: " + bigBag.get(i).size());
+			
+			
 			/*	para cada classe i	*/
 			for(int j=0; j<bigBag.get(i).size(); j++){
-				double[] newInst = new double[vocabulary.getVocabulary().size() + 2];
+				//System.out.println("classe: " + i);
+				//System.out.println("vocab size + 2 = " + vocabulary.getVocabulary().size() + 2);
+				newInst = new double[vocabulary.getVocabulary().size()+1];
+				//System.out.println("criou vetor de double");
 				/*	para cada arquivo j	*/
 				/*	adicionar nome do arquivo no primeiro atributo	*/
-				newInst[0] = (double)data.attribute(0).addStringValue(bigBag.get(i).get(j).get(0).getOriginal_file());
-				/*	adicionar o nome da classe ao ultimo atributo	*/
-				newInst[vocabulary.getVocabulary().size() + 1] = (double)data.attribute(vocabulary.getVocabulary().size() + 1).addStringValue(bigBag.get(i).get(j).get(0).getClasse());
 				
+				/*
+				if(bigBag.get(i).get(j).size() != 0){
+					newInst[0] = (double)bigBag.get(i).get(j).get(0).getOriginal_file();
+				}else{
+					continue;
+				}
+				*/
+				
+				
+				
+				
+				//System.out.println("adicionou a classe na primeira casa");
+				/*	adicionar o nome da classe ao ultimo atributo	*/
+				
+				
+				if(bigBag.get(i).get(j).size() != 0){
+					newInst[vocabulary.getVocabulary().size()] = attVals.indexOf(bigBag.get(i).get(j).get(0).getClasse());
+					//newInst[vocabulary.getVocabulary().size()] = (double)data.attribute(vocabulary.getVocabulary().size()).addStringValue(bigBag.get(i).get(j).get(0).getClasse());
+				}else{
+					continue;
+				}
+				
+				
+				
+				
+				
+				//System.out.println("adicionou o nome da classe no ultimo slot");
+				//System.out.println("para cada atributo");
 				for(int k=0; k< vocabulary.getVocabulary().size(); k++){
 					/*	para cada atributo	*/
 					test_text = vocabulary.getVocabulary().get(k).getText();
+					//System.out.println("pegou atributo");
 					//System.out.println("procurando termo " + test_text);
 					/*	procurar se o documento j da classe k possui o atributo	*/
 					has_term=0;
+					
 					for(int m=0; m< bigBag.get(i).get(j).size(); m++){
 						if(test_text.equals(bigBag.get(i).get(j).get(m).getText())){
 							has_term = 1;
@@ -67,14 +115,19 @@ public class InstancesGenerator {
 					
 					if(has_term == 1){
 						//System.out.println("encontrou");
-						newInst[k+1] = (double)data.attribute(k+1).addStringValue(String.valueOf(bigBag.get(i).get(j).get(index).getWeight()));
+						newInst[k/*+1*/] = bigBag.get(i).get(j).get(index).getWeight();
+						//newInst[k] = 69;
 					}else{
 						/*	se n�o tiver, adicionar 0 ao data.attribute(k)	*/
-						newInst[k+1] = (double)data.attribute(k+1).addStringValue("0");
+						//System.out.println("nao encontrou");
+						//newInst[k/*+1*/] = (double)data.attribute(k/*+1*/).addStringValue("?");
+						newInst[k] = 0;
 						//System.out.println("nao encontrou");
 					}
+					//System.out.println("proximo atributo");
 				}
 				data.add(new Instance(1, newInst));
+				//System.out.println("Adicionou instance a Instances");
 				//for(int n=0; n<vocabulary.getVocabulary().size(); n++ ) newInst[n] = 0;
 			}
 		}
