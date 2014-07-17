@@ -7,8 +7,8 @@ import weka.core.Instances;
 
 public class ClassificationModel {
 
-	public enum ClassifierType{ NAIVE_BAYES, J48, IBK, KSTAR;}
-	public enum EvaluationMethod{ CROSS_VALIDATION, PERCENTAGE_SPLIT, LOOCV;}
+	public enum ClassifierType{NAIVE_BAYES, J48, IBK, KSTAR, COSINE;}
+	public enum EvaluationMethod{CROSS_VALIDATION, PERCENTAGE_SPLIT, LOOCV;}
 	
 	private String path;
 	private Instances instances;

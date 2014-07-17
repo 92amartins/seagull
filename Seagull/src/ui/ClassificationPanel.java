@@ -23,6 +23,7 @@ public class ClassificationPanel extends MasterPanel{
 	private JCheckBox checkBoxNaiveBayes;
 	private JCheckBox checkBoxJ48;
 	private JCheckBox checkBoxKnn;
+	private JCheckBox checkBoxCosSimilarity;
 	
 	private JLabel lblEvaluationMethod;
 	private JRadioButton radioBtnCrossValidation;
@@ -54,9 +55,10 @@ public class ClassificationPanel extends MasterPanel{
 		panelOptions = new JPanel();	
 		
 		lblClassifier = new JLabel("Classifier:");
-		checkBoxNaiveBayes = new JCheckBox("NaïveBayes");
+		checkBoxNaiveBayes = new JCheckBox("Naïve Bayes");
 		checkBoxJ48 = new JCheckBox("J48");
 		checkBoxKnn = new JCheckBox("K-nn");
+		checkBoxCosSimilarity = new JCheckBox("Cosine Similarity");
 		
 		lblEvaluationMethod = new JLabel("Evaluation Method:");
 		radioBtnCrossValidation = new JRadioButton("Cross-validation");
@@ -86,23 +88,24 @@ public class ClassificationPanel extends MasterPanel{
 		btnBrowse.setBounds(10, 10, 100, 25);
 		add(btnBrowse);
 		
-		panelOptions.setBounds(10, 45, 160, 250);
+		panelOptions.setBounds(10, 45, 160, 275);
 		panelOptions.setLayout(null);
 		
 		lblClassifier.setBounds(5, 5, 140, 20);
 		checkBoxNaiveBayes.setBounds(10, 25, 140, 20);
 		checkBoxJ48.setBounds(10, 50, 140, 20);
 		checkBoxKnn.setBounds(10, 75, 140, 20);
+		checkBoxCosSimilarity.setBounds(10, 100, 140, 20);
 		
-		lblEvaluationMethod.setBounds(5, 100, 140, 20);
-		radioBtnCrossValidation.setBounds(10, 125, 140, 20);
+		lblEvaluationMethod.setBounds(5, 125, 140, 20);
+		radioBtnCrossValidation.setBounds(10, 150, 140, 20);
 		radioBtnCrossValidation.setSelected(true);
-		txtFolds.setBounds(30, 150, 30, 20);
-		lblFolds.setBounds(60, 150, 100, 20);
-		radioBtnPercentageSplit.setBounds(10, 175, 140, 20);
-		txtSplit.setBounds(30, 200, 30, 20);
-		lblSplit.setBounds(60, 200, 100, 20);
-		radioBtnLOOCV.setBounds(10, 225, 140, 20);
+		txtFolds.setBounds(30, 175, 30, 20);
+		lblFolds.setBounds(60, 175, 100, 20);
+		radioBtnPercentageSplit.setBounds(10, 200, 140, 20);
+		txtSplit.setBounds(30, 225, 30, 20);
+		lblSplit.setBounds(60, 225, 100, 20);
+		radioBtnLOOCV.setBounds(10, 250, 140, 20);
 		btnGroupEM.add(radioBtnCrossValidation);
 		btnGroupEM.add(radioBtnPercentageSplit);
 		btnGroupEM.add(radioBtnLOOCV);
@@ -111,6 +114,7 @@ public class ClassificationPanel extends MasterPanel{
 		panelOptions.add(checkBoxNaiveBayes);
 		panelOptions.add(checkBoxJ48);
 		panelOptions.add(checkBoxKnn);
+		panelOptions.add(checkBoxCosSimilarity);
 		
 		panelOptions.add(lblEvaluationMethod);
 		panelOptions.add(radioBtnCrossValidation);
@@ -123,7 +127,7 @@ public class ClassificationPanel extends MasterPanel{
 		
 		add(panelOptions);
 		
-		btnProcess.setBounds(10, 310, 100, 25);
+		btnProcess.setBounds(10, 335, 100, 25);
 		add(btnProcess);
 		
 		lblReport.setBounds(200, 10, 100, 25);
