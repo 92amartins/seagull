@@ -83,7 +83,7 @@ public class FrameListener implements ActionListener {
 	private void processPreProcessing() {
 		mainFrame.getPreProcessingPanel().getBtnClassify().setEnabled(false);
 		activateProgressBarDisableComponents(mainFrame.getPreProcessingPanel());
-		//TODO how to deal if the user clicks the Process again? It only executes once. (The same for Classification)
+		
 		SwingWorker preProcessingWorker = new SwingWorker<Void, Void>() {
 		    @Override
 		    public Void doInBackground() {
@@ -113,7 +113,6 @@ public class FrameListener implements ActionListener {
 	}
 	
 	private void processClassification() {
-		//TODO create a Validation class or separated methods to validate the things below.
 		ArrayList<ClassifierType> classifierTypes = new ArrayList<ClassifierType>();
 		if(mainFrame.getClassificationPanel().getCheckBoxNaiveBayes().isSelected())
 			classifierTypes.add(ClassifierType.NAIVE_BAYES);
