@@ -16,6 +16,7 @@ import javax.swing.SwingWorker;
 import model.ClassificationModel.ClassifierType;
 import model.ClassificationModel.EvaluationMethod;
 import model.PreProcessingModel;
+import model.PreProcessingModel.WeightingType;
 import ui.MainFrame;
 import ui.MasterPanel;
 import error.ExceptionsHandler;
@@ -74,50 +75,42 @@ public class FrameListener implements ActionListener {
 			model.addElement(fileName);
 		
 		if(!model.isEmpty()) {
-			mainFrame.getPreProcessingPanel().getLblTotalFiles().setText(model.size()-preProcessingManager.getPreProcessingModel().getBigBag().size()+" files imported.");
+			mainFrame.getPreProcessingPanel().getLblFiles().setText(model.size()-preProcessingManager.getPreProcessingModel().getBigBag().size()+" Imported Files:");
 			mainFrame.getPreProcessingPanel().getListFiles().setModel(model);
 		}
 	}
-	
-	SwingWorker preProcessingWorker = new SwingWorker<Void, Void>() {
-	    @Override
-	    public Void doInBackground() {
-	    	PreProcessingModel preProcessingModel = PreProcessingModel.getInstance();
-			
-			preProcessingModel.setStemming(mainFrame.getPreProcessingPanel().getCheckBoxStemming().isSelected());
-			preProcessingModel.setStopwords(mainFrame.getPreProcessingPanel().getCheckBoxStopwords().isSelected());
-			preProcessingModel.setNormalization(mainFrame.getPreProcessingPanel().getCheckBoxNormalization().isSelected());
-			
-			preProcessingManager.startPreProcessing();	        
-			return null;
-	    }
-	    
-	    protected void done() {
-	    	mainFrame.getPreProcessingPanel().getBtnClassify().setEnabled(true);
-	    	deactivateProgressBarEnableComponents(mainFrame.getPreProcessingPanel());
-	    };
-	};
 	
 	private void processPreProcessing() {
 		mainFrame.getPreProcessingPanel().getBtnClassify().setEnabled(false);
 		activateProgressBarDisableComponents(mainFrame.getPreProcessingPanel());
 		//TODO how to deal if the user clicks the Process again? It only executes once. (The same for Classification)
+		SwingWorker preProcessingWorker = new SwingWorker<Void, Void>() {
+		    @Override
+		    public Void doInBackground() {
+		    	PreProcessingModel preProcessingModel = PreProcessingModel.getInstance();
+				
+				preProcessingModel.setStemming(mainFrame.getPreProcessingPanel().getCheckBoxStemming().isSelected());
+				preProcessingModel.setStopwords(mainFrame.getPreProcessingPanel().getCheckBoxStopwords().isSelected());
+				
+				if(mainFrame.getPreProcessingPanel().getRadioBtnTF().isSelected())
+					preProcessingManager.getPreProcessingModel().setWeightingType(WeightingType.TF);
+				else if(mainFrame.getPreProcessingPanel().getRadioBtnTFIDF().isSelected())
+					preProcessingManager.getPreProcessingModel().setWeightingType(WeightingType.TF_IDF);
+				else if(mainFrame.getPreProcessingPanel().getRadioBtnIC().isSelected())
+					preProcessingManager.getPreProcessingModel().setWeightingType(WeightingType.IC);
+				
+				preProcessingManager.startPreProcessing();	        
+				return null;
+		    }
+		    
+		    protected void done() {
+		    	mainFrame.getPreProcessingPanel().getBtnClassify().setEnabled(true);
+		    	deactivateProgressBarEnableComponents(mainFrame.getPreProcessingPanel());
+		    };
+		};
+		
 		preProcessingWorker.execute();
 	}
-	
-	SwingWorker classificationWorker = new SwingWorker<Void, Void>() {
-	    @Override
-	    public Void doInBackground() {
-	    	mainFrame.getClassificationPanel().getTxtAreaReport().setText(classificationManager.classify());
-			return null;
-	    }
-	    
-	    protected void done() {
-	    	mainFrame.getClassificationPanel().getBtnSave().setEnabled(true);
-			mainFrame.getClassificationPanel().getBtnChart().setEnabled(true);
-	    	deactivateProgressBarEnableComponents(mainFrame.getClassificationPanel());
-	    };
-	};
 	
 	private void processClassification() {
 		//TODO create a Validation class or separated methods to validate the things below.
@@ -158,6 +151,21 @@ public class FrameListener implements ActionListener {
 				mainFrame.getClassificationPanel().getBtnSave().setEnabled(false);
 				mainFrame.getClassificationPanel().getBtnChart().setEnabled(false);
 				activateProgressBarDisableComponents(mainFrame.getClassificationPanel());
+				
+				SwingWorker classificationWorker = new SwingWorker<Void, Void>() {
+				    @Override
+				    public Void doInBackground() {
+				    	mainFrame.getClassificationPanel().getTxtAreaReport().setText(classificationManager.classify());
+						return null;
+				    }
+				    
+				    protected void done() {
+				    	mainFrame.getClassificationPanel().getBtnSave().setEnabled(true);
+						mainFrame.getClassificationPanel().getBtnChart().setEnabled(true);
+				    	deactivateProgressBarEnableComponents(mainFrame.getClassificationPanel());
+				    };
+				};
+				
 				classificationWorker.execute();
 			}
 		}
@@ -188,10 +196,9 @@ public class FrameListener implements ActionListener {
         String text = mainFrame.getClassificationPanel().getTxtAreaReport().getText();
 
         JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new File( "./"));
         int actionDialog = chooser.showSaveDialog(mainFrame);
         if (actionDialog == JFileChooser.APPROVE_OPTION) {
-            File fileName = new File(chooser.getSelectedFile( ) + "" );
+            File fileName = new File(chooser.getSelectedFile().toString());
 
             if(fileName.exists()) {
                 actionDialog = JOptionPane.showConfirmDialog(mainFrame, "Replace existing file?");
