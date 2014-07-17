@@ -7,7 +7,6 @@ import preprocessing.BigBagReducer;
 import preprocessing.StemmingMaster;
 import preprocessing.StopwordRemover;
 import preprocessing.Weighter;
-import preprocessing.MatrixGenerator;
 
 
 public class PreProcessingManager {
@@ -47,14 +46,19 @@ public class PreProcessingManager {
 		}
 		
 		// NORMALIZATION
-		if(preProcessingModel.isNormalization()){
-			Weighter w = new Weighter();
-			preProcessingModel.setBigBag(w.weightTFIDF(preProcessingModel.getBigBag()));
-		}else{
-			Weighter w = new Weighter();
-			preProcessingModel.setBigBag(w.weightTF(preProcessingModel.getBigBag()));
+		Weighter w;
+		switch (preProcessingModel.getWeightingType()) {
+			case TF:
+				w = new Weighter();
+				preProcessingModel.setBigBag(w.weightTF(preProcessingModel.getBigBag()));
+				break;
+			case TF_IDF:
+				w = new Weighter();
+				preProcessingModel.setBigBag(w.weightTFIDF(preProcessingModel.getBigBag()));
+				break;
+			case IC:
+				break;
 		}
-		
 		
 		ClassificationModel cm = ClassificationModel.getInstance();
 		

@@ -1,11 +1,13 @@
 package ui;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -17,12 +19,16 @@ public class PreProcessingPanel extends MasterPanel {
 //	private JPanel panelOptions;
 	private JCheckBox checkBoxStemming;
 	private JCheckBox checkBoxStopwords;
-	private JCheckBox checkBoxNormalization;
+	
+	private JLabel lblWeighting;  
+	private JRadioButton radioBtnTF;
+	private JRadioButton radioBtnTFIDF;
+	private JRadioButton radioBtnIC;
+	private ButtonGroup btnGroupWeighting;
 	
 	private JLabel lblFiles;
 	private JScrollPane paneListFiles;
 	private JList<String> listFiles;
-	private JLabel lblTotalFiles;
 
 //	private JButton btnProcess; 
 	
@@ -43,14 +49,19 @@ public class PreProcessingPanel extends MasterPanel {
 		panelOptions = new JPanel();
 		checkBoxStemming = new JCheckBox("Stemming");
 		checkBoxStopwords = new JCheckBox("Remove stopwords");
-		checkBoxNormalization = new JCheckBox("Normalization");
+		
+		lblWeighting = new JLabel("Weighting: ");
+		radioBtnTF = new JRadioButton("TF");
+		radioBtnTFIDF = new JRadioButton("TF-IDF");
+		radioBtnIC = new JRadioButton("Information Gain");
+		btnGroupWeighting = new ButtonGroup();
+		
 		lblFiles = new JLabel("Imported files: ");
 		listFiles = new JList<String>();
 		paneListFiles = new JScrollPane(listFiles);
 		
 		btnProcess = new JButton("Process!");
 		
-		lblTotalFiles = new JLabel();
 		lblBOW = new JLabel("Bag of Words: ");
 		tblBOW = new JTable();
 		paneBOW = new JScrollPane(tblBOW);
@@ -66,28 +77,37 @@ public class PreProcessingPanel extends MasterPanel {
 		btnBrowse.setBounds(10, 10, 100, 25);
 		add(btnBrowse);
 		
-		panelOptions.setBounds(10, 45, 165, 105);
+		panelOptions.setBounds(10, 40, 165, 170);
 		panelOptions.setLayout(null);
 		
-		lblOptions.setBounds(5, 5, 100, 25);
-		checkBoxStemming.setBounds(10, 30, 140, 20);
-		checkBoxStopwords.setBounds(10, 55, 160, 20);
-		checkBoxNormalization.setBounds(10, 80, 140, 20);
+		lblOptions.setBounds(5, 0, 100, 25);
+		checkBoxStemming.setBounds(10, 25, 140, 20);
+		checkBoxStopwords.setBounds(10, 50, 160, 20);
+		
+		lblWeighting.setBounds(5, 75, 100, 25);
+		radioBtnTF.setBounds(10, 100, 140, 20);
+		radioBtnTF.setSelected(true);
+		radioBtnTFIDF.setBounds(10, 125, 140, 20);
+		radioBtnIC.setBounds(10, 150, 140, 20);
+		btnGroupWeighting.add(radioBtnTF);
+		btnGroupWeighting.add(radioBtnTFIDF);
+		btnGroupWeighting.add(radioBtnIC);
 		
 		panelOptions.add(lblOptions);
 		panelOptions.add(checkBoxStemming);
 		panelOptions.add(checkBoxStopwords);
-		panelOptions.add(checkBoxNormalization);
+		
+		panelOptions.add(lblWeighting);
+		panelOptions.add(radioBtnTF);
+		panelOptions.add(radioBtnTFIDF);
+		panelOptions.add(radioBtnIC);
+		
 		add(panelOptions);
 		
-		lblFiles.setBounds(15, 160, 200, 25);
+		lblFiles.setBounds(15, 215, 200, 25);
 		add(lblFiles);
-		
-		paneListFiles.setBounds(15, 190, 150, 190);
+		paneListFiles.setBounds(30, 240, 150, 165);
 		add(paneListFiles);
-		
-		lblTotalFiles.setBounds(15, 380, 200, 25);
-		add(lblTotalFiles);
 		
 		btnProcess.setBounds(10, 415, 100, 25);
 		add(btnProcess);
@@ -129,12 +149,28 @@ public class PreProcessingPanel extends MasterPanel {
 		this.checkBoxStopwords = checkBoxStopwords;
 	}
 
-	public JCheckBox getCheckBoxNormalization() {
-		return checkBoxNormalization;
+	public JRadioButton getRadioBtnTF() {
+		return radioBtnTF;
 	}
 
-	public void setCheckBoxNormalization(JCheckBox checkBoxNormalization) {
-		this.checkBoxNormalization = checkBoxNormalization;
+	public void setRadioBtnTF(JRadioButton radioBtnTF) {
+		this.radioBtnTF = radioBtnTF;
+	}
+
+	public JRadioButton getRadioBtnTFIDF() {
+		return radioBtnTFIDF;
+	}
+
+	public void setRadioBtnTFIDF(JRadioButton radioBtnTFIDF) {
+		this.radioBtnTFIDF = radioBtnTFIDF;
+	}
+
+	public JRadioButton getRadioBtnIC() {
+		return radioBtnIC;
+	}
+
+	public void setRadioBtnIC(JRadioButton radioBtnIC) {
+		this.radioBtnIC = radioBtnIC;
 	}
 
 	public JList<String> getListFiles() {
@@ -145,12 +181,12 @@ public class PreProcessingPanel extends MasterPanel {
 		this.listFiles = listFiles;
 	}
 	
-	public JLabel getLblTotalFiles() {
-		return lblTotalFiles;
+	public JLabel getLblFiles() {
+		return lblFiles;
 	}
 
-	public void setLblTotalFiles(JLabel lblTotalFiles) {
-		this.lblTotalFiles = lblTotalFiles;
+	public void setLblFiles(JLabel lblFiles) {
+		this.lblFiles = lblFiles;
 	}
 
 	public JButton getBtnProcess() {
