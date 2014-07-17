@@ -1,17 +1,20 @@
 package ui;
 
 import java.awt.Font;
+import java.text.NumberFormat;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JPanel; 
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.NumberFormatter;
 
 public class ClassificationPanel extends MasterPanel{
 	
@@ -30,10 +33,9 @@ public class ClassificationPanel extends MasterPanel{
 	private JRadioButton radioBtnPercentageSplit;
 	private JRadioButton radioBtnLOOCV;
 	private ButtonGroup btnGroupEM;
-	//TODO txtFolds and txtSplit should only allow positive Integers
-	private JTextField txtFolds;
+	private JFormattedTextField txtFolds;
 	private JLabel lblFolds;
-	private JTextField txtSplit;
+	private JFormattedTextField txtSplit;
 	private JLabel lblSplit;
 	
 //	private JButton btnProcess;
@@ -65,11 +67,19 @@ public class ClassificationPanel extends MasterPanel{
 		radioBtnPercentageSplit = new JRadioButton("Percentage Split");
 		radioBtnLOOCV = new JRadioButton("LOOCV");
 		btnGroupEM = new ButtonGroup();
-		txtFolds = new JTextField("10");
+		
+		NumberFormat format = NumberFormat.getNumberInstance(); 
+		NumberFormatter formatter = new NumberFormatter(format);
+	    formatter.setValueClass(Integer.class);
+	    formatter.setMinimum(0);
+	    formatter.setMaximum(99);
+	    formatter.setCommitsOnValidEdit(true);
+		
+		txtFolds = new JFormattedTextField(formatter);
 		lblFolds = new JLabel("folds");
-		txtSplit = new JTextField("80");
+		txtSplit = new JFormattedTextField(formatter);
 		lblSplit = new JLabel("% training set");
-
+		
 		btnProcess = new JButton("Process!");
 		
 		lblReport = new JLabel("Report:");
@@ -101,9 +111,11 @@ public class ClassificationPanel extends MasterPanel{
 		radioBtnCrossValidation.setBounds(10, 150, 140, 20);
 		radioBtnCrossValidation.setSelected(true);
 		txtFolds.setBounds(30, 175, 30, 20);
+		txtFolds.setText("10");
 		lblFolds.setBounds(60, 175, 100, 20);
 		radioBtnPercentageSplit.setBounds(10, 200, 140, 20);
 		txtSplit.setBounds(30, 225, 30, 20);
+		txtSplit.setText("80");
 		lblSplit.setBounds(60, 225, 100, 20);
 		radioBtnLOOCV.setBounds(10, 250, 140, 20);
 		btnGroupEM.add(radioBtnCrossValidation);
@@ -196,11 +208,11 @@ public class ClassificationPanel extends MasterPanel{
 		this.radioBtnCrossValidation = radioBtnCrossValidation;
 	}
 
-	public JTextField getTxtFolds() {
+	public JFormattedTextField getTxtFolds() {
 		return txtFolds;
 	}
 
-	public void setTxtFolds(JTextField txtFolds) {
+	public void setTxtFolds(JFormattedTextField txtFolds) {
 		this.txtFolds = txtFolds;
 	}
 	
@@ -212,11 +224,11 @@ public class ClassificationPanel extends MasterPanel{
 		this.radioBtnPercentageSplit = radioBtnPercentageSplit;
 	}
 	
-	public JTextField getTxtSplit() {
+	public JFormattedTextField getTxtSplit() {
 		return txtSplit;
 	}
 
-	public void setTxtSplit(JTextField txtSplit) {
+	public void setTxtSplit(JFormattedTextField txtSplit) {
 		this.txtSplit = txtSplit;
 	}
 
