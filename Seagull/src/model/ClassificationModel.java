@@ -7,8 +7,27 @@ import weka.core.Instances;
 
 public class ClassificationModel {
 
-	public enum ClassifierType{NAIVE_BAYES, J48, IBK, KSTAR, COSINE;}
-	public enum EvaluationMethod{CROSS_VALIDATION, PERCENTAGE_SPLIT, LOOCV;}
+	public enum ClassifierType{
+		NAIVE_BAYES("Naïve Bayes"), 
+		J48("J48"),
+		IBK("Knn"),
+		KSTAR("Kstar"),
+		COSINE("Cosine Similarity");
+		
+		private String name;
+		private ClassifierType(String name) { this.name = name; }
+		public String getName() { return this.name; }
+	}
+	
+	public enum EvaluationMethod{
+		CROSS_VALIDATION("Cross-validation"), 
+		PERCENTAGE_SPLIT("Percentage Split"), 
+		LOOCV("LOOCV");
+		
+		private String name;
+		private EvaluationMethod(String name) { this.name = name; }
+		public String getName() { return this.name; }
+	}
 	
 	private String path;
 	private Instances instances;
