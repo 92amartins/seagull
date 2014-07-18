@@ -20,15 +20,20 @@ public class ClassificationManager {
 			Instances data = classificationModel.getInstances();
 			data.setClassIndex(data.numAttributes()-1);
 			Classification cls = new Classification(classificationModel.getClassifierTypes());
+			
+			String strEM = "";
 			switch (classificationModel.getEvaluationMethod()) {
 				case CROSS_VALIDATION:
 					cls.performCrossValidation(data, classificationModel.getAdditionalParamEM());
+					strEM = classificationModel.getEvaluationMethod().getName()+" ("+classificationModel.getAdditionalParamEM()+" folds)";
 					break;
 				case PERCENTAGE_SPLIT:
 					cls.performTestSetEvaluation(data, classificationModel.getAdditionalParamEM());
+					strEM = classificationModel.getEvaluationMethod().getName()+" ("+classificationModel.getAdditionalParamEM()+"% training set)";
 					break;
 				case LOOCV:
 					cls.performLOOCV(data);
+					strEM = classificationModel.getEvaluationMethod().getName();
 					break;
 			}
 						
@@ -36,10 +41,11 @@ public class ClassificationManager {
 			Report[] r = new Report[evals.length];
 			StringBuffer sb = new StringBuffer();
 			
-			//TODO show which classifier and evaluation method are being shown
 			for(int i = 0; i < evals.length;i++){
 				r[i] = new Report(evals[i]);
 				
+				sb.append("Classifier: "+classificationModel.getClassifierTypes().get(i).getName()+"\n");
+				sb.append("Evaluation Method: "+strEM+"\n");
 				sb.append(r[i].summaryString());
 				sb.append("\n \n \n");
 				sb.append(r[i].classificationDetails());
