@@ -4,21 +4,48 @@ import input.Cell;
 import java.util.ArrayList;
 import java.util.List;
 
+/*				MANUAL
+ * 
+ * Chamar o método GenerateMatrix(bigBag); para gerar a matriz
+ * Esse método retorna um Array<Array<String>>, mas nao eh o melhor jeito para construir um JTable
+ * 
+ * Apos a construcao da matriz pelo metodo acima, os metodos genColumnNames e genDataMatrix sao usados
+ * para pegar os parametros necessarios para o tableModel na hora de construir a tabela (pelo menos acho
+ * que eh assim que funciona)
+ * 
+ * genColumnNames gera um vetor com os nomes das colunas
+ * 
+ * genDataMatrix gera uma matrix bidimensional de strings com o nome do arquivo, peso dos termos e classe
+ * 
+ * 
+ * 
+ */
+
+
+
+
+
 public class MatrixGenerator {
 	private List<List<String>> matrix;
-
+	
 
 	
 	public MatrixGenerator(){
-		matrix = new ArrayList<List<String>>();
+		
 	}
 	
 
+	
+	
+	/*************************************/
+	/**	keep this until fully tested	**/
+	/*************************************/
+	/*
+	
 	private void printMatrix(List<List<String>> bow){
 		for(int i=0; i< bow.size(); i++){
 			for(int j=0; j< bow.get(i).size(); j++){
 				System.out.print(bow.get(i).get(j) + " ");
-				
 				
 			}
 			
@@ -29,12 +56,47 @@ public class MatrixGenerator {
 		return;
 		
 	}
-			
-			
+	*/	
 	
+	
+	
+	
+	
+	
+	
+	
+	public String[] genColumnNames(){
+		int size = matrix.get(0).size();
+		String[] columnNames = new String[size];
+		
+		for(int i=0; i< size; i++){
+			columnNames[i] = matrix.get(0).get(i);
+		}
+		return columnNames;
+	}
+	
+	
+	
+			
+	public String[][] genDataMatrix(){
+		String[][] data;
+		int maxi = matrix.size() - 1;
+		int maxj =  matrix.get(0).size();
+		data = new String[maxi][maxj];
+		
+		for(int i=0; i< maxi; i++){
+			for(int j=0; j< maxj; j++){
+				data[i][j] = matrix.get(i).get(j);
+			}
+		}
+		return data;
+	}
 	
 	
 	public List<List<String>> GenerateMatrix(List<List<List<Cell>>> bigBag){
+		/*	generates a new matrix every time this method is called	*/
+		matrix = new ArrayList<List<String>>();
+		
 		List<String> bufferList;
 		List<String> header = new ArrayList<String>();
 		Vocabulary voc = new Vocabulary(bigBag);
@@ -94,32 +156,8 @@ public class MatrixGenerator {
 		return matrix;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-	
-	
-	
 
-	
-	
 	
 	
 	
