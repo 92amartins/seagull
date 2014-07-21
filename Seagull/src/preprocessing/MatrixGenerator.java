@@ -1,77 +1,123 @@
 package preprocessing;
 import input.Cell;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MatrixGenerator {
 	private List<List<String>> matrix;
+
 
 	
 	public MatrixGenerator(){
 		matrix = new ArrayList<List<String>>();
 	}
 	
-	public List<List<String>> GenerateMatrix(List<List<List<Cell>>> bigBag){
-		Vocabulary voc = new Vocabulary(bigBag);
-		List<String> buffer;
-		String check;
-		int found;
-		
-		matrix.add(voc.getMatrixHeader());
-		
-		for(int i=0; i<bigBag.size();i++){
-			buffer = new ArrayList<String>();	/*	POG	*/
-			/*	para cada classe	*/
-			for(int j=0;j<bigBag.get(i).size(); j++){
-				/*	para cada arquivo	*/
-				//System.out.println("classe " + i + " arquivo " + j);
-				buffer = new ArrayList<String>();
-				/*	add file name to first row	*/
-				buffer.add(bigBag.get(i).get(j).get(0).getOriginal_file());
-				
-				for(int k=1;k<matrix.get(0).size() - 1; k++){
-					found = 0;
-					/*	for each item in the vocabulary	*/
-					check = matrix.get(0).get(k);
-					for(int m =0; m< bigBag.get(i).get(j).size(); m++){
-						/*	search the file for the wanted cell	*/
-						if(check.equals(bigBag.get(i).get(j).get(m).getText())){
-							found = 1;
-							buffer.add(String.valueOf(bigBag.get(i).get(j).get(m).getWeight()));
-						}
-					}
-					if(found == 0) buffer.add("0");
-					
-				}
-				
-				buffer.add(bigBag.get(i).get(j).get(0).getClasse());
-				matrix.add(buffer);
-			}
-			
-			
-		}
-		
-		
-		return matrix;
-	}
-	
-	public void printList(){
-		for(int i=0; i< matrix.size();i++){
-			for(int j=0; j< matrix.get(i).size(); j++){
-				
-				System.out.print(matrix.get(i).get(j) + " ");
 
+	private void printMatrix(List<List<String>> bow){
+		for(int i=0; i< bow.size(); i++){
+			for(int j=0; j< bow.get(i).size(); j++){
+				System.out.print(bow.get(i).get(j) + " ");
+				
+				
 			}
 			
 			System.out.println("");
 			
 		}
 		
-		
-		
 		return;
+		
+	}
+			
+			
+	
+	
+	
+	public List<List<String>> GenerateMatrix(List<List<List<Cell>>> bigBag){
+		List<String> bufferList;
+		List<String> header = new ArrayList<String>();
+		Vocabulary voc = new Vocabulary(bigBag);
+		int found;
+		
+		header = voc.getMatrixHeader();
+				
+		matrix.add(header);
+		
+		
+		for(int i=0; i< bigBag.size(); i++){
+			/*	para cada classe	*/
+			for(int j=0;j<bigBag.get(i).size(); j++){
+				/*	para cada arquivo	*/
+				bufferList = new ArrayList<String>();
+				bufferList.add(bigBag.get(i).get(j).get(0).getOriginal_file());
+				
+				for(int m = 1; m< header.size() - 1; m++){
+					/*	para cada termo no header	*/
+					/*	found = 0	*/
+					found = 0;
+					for(int n=0; n< bigBag.get(i).get(j).size(); n++){
+						/*	comparar com todos os termos n do arquivo	*/
+						if(header.get(m).equals(bigBag.get(i).get(j).get(n).getText())){
+							/*	ao encontrar, found = 1; adicionar peso na lista; break	*/
+							found = 1;
+							System.out.println("encontrou termo " + header.get(m) + " no arquivo ");
+							
+							
+							bufferList.add(String.valueOf( bigBag.get(i).get(j).get(n).getWeight()  ));
+							//break;
+						}
+						
+						
+					}
+					/*	se apos comparacoes found == 0; adicionar "0" a lista 	*/
+					if(found == 0){
+						bufferList.add("0");
+					}
+					
+				}
+				
+				bufferList.add(bigBag.get(i).get(j).get(0).getClasse());
+				
+				
+				matrix.add(bufferList);
+				
+				
+			}
+			
+		}
+
+		
+		
+		
+		//printMatrix(matrix);
+		return matrix;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+
 	
 	
 	
