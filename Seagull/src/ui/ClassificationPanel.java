@@ -200,6 +200,14 @@ public class ClassificationPanel extends MasterPanel{
 		this.checkBoxKnn = checkBoxKnn;
 	}
 	
+	public JCheckBox getCheckBoxCosSimilarity(){
+		return checkBoxCosSimilarity;
+	}
+	
+	public void setCheckBoxCosSimilarity(JCheckBox checkBoxCosSimilarity){
+		this.checkBoxCosSimilarity = checkBoxCosSimilarity;
+	}
+	
 	public JRadioButton getRadioBtnCrossValidation() {
 		return radioBtnCrossValidation;
 	}
