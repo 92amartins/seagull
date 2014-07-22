@@ -19,20 +19,21 @@ public class ClassificationManager {
 		try{
 			Instances data = classificationModel.getInstances();
 			data.setClassIndex(data.numAttributes()-1);
+			classificationModel.setInstances(data);
 			Classification cls = new Classification(classificationModel.getClassifierTypes());
 			
 			String strEM = "";
 			switch (classificationModel.getEvaluationMethod()) {
 				case CROSS_VALIDATION:
-					cls.performCrossValidation(data, classificationModel.getAdditionalParamEM());
+					cls.performCrossValidation(classificationModel.getInstances(), classificationModel.getAdditionalParamEM());
 					strEM = classificationModel.getEvaluationMethod().getName()+" ("+classificationModel.getAdditionalParamEM()+" folds)";
 					break;
 				case PERCENTAGE_SPLIT:
-					cls.performTestSetEvaluation(data, classificationModel.getAdditionalParamEM());
+					cls.performTestSetEvaluation(classificationModel.getInstances(), classificationModel.getAdditionalParamEM());
 					strEM = classificationModel.getEvaluationMethod().getName()+" ("+classificationModel.getAdditionalParamEM()+"% training set)";
 					break;
 				case LOOCV:
-					cls.performLOOCV(data);
+					cls.performLOOCV(classificationModel.getInstances());
 					strEM = classificationModel.getEvaluationMethod().getName();
 					break;
 			}
