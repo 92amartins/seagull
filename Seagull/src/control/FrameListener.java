@@ -133,6 +133,8 @@ public class FrameListener implements ActionListener {
 			classifierTypes.add(ClassifierType.J48);
 		if(mainFrame.getClassificationPanel().getCheckBoxKnn().isSelected())
 			classifierTypes.add(ClassifierType.IBK);
+		if(mainFrame.getClassificationPanel().getCheckBoxCosSimilarity().isSelected())
+			classifierTypes.add(ClassifierType.COSINE);
 		
 		if(mainFrame.getClassificationPanel().getRadioBtnCrossValidation().isSelected()) {
 			classificationManager.getClassificationModel().setEvaluationMethod(EvaluationMethod.CROSS_VALIDATION);
