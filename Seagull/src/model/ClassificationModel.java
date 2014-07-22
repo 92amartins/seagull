@@ -11,7 +11,6 @@ public class ClassificationModel {
 		NAIVE_BAYES("Naïve Bayes"), 
 		J48("J48"),
 		IBK("Knn"),
-		KSTAR("Kstar"),
 		COSINE("Cosine Similarity");
 		
 		private String name;
