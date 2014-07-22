@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.SwingWorker;
+import javax.swing.table.DefaultTableModel;
 
 import model.ClassificationModel.ClassifierType;
 import model.ClassificationModel.EvaluationMethod;
@@ -19,6 +21,7 @@ import model.PreProcessingModel;
 import model.PreProcessingModel.WeightingType;
 import ui.MainFrame;
 import ui.MasterPanel;
+import ui.TableColumnAdjuster;
 import error.ExceptionsHandler;
 
 public class FrameListener implements ActionListener {
@@ -100,10 +103,20 @@ public class FrameListener implements ActionListener {
 					preProcessingManager.getPreProcessingModel().setWeightingType(WeightingType.IC);
 				
 				preProcessingManager.startPreProcessing();	        
+				
 				return null;
 		    }
 		    
 		    protected void done() {
+		    	DefaultTableModel model = new DefaultTableModel(preProcessingManager.getMatrixGenerator().genDataMatrix(), 0);
+				model.addRow(preProcessingManager.getMatrixGenerator().genColumnNames());
+				
+				mainFrame.getPreProcessingPanel().getTblBOW().setModel(model);
+				mainFrame.getPreProcessingPanel().getTblBOW().setAutoscrolls(true);
+				mainFrame.getPreProcessingPanel().getTblBOW().setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				TableColumnAdjuster tca = new TableColumnAdjuster(mainFrame.getPreProcessingPanel().getTblBOW());
+				tca.adjustColumns();
+				
 		    	mainFrame.getPreProcessingPanel().getBtnClassify().setEnabled(true);
 		    	deactivateProgressBarEnableComponents(mainFrame.getPreProcessingPanel());
 		    };

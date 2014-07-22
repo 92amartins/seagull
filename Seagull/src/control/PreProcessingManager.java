@@ -4,6 +4,7 @@ import input.InstancesGenerator;
 import model.ClassificationModel;
 import model.PreProcessingModel;
 import preprocessing.BigBagReducer;
+import preprocessing.MatrixGenerator;
 import preprocessing.StemmingMaster;
 import preprocessing.StopwordRemover;
 import preprocessing.Weighter;
@@ -12,9 +13,11 @@ import preprocessing.Weighter;
 public class PreProcessingManager {
 
 	private PreProcessingModel preProcessingModel;
+	private MatrixGenerator matrixGenerator;
 	
 	public PreProcessingManager() {
 		preProcessingModel = PreProcessingModel.getInstance();
+		matrixGenerator = new MatrixGenerator();
 	}
 
 	public PreProcessingModel getPreProcessingModel() {
@@ -25,6 +28,14 @@ public class PreProcessingManager {
 		this.preProcessingModel = preProcessingModel;
 	}
 	
+	public MatrixGenerator getMatrixGenerator() {
+		return matrixGenerator;
+	}
+
+	public void setMatrixGenerator(MatrixGenerator matrixGenerator) {
+		this.matrixGenerator = matrixGenerator;
+	}
+
 	public void startPreProcessing(){
 		InstancesGenerator ig = new InstancesGenerator();
 		BigBagReducer bbr = new BigBagReducer();
@@ -63,6 +74,8 @@ public class PreProcessingManager {
 		ClassificationModel cm = ClassificationModel.getInstance();
 		
 		cm.setInstances(ig.generate(preProcessingModel.getBigBag()));
+		
+		matrixGenerator.generateMatrix(preProcessingModel.getBigBag());
 	}
 	
 }

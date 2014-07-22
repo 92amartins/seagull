@@ -86,14 +86,14 @@ public class MatrixGenerator {
 		
 		for(int i=0; i< maxi; i++){
 			for(int j=0; j< maxj; j++){
-				data[i][j] = matrix.get(i).get(j);
+				data[i][j] = matrix.get(i+1).get(j);
 			}
 		}
 		return data;
 	}
 	
 	
-	public List<List<String>> GenerateMatrix(List<List<List<Cell>>> bigBag){
+	public List<List<String>> generateMatrix(List<List<List<Cell>>> bigBag){
 		/*	generates a new matrix every time this method is called	*/
 		matrix = new ArrayList<List<String>>();
 		
