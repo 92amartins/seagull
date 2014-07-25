@@ -109,7 +109,6 @@ public class FrameListener implements ActionListener {
 		    
 		    protected void done() {
 		    	DefaultTableModel model = new DefaultTableModel(preProcessingManager.getMatrixGenerator().genDataMatrix(), preProcessingManager.getMatrixGenerator().genColumnNames());
-				//model.addRow();
 				
 				mainFrame.getPreProcessingPanel().getTblBOW().setModel(model);
 				mainFrame.getPreProcessingPanel().getTblBOW().setAutoscrolls(true);
