@@ -85,6 +85,7 @@ public class FrameListener implements ActionListener {
 	
 	private void processPreProcessing() {
 		mainFrame.getPreProcessingPanel().getBtnClassify().setEnabled(false);
+		mainFrame.getPreProcessingPanel().getTblBOW().setModel(new DefaultTableModel());
 		activateProgressBarDisableComponents(mainFrame.getPreProcessingPanel());
 		
 		SwingWorker preProcessingWorker = new SwingWorker<Void, Void>() {
@@ -163,6 +164,7 @@ public class FrameListener implements ActionListener {
 				classificationManager.getClassificationModel().setClassifierTypes(classifierTypes);
 				mainFrame.getClassificationPanel().getBtnSave().setEnabled(false);
 				mainFrame.getClassificationPanel().getBtnChart().setEnabled(false);
+				mainFrame.getClassificationPanel().getTxtAreaReport().setText("");
 				activateProgressBarDisableComponents(mainFrame.getClassificationPanel());
 				
 				SwingWorker classificationWorker = new SwingWorker<Void, Void>() {
