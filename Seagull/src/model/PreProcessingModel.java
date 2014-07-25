@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PreProcessingModel {
 	
-	public enum WeightingType{TF, TF_IDF, IC;}
+	public enum WeightingType{TF, TF_IDF, IG;}
 	
 	private String path;	
 	private boolean stemming;
