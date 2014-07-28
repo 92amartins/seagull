@@ -79,6 +79,9 @@ public class MatrixGenerator {
 	
 			
 	public String[][] genDataMatrix(){
+		System.out.println("################");
+		System.out.println("generating matrix");
+		
 		String[][] data;
 		int maxi = matrix.size() - 1;
 		int maxj =  matrix.get(0).size();
@@ -112,6 +115,7 @@ public class MatrixGenerator {
 			for(int j=0;j<bigBag.get(i).size(); j++){
 				/*	para cada arquivo	*/
 				bufferList = new ArrayList<String>();
+				if(bigBag.get(i).get(j).size() == 0) continue;
 				bufferList.add(bigBag.get(i).get(j).get(0).getOriginal_file());
 				
 				for(int m = 1; m< header.size() - 1; m++){
@@ -123,7 +127,7 @@ public class MatrixGenerator {
 						if(header.get(m).equals(bigBag.get(i).get(j).get(n).getText())){
 							/*	ao encontrar, found = 1; adicionar peso na lista; break	*/
 							found = 1;
-							System.out.println("encontrou termo " + header.get(m) + " no arquivo ");
+							//System.out.println("encontrou termo " + header.get(m) + " no arquivo ");
 							
 							
 							bufferList.add(String.valueOf( bigBag.get(i).get(j).get(n).getWeight()  ));

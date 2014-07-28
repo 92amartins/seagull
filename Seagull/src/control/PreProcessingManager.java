@@ -44,17 +44,23 @@ public class PreProcessingManager {
 		preProcessingModel.setBigBag(bbr.reduceBag(preProcessingModel.getBigBag()));
 		
 		
+		// STOPWORDS
+				if(preProcessingModel.isStopwords()){
+					StopwordRemover swr = new StopwordRemover();
+					swr.removeAllStopwords(preProcessingModel.getBigBag());
+					preProcessingModel.setBigBag(bbr.reduceBag(preProcessingModel.getBigBag()));
+				}
+		
+		
 		// STEMMING
 		if(preProcessingModel.isStemming()){
 			StemmingMaster sm = new StemmingMaster();
 			sm.StemmBag(preProcessingModel.getBigBag());
+			preProcessingModel.setBigBag(bbr.reduceBag(preProcessingModel.getBigBag()));
+			
 		}
 		
-		// STOPWORDS
-		if(preProcessingModel.isStopwords()){
-			StopwordRemover swr = new StopwordRemover();
-			swr.removeAllStopwords(preProcessingModel.getBigBag());
-		}
+		
 		
 		// NORMALIZATION
 		Weighter w;
@@ -75,7 +81,7 @@ public class PreProcessingManager {
 		
 		cm.setInstances(ig.generate(preProcessingModel.getBigBag()));
 		
-		matrixGenerator.generateMatrix(preProcessingModel.getBigBag());
+		//matrixGenerator.generateMatrix(preProcessingModel.getBigBag());
 	}
 	
 }

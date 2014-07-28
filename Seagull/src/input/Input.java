@@ -40,7 +40,7 @@ public class Input {
 				s.setClasse(classe);
 				s.setOriginal_file(original_file);
 
-				if((s.getText() != "") && !checker.is(s.getText()))
+				if((s.getText() != "") && !checker.is(s.getText())  )
 					wBag.add(s);
 				else
 					counter++;

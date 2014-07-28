@@ -131,7 +131,7 @@ public class InstancesGenerator {
 				//for(int n=0; n<vocabulary.getVocabulary().size(); n++ ) newInst[n] = 0;
 			}
 		}
-		System.out.println(data);
+		//System.out.println(data);
 		return data;
 	}
 	

@@ -14,8 +14,9 @@ import java.io.*;
 */
 
 class Stemmer
-{  private char[] b;
-private int i,     /* offset into b */
+{  
+	private char[] b;
+	private int i,     /* offset into b */
             i_end, /* offset to end of stemmed word */
             j, k;
 private static final int INC = 50;
@@ -30,6 +31,12 @@ public Stemmer()
  * Add a character to the word being stemmed.  When you are finished
  * adding characters, you can call stem(void) to stem the word.
  */
+
+public void createNew(){
+	b = new char[INC];
+	i = 0;
+	i_end = 0;
+}
 
 public void setWord(String s){
 	for(int i=0; i<s.length(); i++){
