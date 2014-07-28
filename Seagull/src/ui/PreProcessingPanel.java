@@ -23,7 +23,7 @@ public class PreProcessingPanel extends MasterPanel {
 	private JLabel lblWeighting;  
 	private JRadioButton radioBtnTF;
 	private JRadioButton radioBtnTFIDF;
-	private JRadioButton radioBtnIC;
+	private JRadioButton radioBtnIG;
 	private ButtonGroup btnGroupWeighting;
 	
 	private JLabel lblFiles;
@@ -53,7 +53,7 @@ public class PreProcessingPanel extends MasterPanel {
 		lblWeighting = new JLabel("Weighting: ");
 		radioBtnTF = new JRadioButton("TF");
 		radioBtnTFIDF = new JRadioButton("TF-IDF");
-		radioBtnIC = new JRadioButton("Information Gain");
+		radioBtnIG = new JRadioButton("Information Gain");
 		btnGroupWeighting = new ButtonGroup();
 		
 		lblFiles = new JLabel("Imported files: ");
@@ -88,10 +88,10 @@ public class PreProcessingPanel extends MasterPanel {
 		radioBtnTF.setBounds(10, 100, 140, 20);
 		radioBtnTF.setSelected(true);
 		radioBtnTFIDF.setBounds(10, 125, 140, 20);
-		radioBtnIC.setBounds(10, 150, 140, 20);
+		radioBtnIG.setBounds(10, 150, 140, 20);
 		btnGroupWeighting.add(radioBtnTF);
 		btnGroupWeighting.add(radioBtnTFIDF);
-		btnGroupWeighting.add(radioBtnIC);
+		btnGroupWeighting.add(radioBtnIG);
 		
 		panelOptions.add(lblOptions);
 		panelOptions.add(checkBoxStemming);
@@ -100,7 +100,7 @@ public class PreProcessingPanel extends MasterPanel {
 		panelOptions.add(lblWeighting);
 		panelOptions.add(radioBtnTF);
 		panelOptions.add(radioBtnTFIDF);
-		panelOptions.add(radioBtnIC);
+		panelOptions.add(radioBtnIG);
 		
 		add(panelOptions);
 		
@@ -165,12 +165,12 @@ public class PreProcessingPanel extends MasterPanel {
 		this.radioBtnTFIDF = radioBtnTFIDF;
 	}
 
-	public JRadioButton getRadioBtnIC() {
-		return radioBtnIC;
+	public JRadioButton getRadioBtnIG() {
+		return radioBtnIG;
 	}
 
-	public void setRadioBtnIC(JRadioButton radioBtnIC) {
-		this.radioBtnIC = radioBtnIC;
+	public void setRadioBtnIG(JRadioButton radioBtnIG) {
+		this.radioBtnIG = radioBtnIG;
 	}
 
 	public JList<String> getListFiles() {

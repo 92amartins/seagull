@@ -67,7 +67,7 @@ public class PreProcessingManager {
 				w = new Weighter();
 				preProcessingModel.setBigBag(w.weightTFIDF(preProcessingModel.getBigBag()));
 				break;
-			case IC:
+			case IG:
 				break;
 		}
 		
