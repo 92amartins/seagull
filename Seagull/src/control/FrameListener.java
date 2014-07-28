@@ -99,8 +99,8 @@ public class FrameListener implements ActionListener {
 					preProcessingManager.getPreProcessingModel().setWeightingType(WeightingType.TF);
 				else if(mainFrame.getPreProcessingPanel().getRadioBtnTFIDF().isSelected())
 					preProcessingManager.getPreProcessingModel().setWeightingType(WeightingType.TF_IDF);
-				else if(mainFrame.getPreProcessingPanel().getRadioBtnIC().isSelected())
-					preProcessingManager.getPreProcessingModel().setWeightingType(WeightingType.IC);
+				else if(mainFrame.getPreProcessingPanel().getRadioBtnIG().isSelected())
+					preProcessingManager.getPreProcessingModel().setWeightingType(WeightingType.IG);
 				
 				preProcessingManager.startPreProcessing();	        
 				
