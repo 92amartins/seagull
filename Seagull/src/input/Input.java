@@ -36,7 +36,7 @@ public class Input {
 				s = new Cell();
 				
 				/*		tratar espaços		*/
-				s.setText((s2.next().toLowerCase()).replaceAll("[^A-Za-z0-9]", ""));
+				s.setText((s2.next().toLowerCase()).replaceAll("[^A-Za-z]", ""));
 				s.setClasse(classe);
 				s.setOriginal_file(original_file);
 
