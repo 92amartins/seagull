@@ -15,7 +15,7 @@ public class PreProcessingModel {
 	private WeightingType weightingType;
 	private boolean informationGain;
 	private List<List<List<Cell>>> bigBag;
-	private ArrayList<String> bagOfWords;
+	private List<List<String>> bagOfWords;
 	private ArrayList<String> filesList = new ArrayList<String>();
 	
 	private static PreProcessingModel instance = null;
@@ -76,11 +76,11 @@ public class PreProcessingModel {
 		this.bigBag = bigBag;
 	}
 
-	public ArrayList<String> getBagOfWords() {
+	public List<List<String>> getBagOfWords() {
 		return bagOfWords;
 	}
 
-	public void setBagOfWords(ArrayList<String> bagOfWords) {
+	public void setBagOfWords(List<List<String>> bagOfWords) {
 		this.bagOfWords = bagOfWords;
 	}
 

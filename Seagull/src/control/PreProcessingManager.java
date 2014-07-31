@@ -48,7 +48,6 @@ public class PreProcessingManager {
 				if(preProcessingModel.isStopwords()){
 					StopwordRemover swr = new StopwordRemover();
 					swr.removeAllStopwords(preProcessingModel.getBigBag());
-					preProcessingModel.setBigBag(bbr.reduceBag(preProcessingModel.getBigBag()));
 				}
 		
 		
@@ -73,13 +72,17 @@ public class PreProcessingManager {
 				w = new Weighter();
 				preProcessingModel.setBigBag(w.weightTFIDF(preProcessingModel.getBigBag()));
 				break;
-			case IG:
+			/*case IG:
 				break;
+				*/
 		}
 		
 		ClassificationModel cm = ClassificationModel.getInstance();
 		
 		cm.setInstances(ig.generate(preProcessingModel.getBigBag()));
+		
+		PreProcessingModel p = PreProcessingModel.getInstance();
+		p.setBagOfWords(ig.getMatrix());
 		
 		//matrixGenerator.generateMatrix(preProcessingModel.getBigBag());
 	}

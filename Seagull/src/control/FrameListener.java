@@ -113,8 +113,9 @@ public class FrameListener implements ActionListener {
 		    }
 		    
 		    protected void done() {
-		    	preProcessingManager.getMatrixGenerator().generateMatrix(PreProcessingModel.getInstance().getBigBag());
-		    	DefaultTableModel model = new DefaultTableModel(preProcessingManager.getMatrixGenerator().genDataMatrix(), preProcessingManager.getMatrixGenerator().genColumnNames());
+		    	//preProcessingManager.getMatrixGenerator().generateMatrix(PreProcessingModel.getInstance().getBigBag());
+		    	PreProcessingModel p = PreProcessingModel.getInstance();
+		    	DefaultTableModel model = new DefaultTableModel(preProcessingManager.getMatrixGenerator().genDataMatrixStatic(p.getBagOfWords()), preProcessingManager.getMatrixGenerator().genColumnNamesStatic(p.getBagOfWords()));
 				
 				mainFrame.getPreProcessingPanel().getTblBOW().setModel(model);
 				mainFrame.getPreProcessingPanel().getTblBOW().setAutoscrolls(true);

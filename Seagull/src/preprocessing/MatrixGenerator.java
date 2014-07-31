@@ -59,6 +59,34 @@ public class MatrixGenerator {
 	*/	
 	
 	
+	public static String[] genColumnNamesStatic(List<List<String>> matrix2){
+		int size = matrix2.get(0).size();
+		String[] columnNames = new String[size];
+		
+		for(int i=0; i< size; i++){
+			columnNames[i] = matrix2.get(0).get(i);
+		}
+		return columnNames;
+	}	
+	
+	
+	public static String[][] genDataMatrixStatic(List<List<String>> matrix2){
+		System.out.println("################");
+		System.out.println("generating matrix");
+		
+		String[][] data;
+		int maxi = matrix2.size() - 1;
+		int maxj =  matrix2.get(0).size();
+		data = new String[maxi][maxj];
+		
+		for(int i=0; i< maxi; i++){
+			for(int j=0; j< maxj; j++){
+				data[i][j] = matrix2.get(i+1).get(j);
+			}
+		}
+		return data;
+	}	
+	
 	
 	
 	
@@ -74,6 +102,18 @@ public class MatrixGenerator {
 		}
 		return columnNames;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -96,10 +136,22 @@ public class MatrixGenerator {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public List<List<String>> generateMatrix(List<List<List<Cell>>> bigBag){
 		/*	generates a new matrix every time this method is called	*/
 		matrix = new ArrayList<List<String>>();
-		
+		System.out.println("generating matrix base");
 		List<String> bufferList;
 		List<String> header = new ArrayList<String>();
 		Vocabulary voc = new Vocabulary(bigBag);

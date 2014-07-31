@@ -15,7 +15,7 @@ public class BigBagReducer {
 		String term;
 		String other_term;
 		int flag;
-		do{
+		
 			remove_counter = 0;
 			//##########################
 			System.out.println("Removing repeated terms.");
@@ -71,7 +71,6 @@ public class BigBagReducer {
 			System.out.println("Remocao de " + remove_counter + " termos repetidos.");
 			System.out.println("################");
 			
-		}while(remove_counter > 0);	
 			
 			
 			
