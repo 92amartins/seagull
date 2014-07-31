@@ -1,11 +1,14 @@
 package preprocessing;
 
+import javax.swing.JOptionPane;
+
+import control.FrameListener;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.attributeSelection.Ranker;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
-import weka.filters.supervised.attribute.AttributeSelection;
+import weka.filters.supervised.attribute.AttributeSelection;;
 
 public class InformationGain {
 	private InfoGainAttributeEval infoG;
@@ -19,20 +22,22 @@ public class InformationGain {
 		infoG.buildEvaluator(data);
 		filter = new AttributeSelection();
 		search = new Ranker();
+		search.setThreshold(0.0);
 	}
 
-	public Instances selectFeatures(){
+	public Instances selectFeatures(){	
 		
-		search.setThreshold(0.9);	
+		Instances newData = new Instances(data);
 		
-		Instances newData = data;
-
 		try {
 			filter.setEvaluator(infoG);
 			filter.setSearch(search);
 			filter.setInputFormat(data);
+			showInfo(data);
+			
 			// filter data
 			newData = Filter.useFilter(data, filter);
+			showInfo(newData);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,34 +46,7 @@ public class InformationGain {
 		return newData;
 	}
 	
-	public static void main(String[] args){
-		Instances data;
-		try {
-			data = DataSource.read("C:\\Program Files\\Weka-3-6\\data\\iris.arff");
-			data.setClassIndex(data.numAttributes()-1);
-			InformationGain ig = new InformationGain(data);
-			
-			System.out.println("BEFORE INFORMATION GAIN \n");
-			showInfo(data);
-			
-			
-			// Applying Information Gain
-			data = ig.selectFeatures();
-			
-			System.out.println("AFTER INFORMATION GAIN \n");
-			showInfo(data);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	private static void showInfo(Instances data){
-		System.out.println("Number of Attributes: " + (data.numAttributes() - 1));
-		System.out.println("\n");
-		for (int i = 0; i < data.numAttributes()-1; i++) {
-			System.out.println(data.attribute(i).name());
-			System.out.println("\t");
-		}
+		JOptionPane.showMessageDialog(FrameListener.getMainFrame(), "Number of Attributes: " + (data.numAttributes() - 1 + "\n"));
 	}
 }
