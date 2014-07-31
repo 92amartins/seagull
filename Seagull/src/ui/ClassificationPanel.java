@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.text.NumberFormat;
 
@@ -148,6 +149,7 @@ public class ClassificationPanel extends MasterPanel{
 		paneReport.setBounds(200, 40, 560, 370);
 		txtAreaReport.setEditable(false);
 		txtAreaReport.setFont(new Font("Courier New", Font.PLAIN, 12));
+		txtAreaReport.setForeground(Color.black);
 		add(paneReport);
 
 		progressBar.setBounds(200, 415, 250, 25);
