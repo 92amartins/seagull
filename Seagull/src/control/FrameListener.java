@@ -19,6 +19,7 @@ import model.ClassificationModel.ClassifierType;
 import model.ClassificationModel.EvaluationMethod;
 import model.PreProcessingModel;
 import model.PreProcessingModel.WeightingType;
+import ui.ChartFrame;
 import ui.MainFrame;
 import ui.MasterPanel;
 import ui.TableColumnAdjuster;
@@ -56,8 +57,10 @@ public class FrameListener implements ActionListener {
 			processClassification();
 		else if(e.getSource().equals(mainFrame.getClassificationPanel().getBtnSave()))
 			saveToFile();
-		else if(e.getSource().equals(mainFrame.getClassificationPanel().getBtnChart()))
-			showAboutDialog();
+		else if(e.getSource().equals(mainFrame.getClassificationPanel().getBtnChart())) {
+			ChartFrame chartFrame = new ChartFrame();
+			chartFrame.create();
+		}
 	}
 	
 	private void showAboutDialog() {
@@ -98,11 +101,11 @@ public class FrameListener implements ActionListener {
 				
 				if(mainFrame.getPreProcessingPanel().getRadioBtnTF().isSelected())
 					preProcessingManager.getPreProcessingModel().setWeightingType(WeightingType.TF);
-				else if(mainFrame.getPreProcessingPanel().getRadioBtnTFIDF().isSelected())
+				else if(mainFrame.getPreProcessingPanel().getRadioBtnTFIDF().isSelected()) {
 					preProcessingManager.getPreProcessingModel().setWeightingType(WeightingType.TF_IDF);
-				
-				else if(mainFrame.getPreProcessingPanel().getRadioBtnIG().isSelected())
-					preProcessingManager.getPreProcessingModel().setWeightingType(WeightingType.IG);
+					if(mainFrame.getPreProcessingPanel().getCheckBoxIG().isSelected())
+						preProcessingManager.getPreProcessingModel().setInformationGain(true);
+				}
 				
 				preProcessingManager.startPreProcessing();	        
 				
