@@ -7,7 +7,10 @@ import control.FrameListener;
 public class ExceptionsHandler {
 	
 	public static void showSelectFoldersStructureDialog() {
-		String msg = "Please, select a valid folders structure.";
+		String msg = "Please, select a valid folders structure: \n"
+				+ "- Selected Folder \n"
+				+ "-- Subfolders with the class name \n"
+				+ "--- Plain text files";
 		JOptionPane.showMessageDialog(FrameListener.getMainFrame(), msg, "Select valid folders structure", JOptionPane.WARNING_MESSAGE);
 	}
 	
