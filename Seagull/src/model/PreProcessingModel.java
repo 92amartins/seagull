@@ -7,12 +7,13 @@ import java.util.List;
 
 public class PreProcessingModel {
 	
-	public enum WeightingType{TF, TF_IDF, IG;}
+	public enum WeightingType{TF, TF_IDF;}
 	
 	private String path;	
 	private boolean stemming;
 	private boolean stopwords;
 	private WeightingType weightingType;
+	private boolean informationGain;
 	private List<List<List<Cell>>> bigBag;
 	private ArrayList<String> bagOfWords;
 	private ArrayList<String> filesList = new ArrayList<String>();
@@ -61,6 +62,14 @@ public class PreProcessingModel {
 
 	public void setWeightingType(WeightingType weightingType) {
 		this.weightingType = weightingType;
+	}
+	
+	public boolean isInformationGain() {
+		return informationGain;
+	}
+
+	public void setInformationGain(boolean informationGain) {
+		this.informationGain = informationGain;
 	}
 
 	public void setBigBag(List<List<List<Cell>>> bigBag) {

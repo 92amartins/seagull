@@ -10,33 +10,28 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class PreProcessingPanel extends MasterPanel {
-	
-//	private JButton btnBrowse;
 		
 	private JLabel lblOptions;
-//	private JPanel panelOptions;
 	private JCheckBox checkBoxStemming;
 	private JCheckBox checkBoxStopwords;
 	
 	private JLabel lblWeighting;  
 	private JRadioButton radioBtnTF;
 	private JRadioButton radioBtnTFIDF;
-	private JRadioButton radioBtnIG;
+	private JCheckBox checkBoxIG;
 	private ButtonGroup btnGroupWeighting;
 	
 	private JLabel lblFiles;
 	private JScrollPane paneListFiles;
 	private JList<String> listFiles;
 
-//	private JButton btnProcess; 
-	
 	private JLabel lblBOW;
 	private JScrollPane paneBOW;
 	private JTable tblBOW;
-	
-//	private JProgressBar progressBar;
 	
 	private JButton btnClassify;
 	
@@ -53,7 +48,7 @@ public class PreProcessingPanel extends MasterPanel {
 		lblWeighting = new JLabel("Weighting: ");
 		radioBtnTF = new JRadioButton("TF");
 		radioBtnTFIDF = new JRadioButton("TF-IDF");
-		radioBtnIG = new JRadioButton("Information Gain");
+		checkBoxIG = new JCheckBox("Information Gain");
 		btnGroupWeighting = new ButtonGroup();
 		
 		lblFiles = new JLabel("Imported files: ");
@@ -88,10 +83,25 @@ public class PreProcessingPanel extends MasterPanel {
 		radioBtnTF.setBounds(10, 100, 140, 20);
 		radioBtnTF.setSelected(true);
 		radioBtnTFIDF.setBounds(10, 125, 140, 20);
-		radioBtnIG.setBounds(10, 150, 140, 20);
+		
+		radioBtnTFIDF.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if(radioBtnTFIDF.isSelected())
+					checkBoxIG.setEnabled(true);
+				else {
+					checkBoxIG.setEnabled(false);
+					checkBoxIG.setSelected(false);
+				}
+			}
+		});
+		
 		btnGroupWeighting.add(radioBtnTF);
 		btnGroupWeighting.add(radioBtnTFIDF);
-		btnGroupWeighting.add(radioBtnIG);
+		
+		checkBoxIG.setBounds(25, 150, 140, 20);
+		checkBoxIG.setEnabled(false);
 		
 		panelOptions.add(lblOptions);
 		panelOptions.add(checkBoxStemming);
@@ -100,7 +110,7 @@ public class PreProcessingPanel extends MasterPanel {
 		panelOptions.add(lblWeighting);
 		panelOptions.add(radioBtnTF);
 		panelOptions.add(radioBtnTFIDF);
-		panelOptions.add(radioBtnIG);
+		panelOptions.add(checkBoxIG);
 		
 		add(panelOptions);
 		
@@ -165,12 +175,12 @@ public class PreProcessingPanel extends MasterPanel {
 		this.radioBtnTFIDF = radioBtnTFIDF;
 	}
 
-	public JRadioButton getRadioBtnIG() {
-		return radioBtnIG;
+	public JCheckBox getCheckBoxIG() {
+		return checkBoxIG;
 	}
 
-	public void setRadioBtnIG(JRadioButton radioBtnIG) {
-		this.radioBtnIG = radioBtnIG;
+	public void setCheckBoxIG(JCheckBox checkBoxIG) {
+		this.checkBoxIG = checkBoxIG;
 	}
 
 	public JList<String> getListFiles() {
