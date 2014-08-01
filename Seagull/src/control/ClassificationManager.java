@@ -9,6 +9,7 @@ import weka.core.Instances;
 public class ClassificationManager {
 	
 	private ClassificationModel classificationModel;
+	private Report[] reports;
 	
 	public ClassificationManager() {
 		classificationModel = ClassificationModel.getInstance();
@@ -39,19 +40,19 @@ public class ClassificationManager {
 			}
 						
 			Evaluation[] evals = cls.getEvaluations();
-			Report[] r = new Report[evals.length];
+			reports = new Report[evals.length];
 			StringBuffer sb = new StringBuffer();
 			
 			for(int i = 0; i < evals.length;i++){
-				r[i] = new Report(evals[i]);
+				reports[i] = new Report(evals[i], data);
 				
 				sb.append("Classifier: "+classificationModel.getClassifierTypes().get(i).getName()+"\n");
 				sb.append("Evaluation Method: "+strEM+"\n");
-				sb.append(r[i].summaryString());
+				sb.append(reports[i].summaryString());
 				sb.append("\n \n \n");
-				sb.append(r[i].classificationDetails());
+				sb.append(reports[i].classificationDetails());
 				sb.append("\n \n \n");
-				sb.append(r[i].confusionMatrix());
+				sb.append(reports[i].confusionMatrix());
 				sb.append("==============================================================================================\n");
 			}
 			
@@ -70,4 +71,13 @@ public class ClassificationManager {
 	public void setClassificationModel(ClassificationModel classificationModel) {
 		this.classificationModel = classificationModel;
 	}
+
+	public Report[] getReports() {
+		return reports;
+	}
+
+	public void setReports(Report[] reports) {
+		this.reports = reports;
+	}
+	
 }
