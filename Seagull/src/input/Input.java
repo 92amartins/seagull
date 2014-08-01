@@ -28,7 +28,7 @@ public class Input {
 		try {
 			sc2 = new Scanner(new File(path));
 		} catch (FileNotFoundException e) {
-			System.out.println("erro");
+			//tln("erro");
 			e.printStackTrace();
 		}
 		while (sc2.hasNextLine()) {

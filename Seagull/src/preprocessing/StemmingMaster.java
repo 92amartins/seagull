@@ -12,7 +12,7 @@ public class StemmingMaster {
 	/*	colocando numa classe separata até saber aonde colocar for sure	*/
 	public void StemmBag(List<List<List<Cell>>> bigBag){
 		//Stemmer stem = new Stemmer();
-		//System.out.println("flag");
+		////tln("flag");
 		Porter p = new Porter();
 		int counter;
 		String s;
@@ -30,14 +30,14 @@ public class StemmingMaster {
 						//s = stem.toString();
 						n = p.stripAffixes(s);
 						if(! s.equals(n))  counter++;
-						//if(! s.equals(n)) System.out.println(s + " turned into " + n);
+						//if(! s.equals(n)) //tln(s + " turned into " + n);
 						bigBag.get(i).get(j).get(k).setText(n);
 					}
 				}
 			}
-			System.out.println("################");
-			System.out.println("Stemmed " + counter + " terms");
-			System.out.println("################");
+			//tln("################");
+			//tln("Stemmed " + counter + " terms");
+			//tln("################");
 		
 			
 			

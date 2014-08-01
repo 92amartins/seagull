@@ -45,11 +45,11 @@ public class MatrixGenerator {
 	private void printMatrix(List<List<String>> bow){
 		for(int i=0; i< bow.size(); i++){
 			for(int j=0; j< bow.get(i).size(); j++){
-				System.out.print(bow.get(i).get(j) + " ");
+				//t(bow.get(i).get(j) + " ");
 				
 			}
 			
-			System.out.println("");
+			//tln("");
 			
 		}
 		
@@ -71,8 +71,8 @@ public class MatrixGenerator {
 	
 	
 	public static String[][] genDataMatrixStatic(List<List<String>> matrix2){
-		System.out.println("################");
-		System.out.println("generating matrix");
+		//tln("################");
+		//tln("generating matrix");
 		
 		String[][] data;
 		int maxi = matrix2.size() - 1;
@@ -119,8 +119,8 @@ public class MatrixGenerator {
 	
 			
 	public String[][] genDataMatrix(){
-		System.out.println("################");
-		System.out.println("generating matrix");
+		//tln("################");
+		//tln("generating matrix");
 		
 		String[][] data;
 		int maxi = matrix.size() - 1;
@@ -151,7 +151,7 @@ public class MatrixGenerator {
 	public List<List<String>> generateMatrix(List<List<List<Cell>>> bigBag){
 		/*	generates a new matrix every time this method is called	*/
 		matrix = new ArrayList<List<String>>();
-		System.out.println("generating matrix base");
+		//tln("generating matrix base");
 		List<String> bufferList;
 		List<String> header = new ArrayList<String>();
 		Vocabulary voc = new Vocabulary(bigBag);
@@ -179,7 +179,7 @@ public class MatrixGenerator {
 						if(header.get(m).equals(bigBag.get(i).get(j).get(n).getText())){
 							/*	ao encontrar, found = 1; adicionar peso na lista; break	*/
 							found = 1;
-							//System.out.println("encontrou termo " + header.get(m) + " no arquivo ");
+							////tln("encontrou termo " + header.get(m) + " no arquivo ");
 							
 							
 							bufferList.add(String.valueOf( bigBag.get(i).get(j).get(n).getWeight()  ));
