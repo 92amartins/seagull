@@ -58,7 +58,7 @@ public class FrameListener implements ActionListener {
 		else if(e.getSource().equals(mainFrame.getClassificationPanel().getBtnSave()))
 			saveToFile();
 		else if(e.getSource().equals(mainFrame.getClassificationPanel().getBtnChart())) {
-			ChartFrame chartFrame = new ChartFrame();
+			ChartFrame chartFrame = new ChartFrame(classificationManager.getReports());
 			chartFrame.create();
 		}
 	}
@@ -87,6 +87,11 @@ public class FrameListener implements ActionListener {
 	}
 	
 	private void processPreProcessing() {
+		if(preProcessingManager.getPreProcessingModel().getFilesList().isEmpty()) {
+			ExceptionsHandler.showUploadPreProcessDataSetDialog();
+			return;
+		}
+			
 		mainFrame.getPreProcessingPanel().getBtnClassify().setEnabled(false);
 		mainFrame.getPreProcessingPanel().getTblBOW().setModel(new DefaultTableModel());
 		activateProgressBarDisableComponents(mainFrame.getPreProcessingPanel());
@@ -137,10 +142,12 @@ public class FrameListener implements ActionListener {
 			classifierTypes.add(ClassifierType.NAIVE_BAYES);
 		if(mainFrame.getClassificationPanel().getCheckBoxJ48().isSelected())
 			classifierTypes.add(ClassifierType.J48);
-		if(mainFrame.getClassificationPanel().getCheckBoxKnn().isSelected())
-			classifierTypes.add(ClassifierType.IBK);
-		if(mainFrame.getClassificationPanel().getCheckBoxCosSimilarity().isSelected())
-			classifierTypes.add(ClassifierType.COSINE);
+		if(mainFrame.getClassificationPanel().getCheckBoxKnn().isSelected()) {
+			if(mainFrame.getClassificationPanel().getRadioBtnEuclideanDist().isSelected())
+				classifierTypes.add(ClassifierType.IBK);
+			else
+				classifierTypes.add(ClassifierType.COSINE);
+		}
 		
 		if(mainFrame.getClassificationPanel().getRadioBtnCrossValidation().isSelected()) {
 			classificationManager.getClassificationModel().setEvaluationMethod(EvaluationMethod.CROSS_VALIDATION);
