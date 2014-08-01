@@ -14,6 +14,11 @@ public class ExceptionsHandler {
 		JOptionPane.showMessageDialog(FrameListener.getMainFrame(), msg, "Select valid folders structure", JOptionPane.WARNING_MESSAGE);
 	}
 	
+	public static void showUploadPreProcessDataSetDialog() {
+		String msg = "Please, upload a dataset to be pre-processed using the browse button.";
+		JOptionPane.showMessageDialog(FrameListener.getMainFrame(), msg, "Upload dataset", JOptionPane.WARNING_MESSAGE);
+	}
+	
 	public static void showUploadProcessFileDialog() {
 		String msg = "Please, upload a file to be processed, either using the Pre-processing tab or the browse button.";
 		JOptionPane.showMessageDialog(FrameListener.getMainFrame(), msg, "Upload process file", JOptionPane.WARNING_MESSAGE);
