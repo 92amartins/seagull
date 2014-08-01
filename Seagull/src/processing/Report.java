@@ -67,7 +67,7 @@ public class Report {
 		return vectorR;
 	}
 	
-	public double[] getRocArea(){
+	public double[] getROCArea(){
 		for(int k = 0; k < NUM_CLASSES;k++)
 			vectorROC[k] = e.areaUnderROC(k);
 		
