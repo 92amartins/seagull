@@ -1,13 +1,14 @@
 package input;
 
-import java.util.List;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 import weka.core.Stopwords;
+import error.ExceptionsHandler;
 /*	ctrl+shift+o	*/
 
 
@@ -73,7 +74,9 @@ public class Input {
 		/*	an ArrayList of all the names of the content in the "path" are in content variable	*/
 		/*	Now the program will get only the sub folder names	*/
 		content_number = content.size();
-
+		
+		
+		
 		for(int i=0; i<content_number;i++){
 			fileName = content.get(i);
 			test_f = new File(path + "/" + fileName);
@@ -85,6 +88,13 @@ public class Input {
 		
 		/*	at this point there is a list of the sub folders in the sub_folders variable	*/
 		/*	access all folders	*/
+		/*****************************************************/
+		if(sub_folders.size() == 0){
+			ExceptionsHandler.showSelectFoldersStructureDialog();
+			
+			return null;
+		}
+		/******************************************************/
 		for(int i=0; i < sub_folders.size(); i++){
 			classe = new ArrayList<List<Cell>>();
 			new_path = path + '/' + sub_folders.get(i);
