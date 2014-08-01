@@ -15,19 +15,20 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.text.NumberFormatter;
 
 public class ClassificationPanel extends MasterPanel{
-	
-//	private JButton btnBrowse;
-	
-//	private JPanel panelOptions;
 	
 	private JLabel lblClassifier;
 	private JCheckBox checkBoxNaiveBayes;
 	private JCheckBox checkBoxJ48;
 	private JCheckBox checkBoxKnn;
-	private JCheckBox checkBoxCosSimilarity;
+	
+	private JRadioButton radioBtnEuclideanDist;
+	private JRadioButton radioBtnCosSimilarity;
+	private ButtonGroup btnGroupKnn;
 	
 	private JLabel lblEvaluationMethod;
 	private JRadioButton radioBtnCrossValidation;
@@ -39,13 +40,9 @@ public class ClassificationPanel extends MasterPanel{
 	private JFormattedTextField txtSplit;
 	private JLabel lblSplit;
 	
-//	private JButton btnProcess;
-
 	private JLabel lblReport;
 	private JScrollPane paneReport;
 	private JTextArea txtAreaReport;
-	
-//	private JProgressBar progressBar;
 	
 	private JButton btnSave;
 	private JButton btnChart;
@@ -61,7 +58,10 @@ public class ClassificationPanel extends MasterPanel{
 		checkBoxNaiveBayes = new JCheckBox("Naïve Bayes");
 		checkBoxJ48 = new JCheckBox("J48");
 		checkBoxKnn = new JCheckBox("K-nn");
-		checkBoxCosSimilarity = new JCheckBox("Cosine Similarity");
+		
+		radioBtnEuclideanDist = new JRadioButton("Euclidean Distance");
+		radioBtnCosSimilarity = new JRadioButton("Cosine Similarity");
+		btnGroupKnn = new ButtonGroup();
 		
 		lblEvaluationMethod = new JLabel("Evaluation Method:");
 		radioBtnCrossValidation = new JRadioButton("Cross-validation");
@@ -99,26 +99,47 @@ public class ClassificationPanel extends MasterPanel{
 		btnBrowse.setBounds(10, 10, 100, 25);
 		add(btnBrowse);
 		
-		panelOptions.setBounds(10, 45, 160, 275);
+		panelOptions.setBounds(10, 45, 180, 300);
 		panelOptions.setLayout(null);
 		
 		lblClassifier.setBounds(5, 5, 140, 20);
 		checkBoxNaiveBayes.setBounds(10, 25, 140, 20);
 		checkBoxJ48.setBounds(10, 50, 140, 20);
 		checkBoxKnn.setBounds(10, 75, 140, 20);
-		checkBoxCosSimilarity.setBounds(10, 100, 140, 20);
 		
-		lblEvaluationMethod.setBounds(5, 125, 140, 20);
-		radioBtnCrossValidation.setBounds(10, 150, 140, 20);
+		checkBoxKnn.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if(checkBoxKnn.isSelected()) {
+					radioBtnEuclideanDist.setEnabled(true);
+					radioBtnCosSimilarity.setEnabled(true);
+				} else {
+					radioBtnEuclideanDist.setEnabled(false);
+					radioBtnCosSimilarity.setEnabled(false);
+				}
+			}
+		});
+		
+		radioBtnEuclideanDist.setBounds(25, 100, 160, 20);
+		radioBtnEuclideanDist.setSelected(true);
+		radioBtnCosSimilarity.setBounds(25, 125, 140, 20);
+		radioBtnEuclideanDist.setEnabled(false);
+		radioBtnCosSimilarity.setEnabled(false);
+		btnGroupKnn.add(radioBtnEuclideanDist);
+		btnGroupKnn.add(radioBtnCosSimilarity);
+		
+		lblEvaluationMethod.setBounds(5, 150, 140, 20);
+		radioBtnCrossValidation.setBounds(10, 175, 140, 20);
 		radioBtnCrossValidation.setSelected(true);
-		txtFolds.setBounds(30, 175, 30, 20);
+		txtFolds.setBounds(30, 200, 30, 20);
 		txtFolds.setText("10");
-		lblFolds.setBounds(60, 175, 100, 20);
-		radioBtnPercentageSplit.setBounds(10, 200, 140, 20);
-		txtSplit.setBounds(30, 225, 30, 20);
+		lblFolds.setBounds(60, 200, 100, 20);
+		radioBtnPercentageSplit.setBounds(10, 225, 140, 20);
+		txtSplit.setBounds(30, 250, 30, 20);
 		txtSplit.setText("80");
-		lblSplit.setBounds(60, 225, 100, 20);
-		radioBtnLOOCV.setBounds(10, 250, 140, 20);
+		lblSplit.setBounds(60, 250, 100, 20);
+		radioBtnLOOCV.setBounds(10, 275, 140, 20);
 		btnGroupEM.add(radioBtnCrossValidation);
 		btnGroupEM.add(radioBtnPercentageSplit);
 		btnGroupEM.add(radioBtnLOOCV);
@@ -127,7 +148,9 @@ public class ClassificationPanel extends MasterPanel{
 		panelOptions.add(checkBoxNaiveBayes);
 		panelOptions.add(checkBoxJ48);
 		panelOptions.add(checkBoxKnn);
-		panelOptions.add(checkBoxCosSimilarity);
+		
+		panelOptions.add(radioBtnCosSimilarity);
+		panelOptions.add(radioBtnEuclideanDist);
 		
 		panelOptions.add(lblEvaluationMethod);
 		panelOptions.add(radioBtnCrossValidation);
@@ -140,7 +163,7 @@ public class ClassificationPanel extends MasterPanel{
 		
 		add(panelOptions);
 		
-		btnProcess.setBounds(10, 335, 100, 25);
+		btnProcess.setBounds(10, 360, 100, 25);
 		add(btnProcess);
 		
 		lblReport.setBounds(200, 10, 100, 25);
@@ -202,12 +225,20 @@ public class ClassificationPanel extends MasterPanel{
 		this.checkBoxKnn = checkBoxKnn;
 	}
 	
-	public JCheckBox getCheckBoxCosSimilarity(){
-		return checkBoxCosSimilarity;
+	public JRadioButton getRadioBtnEuclideanDist() {
+		return radioBtnEuclideanDist;
 	}
-	
-	public void setCheckBoxCosSimilarity(JCheckBox checkBoxCosSimilarity){
-		this.checkBoxCosSimilarity = checkBoxCosSimilarity;
+
+	public void setRadioBtnEuclideanDist(JRadioButton radioBtnEuclideanDist) {
+		this.radioBtnEuclideanDist = radioBtnEuclideanDist;
+	}
+
+	public JRadioButton getRadioBtnCosSimilarity() {
+		return radioBtnCosSimilarity;
+	}
+
+	public void setRadioBtnCosSimilarity(JRadioButton radioBtnCosSimilarity) {
+		this.radioBtnCosSimilarity = radioBtnCosSimilarity;
 	}
 	
 	public JRadioButton getRadioBtnCrossValidation() {
