@@ -81,6 +81,7 @@ public class FrameListener implements ActionListener {
 			model.addElement(fileName);
 		
 		if(!model.isEmpty()) {
+			if(preProcessingManager.getPreProcessingModel().getBigBag() == null) return;
 			mainFrame.getPreProcessingPanel().getLblFiles().setText(model.size()-preProcessingManager.getPreProcessingModel().getBigBag().size()+" Imported Files:");
 			mainFrame.getPreProcessingPanel().getListFiles().setModel(model);
 		}

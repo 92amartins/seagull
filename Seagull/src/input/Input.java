@@ -16,17 +16,17 @@ public class Input {
 	
 	private ArrayList<String> filesList = new ArrayList<String>();
 
-	//#########################################
-	// isDirectory from class File
-	//#########################################
+
 	public static List<Cell> readFile (String path, String classe, String original_file) {
 		Stopwords checker = new Stopwords();
 		List<Cell> wBag = new ArrayList<Cell>();
 		Scanner sc2 = null;
 		Cell s;
 		int counter = 0;
+		File f = new File(path);
+		if(f.isDirectory())return null;
 		try {
-			sc2 = new Scanner(new File(path));
+			sc2 = new Scanner(f);
 		} catch (FileNotFoundException e) {
 			//tln("erro");
 			e.printStackTrace();
@@ -58,10 +58,10 @@ public class Input {
 		/*	reads the classes	*/
 		/*	Classe<arquivos<Bag of words>>	*/
 		List<List<List<Cell>>> bigBag = new ArrayList<>();
-
+		int check_files = 0;
 		List<Cell> bag;
 		List<List<Cell>> classe;
-
+		String extension;
 		int content_number;
 		String fileName;
 		List<String> sub_folders = new ArrayList<String>();
@@ -99,20 +99,36 @@ public class Input {
 			classe = new ArrayList<List<Cell>>();
 			new_path = path + '/' + sub_folders.get(i);
 			f = new File(new_path);
-
 			content = new ArrayList<String>(Arrays.asList(f.list()));
 			filesList.add(sub_folders.get(i));
 			content_number = content.size();
+			if(content_number != 0) check_files = 1;
+			else continue;
 			for(int j=0; j< content_number; j++){
 				fileName = content.get(j);
+				extension = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
+				System.out.println(extension);
+				if((extension.length() < 4) && !extension.equals("txt")){
+					continue;
+				}
+				
+				
 				filesList.add("\t\t"+fileName);
 				bag = readFile(new_path + '/' + fileName, sub_folders.get(i), fileName);
+				if(bag == null){
+					ExceptionsHandler.showSelectFoldersStructureDialog();
+					return null;
+				}
+					
 				classe.add(bag);
 			}
 			if(content_number != 0)
 				bigBag.add(classe);
 		}
-
+		if(check_files == 0){
+			ExceptionsHandler.showSelectFoldersStructureDialog();
+			return null;
+		}
 		return bigBag;
 	}
 
