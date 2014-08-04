@@ -18,7 +18,7 @@ public class BigBagReducer {
 		
 			remove_counter = 0;
 			//##########################
-			System.out.println("Removing repeated terms.");
+			//tln("Removing repeated terms.");
 			
 			for(int i=0;i<bigBag.size();i++){		/*	para cada classe	*/
 				for(int j=0; j<bigBag.get(i).size(); j++){		/*	para cada arquivo	*/
@@ -28,15 +28,15 @@ public class BigBagReducer {
 						w_counter = 0;
 						flag =0;
 						term = bigBag.get(i).get(j).get(m).getText();
-						//System.out.println("Procurando termo: " + term + " de indice " + m);
+						////tln("Procurando termo: " + term + " de indice " + m);
 						for(int n=0; n<bigBag.get(i).get(j).size(); n++){
 	
 							other_term = bigBag.get(i).get(j).get(n).getText();
 							if(term.equals(other_term)){
-								//System.out.println("Encontrou equivalencia no indice " + n);
+								////tln("Encontrou equivalencia no indice " + n);
 								
 								if(n<m){
-									System.out.println("Redundancia #######################################################################");
+									//tln("Redundancia #######################################################################");
 									
 								}else{
 								
@@ -45,7 +45,7 @@ public class BigBagReducer {
 									
 									if(w_counter > 1){
 										(bigBag.get(i)).get(j).remove(n);
-										//System.out.println("Removeu c�lula de indice " + n);
+										////tln("Removeu c�lula de indice " + n);
 										n--;
 										remove_counter++;
 	
@@ -56,7 +56,7 @@ public class BigBagReducer {
 						}
 						
 						if(flag == 0) bigBag.get(i).get(j).get(m).setQuantity((w_counter - 1) + bigBag.get(i).get(j).get(m).getQuantity() );
-						//System.out.println("nova quantidade de termos "+ bigBag.get(i).get(j).get(m).getQuantity() );
+						////tln("nova quantidade de termos "+ bigBag.get(i).get(j).get(m).getQuantity() );
 						
 						
 					}
@@ -68,8 +68,8 @@ public class BigBagReducer {
 			
 			
 			
-			System.out.println("Remocao de " + remove_counter + " termos repetidos.");
-			System.out.println("################");
+			//tln("Remocao de " + remove_counter + " termos repetidos.");
+			//tln("################");
 			
 			
 			

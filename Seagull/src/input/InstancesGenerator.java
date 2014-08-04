@@ -38,7 +38,7 @@ public class InstancesGenerator {
 		double[] newInst;
 		FastVector      attVals;
 		//atts.addElement(new Attribute(".file"));
-		System.out.println("generating instances");
+		//tln("generating instances");
 		strBuffer.add("File");
 		/*	create atribute list (vocabulary)	*/
 		for(int i=0; i< vocabulary.getVocabulary().size(); i++){
@@ -56,7 +56,7 @@ public class InstancesGenerator {
 		matrix.add(strBuffer);
 		
 		
-		//System.out.println("maxi: " + bigBag.size());
+		////tln("maxi: " + bigBag.size());
 		
 		
 	     
@@ -66,15 +66,15 @@ public class InstancesGenerator {
 			
 			
 			
-			//System.out.println(" - maxj: " + bigBag.get(i).size());
+			////tln(" - maxj: " + bigBag.get(i).size());
 			
 			
 			/*	para cada classe i	*/
 			for(int j=0; j<bigBag.get(i).size(); j++){
-				//System.out.println("vocab size + 2 = " + vocabulary.getVocabulary().size() + 2);
+				////tln("vocab size + 2 = " + vocabulary.getVocabulary().size() + 2);
 				newInst = new double[vocabulary.getVocabulary().size()+1];
 				strBuffer = new ArrayList<String>();
-				//System.out.println("criou vetor de double");
+				////tln("criou vetor de double");
 				/*	para cada arquivo j	*/
 				/*	adicionar nome do arquivo no primeiro atributo	*/
 				
@@ -105,13 +105,13 @@ public class InstancesGenerator {
 				
 				
 				
-				//System.out.println("adicionou o nome da classe no ultimo slot");
-				//System.out.println("para cada atributo");
+				////tln("adicionou o nome da classe no ultimo slot");
+				////tln("para cada atributo");
 				for(int k=0; k< vocabulary.getVocabulary().size(); k++){
 					/*	para cada atributo	*/
 					test_text = vocabulary.getVocabulary().get(k).getText();
-					//System.out.println("pegou atributo");
-					//System.out.println("procurando termo " + test_text);
+					////tln("pegou atributo");
+					////tln("procurando termo " + test_text);
 					/*	procurar se o documento j da classe k possui o atributo	*/
 					has_term=0;
 					
@@ -125,30 +125,30 @@ public class InstancesGenerator {
 					/*	se tiver, adicionar o peso ao data.attribute(k)	*/
 					
 					if(has_term == 1){
-						//System.out.println("encontrou");
+						////tln("encontrou");
 						newInst[k/*+1*/] = bigBag.get(i).get(j).get(index).getWeight();
 						strBuffer.add(String.valueOf(bigBag.get(i).get(j).get(index).getWeight()));
 						//newInst[k] = 69;
 					}else{
 						/*	se n?o tiver, adicionar 0 ao data.attribute(k)	*/
-						//System.out.println("nao encontrou");
+						////tln("nao encontrou");
 						//newInst[k/*+1*/] = (double)data.attribute(k/*+1*/).addStringValue("?");
 						newInst[k] = 0;
 						strBuffer.add("0");
-						//System.out.println("nao encontrou");
+						////tln("nao encontrou");
 					}
-					//System.out.println("proximo atributo");
+					////tln("proximo atributo");
 				}
 				data.add(new Instance(1, newInst));
 				
 				strBuffer.add(classBuffer);
 				matrix.add(strBuffer);
 				
-				//System.out.println("Adicionou instance a Instances");
+				////tln("Adicionou instance a Instances");
 				//for(int n=0; n<vocabulary.getVocabulary().size(); n++ ) newInst[n] = 0;
 			}
 		}
-		//System.out.println(data);
+		////tln(data);
 		return data;
 	}
 	

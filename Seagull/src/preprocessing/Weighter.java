@@ -30,7 +30,7 @@ public class Weighter {
 	
 	
 	public List<List<List<Cell>>> weightTFIDF(List<List<List<Cell>>> bigBag){
-		System.out.println("Applying TF-IDF weighting.");
+		//tln("Applying TF-IDF weighting.");
 		return tfIdf(bigBag);
 	}
 	
@@ -50,10 +50,10 @@ public class Weighter {
 		
 		for(int a=0;a<bigBag.size();a++){
 			classe = bigBag.get(a);
-			System.out.println("Classe "+(a+1) + "/" + bigBag.size());
+			//tln("Classe "+(a+1) + "/" + bigBag.size());
 			for(int i=0;i<classe.size();i++){
 				
-				System.out.println("Arquivo "+(i+1) + "/" + classe.size());
+				//tln("Arquivo "+(i+1) + "/" + classe.size());
 				for(int j=0; j< (classe.get(i)).size(); j++){
 					/*	calcular TF	*/
 					tf=0;
@@ -81,7 +81,7 @@ public class Weighter {
 					
 					weight = tf * idf;
 					classe.get(i).get(j).setWeight(weight);
-					//System.out.println("Peso: " + weight + " - quantity: " + classe.get(i).get(j).getQuantity());
+					////tln("Peso: " + weight + " - quantity: " + classe.get(i).get(j).getQuantity());
 					
 				}
 			}
@@ -89,8 +89,8 @@ public class Weighter {
 		}
 		
 		
-		System.out.println("Weights applied.");
-		System.out.println("################");
+		//tln("Weights applied.");
+		//tln("################");
 		return bigBag;
 	}
 	

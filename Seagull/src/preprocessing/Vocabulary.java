@@ -8,7 +8,7 @@ public class Vocabulary {
 	private List<Cell> vocabulary;
 	
 	public Vocabulary(List<List<List<Cell>>> bigBag){
-		//System.out.println("Criando vocabulario.");
+		////tln("Criando vocabulario.");
 		vocabulary = new ArrayList<Cell>();
 		
 		String test;
@@ -30,8 +30,8 @@ public class Vocabulary {
 		}
 		
 		
-		//System.out.println("Criou vocabulario com " + vocabulary.size()+ " termos.");
-		//System.out.println("################");
+		////tln("Criou vocabulario com " + vocabulary.size()+ " termos.");
+		////tln("################");
 		
 	}
 	
