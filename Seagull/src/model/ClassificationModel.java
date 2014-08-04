@@ -10,8 +10,8 @@ public class ClassificationModel {
 	public enum ClassifierType{
 		NAIVE_BAYES("Naïve Bayes"), 
 		J48("J48"),
-		IBK("Knn"),
-		COSINE("Cosine Similarity");
+		IBK("Knn (Euclidean Distance)"),
+		COSINE("Knn (Cosine Similarity)");
 		
 		private String name;
 		private ClassifierType(String name) { this.name = name; }

@@ -143,9 +143,9 @@ public class FrameListener implements ActionListener {
 		if(mainFrame.getClassificationPanel().getCheckBoxJ48().isSelected())
 			classifierTypes.add(ClassifierType.J48);
 		if(mainFrame.getClassificationPanel().getCheckBoxKnn().isSelected()) {
-			if(mainFrame.getClassificationPanel().getRadioBtnEuclideanDist().isSelected())
+			if(mainFrame.getClassificationPanel().getCheckBoxEuclideanDist().isSelected())
 				classifierTypes.add(ClassifierType.IBK);
-			else
+			if(mainFrame.getClassificationPanel().getCheckBoxCosSimilarity().isSelected())
 				classifierTypes.add(ClassifierType.COSINE);
 		}
 		
